@@ -10,9 +10,9 @@
 <link href="../plugins/jquery-ztree/zTreeStyle.css" rel="stylesheet">
 <link href="../plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet">
 <link href="../css/playground.css" rel="stylesheet">
-<link rel="stylesheet" href="<%=request.getContextPath()%>/plugins/kindeditor/themes/default/default.css" />
+<link href="stylesheet" href="<%=request.getContextPath()%>/plugins/kindeditor/themes/default/default.css" />
 <link href="<%=request.getContextPath()%>/plugins/kindeditor/plugins/code/prettify.css" rel="stylesheet">
-<link href="<%=request.getContextPath()%>/plugins/bootstrap-fileinput/fileinput.css" rel="stylesheet">
+<link href="<%=request.getContextPath()%>/plugins/bootstrap-fileinput/bootstrap-fileinput.css" rel="stylesheet">
 
 
 <script type="text/javascript" src="../js/jquery.js"></script>

@@ -5,6 +5,8 @@ import com.xiaoyuan.util.UploadFile;
 import com.xiaoyuan.util.UploadResultVo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,10 +30,11 @@ public class UploadFileController {
      */
     @RequestMapping(value = "/uploadfile")
 
-    public void uploadfile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void uploadfile(MultipartHttpServletRequest request, HttpServletResponse response) throws Exception {
 
         //final String uploadPath = "http://localhost:8080/template"+File.separator+"upload";
         String fullUploadPath=request.getServletContext().getRealPath("upload")+File.separator;
+
         String fullUploadUrl=request.getContextPath()+File.separator+"upload"+File.separator;
 
         try{

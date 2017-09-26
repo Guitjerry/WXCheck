@@ -37,13 +37,13 @@ public class UploadFile {
 	MultipartHttpServletRequest multipartRequest;
 	private static final Log _Log = LogFactory.getLog(UploadFile.class);
 
-	public UploadFile(HttpServletRequest request, String uploadPath) {
-		this.multipartRequest = (MultipartHttpServletRequest) request;
+	public UploadFile(MultipartHttpServletRequest request, String uploadPath) {
+		this.multipartRequest =  request;
 		this.uploadPath = uploadPath;
 		// 获得文件：
 		this.fileMap = this.multipartRequest.getFileMap();
 		// 创建文件夹
-		FileUtil.createFileDir(uploadPath);
+		com.xiaoyuan.util.FileUtil.createFileDir(uploadPath);
 	}
 
 	public UploadFile(HttpServletRequest request, String uploadPath,
@@ -56,7 +56,7 @@ public class UploadFile {
 			this.fileName = this.getFormField("filename");
 		}
 		// 创建文件夹
-		FileUtil.createFileDir(uploadPath);
+		com.xiaoyuan.util.FileUtil.createFileDir(uploadPath);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class UploadFile {
 			}
 			try {
 				
-				FileUtil.newFolder(uploadPath);
+				com.xiaoyuan.util.FileUtil.newFolder(uploadPath);
 				saveFile = new File(uploadPath+"/"+fileName);
 				if(!saveFile.exists()){
 					saveFile.createNewFile();
@@ -160,7 +160,7 @@ public class UploadFile {
 			}
 			try {
 				
-				FileUtil.newFolder(uploadPath);
+				com.xiaoyuan.util.FileUtil.newFolder(uploadPath);
 				saveFile = new File(uploadPath + this.fileName);
 				FileCopyUtils.copy(mf.getBytes(), saveFile);
 				
