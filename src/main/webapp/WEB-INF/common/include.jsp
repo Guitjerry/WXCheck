@@ -17,6 +17,7 @@
 
 <script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript" src="../js/leftMenu.js"></script>
+<script type="text/javascript" src="../js/ajaxfileupload.js"></script>
 <script type="text/javascript" src="../plugins/boostrap-table/bootstrap-table.js"></script>
 <script type="text/javascript" src="../plugins/boostrap-table/locale/bootstrap-table-zh-CN.js"></script>
 <script type="text/javascript" src="../plugins/bootstrap-toastr/toastr.js"></script>
