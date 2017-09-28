@@ -35,7 +35,7 @@ public class TmSchoolMainController {
     @RequestMapping(value="/addUser")
     public void addUser(HttpServletRequest request, HttpServletResponse response,String msg){
 
-       TmStudent student = new TmStudent();
+        TmStudent student = new TmStudent();
         student.setId(111);
         student.setName("测试");
         tmStudentRepository.save(student);

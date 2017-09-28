@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <c:import url="../../common/include.jsp"></c:import>
+    <c:import url="../../../common/include.jsp"></c:import>
     <title>校园易购</title>
 
 </head>

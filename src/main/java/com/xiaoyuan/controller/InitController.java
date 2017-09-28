@@ -132,7 +132,7 @@ public class InitController {
         try {
             File file = ResourceUtils.getFile("classpath:student.xls");
             InputStream in = new FileInputStream(file);
-            List<Object> objects = commonImportBack(in,"upfile","excelConfig.xml","TM_STUDENT",new TmStudent(""));
+            List<Object> objects = commonImportBack(in,"upfile","excelConfig.xml","TM_STUDENT",new TmStudent());
             for(Object object:objects){
                 TmStudent tmStudent = (TmStudent) object;
                 tmStudent.setStatus(0);

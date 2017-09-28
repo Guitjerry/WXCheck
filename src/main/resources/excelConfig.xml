@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<insertconfig>
+    <table name="TM_STUDENT">
+        <column>name</column>
+        <column>usercode</column>
+    </table>
+</insertconfig>
+
+

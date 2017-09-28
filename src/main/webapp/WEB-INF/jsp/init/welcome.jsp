@@ -161,9 +161,9 @@
 
 <input name="msg" value="${msg}" type="hidden">
     <div class="container-fluid">
-        <c:import url="../../common/include.jsp"></c:import>
+        <c:import url="../../../common/include.jsp"></c:import>
         <div class="row">
-            <c:import url="../../common/header.jsp"></c:import>
+            <c:import url="../../../common/header.jsp"></c:import>
         </div>
         <div class="row">
             <div class="col-md-2 leftdiv">

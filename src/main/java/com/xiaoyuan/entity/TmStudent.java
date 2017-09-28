@@ -1,9 +1,6 @@
 package com.xiaoyuan.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 学生
@@ -11,6 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TM_STUDENT")
 public class TmStudent {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private Integer id;
@@ -19,27 +17,20 @@ public class TmStudent {
     @Column(name = "USERCODE")
     private String usercode;//学生编号
     @Column(name = "BANJIID")
-    private String banjiid;//班级号
+    private Integer banjiid;//班级号
     @Column(name = "NIANJIID")
     private String nianjiid;//年级
     @Column(name = "STATUS")
     private Integer status;//是否有效 0有效 1无效
+    @Column(name = "AGE")
+    private Integer age;//年龄
+    @Column(name = "SEX")
+    private String sex;//性别
+    @Transient
+    private String banjiname;//班级名称
 
-    public TmStudent(String name) {
-        this.name = name;
-    }
 
-    public TmStudent(Integer id, String name, String usercode, String banjiid, String nianjiid, Integer status) {
-        this.id = id;
-        this.name = name;
-        this.usercode = usercode;
-        this.banjiid = banjiid;
-        this.nianjiid = nianjiid;
-        this.status = status;
-    }
 
-    public TmStudent() {
-    }
 
     public Integer getId() {
         return id;
@@ -65,11 +56,11 @@ public class TmStudent {
         this.usercode = usercode;
     }
 
-    public String getBanjiid() {
+    public Integer getBanjiid() {
         return banjiid;
     }
 
-    public void setBanjiid(String banjiid) {
+    public void setBanjiid(Integer banjiid) {
         this.banjiid = banjiid;
     }
 
@@ -87,5 +78,29 @@ public class TmStudent {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getBanjiname() {
+        return banjiname;
+    }
+
+    public void setBanjiname(String banjiname) {
+        this.banjiname = banjiname;
     }
 }

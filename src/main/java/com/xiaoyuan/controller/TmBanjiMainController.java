@@ -3,18 +3,34 @@ package com.xiaoyuan.controller;
 import com.xiaoyuan.entity.TmBanJi;
 import com.xiaoyuan.entity.TmBanjiKemu;
 import com.xiaoyuan.entity.TmKemu;
+import com.xiaoyuan.entity.TmStudent;
 import com.xiaoyuan.respository.TmBanjiKemuRepository;
 import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmKemuRepository;
+import com.xiaoyuan.respository.TmStudentRepository;
+import com.xiaoyuan.util.ExcelConfig;
 import com.xiaoyuan.util.JsonUtilTemp;
+import com.xiaoyuan.util.JxlExcelUtil;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dnys on 2017/9/20.
@@ -22,12 +38,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/banji")
 public class TmBanjiMainController {
+    private Logger logger = Logger.getLogger(TmBanjiMainController.class);
     @Autowired
     private TmBanjiRepository tmBanjiRepository;
     @Autowired
     private TmKemuRepository tmKemuRepository;
     @Autowired
     private TmBanjiKemuRepository tmBanjiKemuRepository;
+    @Autowired
+    private TmStudentRepository tmStudentRepository;
     /**
      * 班级列表
      */
@@ -86,6 +105,89 @@ public class TmBanjiMainController {
         List<TmBanjiKemu> tmBanjiKemus =  tmBanjiKemuRepository.findAllBybanjiid(banjiid);
         request.setAttribute("selectkemu",tmBanjiKemus);
         return "banji/fpKemu";
+    }
+
+    /**
+     * 分配学生
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "fpStudentSure")
+    private String fpStudentSure(MultipartHttpServletRequest request, HttpServletResponse response,Integer banjiid){
+        Map<String,Object> resultMap = new HashMap<String,Object>();
+        MultipartFile file = request.getFile("filename");
+        List<TmStudent> sameStudents = new ArrayList<>();//相同的学生数据
+        List<TmStudent> insertStudents = new ArrayList<>();//插入的学生数据
+        List<TmStudent> errorStudents = new ArrayList<>();
+        try{
+            InputStream in = file.getInputStream();
+            List<Object> objects = commonImportBack(in,"excelConfig.xml","TM_STUDENT",new TmStudent());
+            TmBanJi tmBanJi = tmBanjiRepository.findOne(banjiid);//班级
+            for(Object object:objects){
+                //excel对象的对象
+                TmStudent tmStudent = (TmStudent) object;
+                if(StringUtils.isEmpty(tmStudent.getUsercode())){
+                    errorStudents.add(tmStudent);
+                }
+                //不存在的插入，数据库查出
+                List<TmStudent> tmStudentList = tmStudentRepository.findAllByusercode(tmStudent.getUsercode());
+                if(tmStudentList!=null&&tmStudentList.size()==0) {
+                    tmStudent.setBanjiid(banjiid);
+                    tmStudent.setBanjiname(tmBanJi.getName());
+                    tmStudentRepository.save(tmStudent);
+                    if(tmStudent.getId()>0){
+                        insertStudents.add(tmStudent);
+
+                    }
+
+                }else{
+                    //数据库根据编码查出的学生数据
+                    TmStudent sametmstudent = tmStudentList.get(0);
+                    sametmstudent.setName(tmStudent.getName());
+                    sametmstudent.setUsercode(tmStudent.getUsercode());
+                    sametmstudent.setBanjiid(banjiid);
+                    sametmstudent.setBanjiname(tmBanJi.getName());
+                    tmStudentRepository.saveAndFlush(sametmstudent);
+                    sameStudents.add(sametmstudent);
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        request.setAttribute("insertStudents",insertStudents);
+        request.setAttribute("insertcount",insertStudents.size());
+        request.setAttribute("sameStudents",sameStudents);
+        request.setAttribute("samecount",sameStudents.size());
+        request.setAttribute("errorStudents",errorStudents);
+        request.setAttribute("errorcount",errorStudents.size());
+        return "banji/importList";
+//        request.setAttribute("banjiid",banjiid);
+    }
+
+    public List<Object> commonImportBack(InputStream in,String configxml,String tablename,Object target){
+        List<Object> reportExcelDatas = new ArrayList<Object>();
+
+        //反射解析得到相应的对象集合
+        try{
+            //解析对应配置文件，封装到对象
+            String filePath = InitController.class.getClassLoader().getResource(configxml).getPath();
+
+            ExcelConfig excelConfig = new JxlExcelUtil().combineExcelConfig(filePath,tablename);
+            //反射解析得到相应的对象集合
+            List<List<Object>> listob = new JxlExcelUtil().getBankListByJXLExcel(in,null, target,filePath,excelConfig);
+            if(listob!=null&&listob.size()>0){
+                for(List<Object> mainobj:listob){
+                    for(Object obj:mainobj){
+                        reportExcelDatas.add( target.getClass().cast(obj));
+                    }
+                }
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return reportExcelDatas;
     }
     /**
      * 分配学生

@@ -81,7 +81,7 @@ public class JxlExcelUtil {
                         Cell oCell= sheet.getCell(m,j);//第j行的第m列
 
                         String val = StringUtils.trimToEmpty(oCell.getContents());
-                        if (StringUtils.isBlank(val)) nullCellNum++;
+                        if (StringUtils.isEmpty(val)) nullCellNum++;
                     if(!StringUtils.isEmpty(oCell.getContents())){
                         ReflectionUtils.setFieldValue(target,cloumnname,oCell.getContents().trim());
                     }
