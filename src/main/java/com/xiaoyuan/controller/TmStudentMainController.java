@@ -1,7 +1,10 @@
 package com.xiaoyuan.controller;
 
+import com.xiaoyuan.entity.TmBanJi;
 import com.xiaoyuan.entity.TmStudent;
+import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmStudentRepository;
+import com.xiaoyuan.service.TmStudentService;
 import com.xiaoyuan.util.JsonUtilTemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,19 +19,26 @@ import java.util.List;
 public class TmStudentMainController {
     @Autowired
     private TmStudentRepository tmStudentRepository;
+    @Autowired
+    private TmStudentService tmStudentService;
+    @Autowired
+    private TmBanjiRepository tmBanjiRepository;
     /**
      *  学生列表
      */
     @RequestMapping("/studentList")
     private String userList(HttpServletRequest request, String msg){
         request.setAttribute("msg",msg);
-        List<TmStudent> tmStudents = tmStudentRepository.findAll();
+        List<TmStudent> tmStudents = tmStudentService.findAllStudent();
+
         request.setAttribute("tmStudents",tmStudents);
         return "student/list";
     }
     @RequestMapping("addStudent")
-    private String addStudent(HttpServletResponse response){
-
+    private String addStudent(HttpServletResponse response,HttpServletRequest request){
+       List<TmBanJi> tmBanJis = tmBanjiRepository.findAll();
+        request.setAttribute("tmBanJis",tmBanJis);
+        //查询班级信息
         return "student/addStudent";
     }
 
@@ -43,8 +53,10 @@ public class TmStudentMainController {
     }
     @RequestMapping("editStudent")
     private String editBanji(HttpServletResponse response,HttpServletRequest request,Integer studentid){
+        List<TmBanJi> tmBanJis = tmBanjiRepository.findAll();
+        request.setAttribute("tmBanJis",tmBanJis);
         TmStudent tmStudent = tmStudentRepository.findOne(studentid);
-        request.setAttribute("studentid",tmStudent);
+        request.setAttribute("student",tmStudent);
         return "student/editStudent";
     }
     @RequestMapping("editStudentSure")

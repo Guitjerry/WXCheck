@@ -73,7 +73,8 @@
                             <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editBanji?banjiid=${banji.ID}">修改用户</a>
                             <a class="large orange button f-mr20" data-toggle="modal" onclick="delBanji(${banji.ID})">删除班级</a>
                             <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpeditModal" href="fpKemu?banjiid=${banji.ID}">分配科目</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudenteditModal" href="fpStudent?banjiid=${banji.ID}">分配学生</a>
+                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生导入</a>
+                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpNewStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生分配</a>
                         </td>
                     </tr>
                 </c:forEach>
@@ -111,6 +112,17 @@
 </div>
 
 
+<div class="modal fade" id="fpNewStudenteditModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="height: 500px" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+
+
+
 <script>
 
     /**
@@ -131,7 +143,9 @@
     $("#fpStudenteditModal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
-
+    $("#fpNewStudenteditModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
     function  delBanji(banjiid) {
         var r= confirm("你确定要删除该班级吗?");
         if(r){

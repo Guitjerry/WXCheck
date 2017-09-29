@@ -26,11 +26,18 @@ public class TmStudent {
     private Integer age;//年龄
     @Column(name = "SEX")
     private String sex;//性别
+    @Column(name = "PHONE")
+    private String phone;
     @Transient
     private String banjiname;//班级名称
 
+    public String getPhone() {
+        return phone;
+    }
 
-
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Integer getId() {
         return id;
