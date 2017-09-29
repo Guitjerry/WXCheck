@@ -22,10 +22,22 @@ public class TmStudentServiceImpl implements TmStudentService{
     @PersistenceContext
     protected EntityManager em;
     @Override
-    public List<TmStudent> findAllStudent() {
+    public List<TmStudent> findAllStudent(String studentname,String usercode) {
         List<TmStudent> tmStudents = new ArrayList<>();
-        String hql =" select u.NAME,u.USERCODE,u.PHONE,u.AGE,u.BANJIID,b.NAME as banjiname,u.id from TM_STUDENT u left join TM_BANJI b on u.banjiid=b.ID";
-        Query query = em.createNativeQuery(hql);
+        StringBuffer hql = new StringBuffer(" select u.NAME,u.USERCODE,u.PHONE,u.AGE,u.BANJIID,b.NAME as banjiname,u.id from TM_STUDENT u left join TM_BANJI b on u.banjiid=b.ID where 1=1 ");
+        if(!StringUtils.isEmpty(studentname)){
+            hql.append(" and u.name =?1");
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            hql.append(" and u.usercode =?2");
+        }
+        Query query = em.createNativeQuery(hql.toString());
+        if(!StringUtils.isEmpty(studentname)){
+            query.setParameter(1,studentname);
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            query.setParameter(2,usercode);
+        }
         List<Object[]> objects = query.getResultList();
         for(Object[] tmstudent:objects){
             TmStudent tmStudent = new TmStudent();
@@ -40,6 +52,7 @@ public class TmStudentServiceImpl implements TmStudentService{
             tmStudent.setName(name);
             tmStudent.setUsercode(code);
             tmStudent.setPhone(phone);
+
             if(!StringUtils.isEmpty(age)){
                 tmStudent.setAge(Integer.valueOf(age));
             }
@@ -61,26 +74,40 @@ public class TmStudentServiceImpl implements TmStudentService{
      * @param pagecount 每页显示的条数
      * @return
      */
-    public PageBean<TmStudent> findAllStudent(int currentPage,int pagecount){
+    public PageBean<TmStudent> findAllStudent(int currentPage,int pagecount,String name,String usercode){
         //总数
-        List<TmStudent> allstudents = findAllStudent();
+        List<TmStudent> allstudents = findAllStudent(name,usercode);
         List<TmStudent> tmStudents = new ArrayList<>();
-        String hql =" select u.NAME,u.USERCODE,u.PHONE,u.AGE,u.BANJIID,b.NAME as banjiname,u.id from TM_STUDENT u left join TM_BANJI b on u.banjiid=b.ID";
-        Query query = em.createNativeQuery(hql);
+        StringBuffer hql = new StringBuffer(" select u.NAME,u.USERCODE,u.PHONE,u.AGE,u.BANJIID,b.NAME as banjiname,u.id from TM_STUDENT u left join TM_BANJI b on u.banjiid=b.ID where 1=1 ");
+
+        if(!StringUtils.isEmpty(name)){
+            hql.append(" and u.name =?1");
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            hql.append(" and u.usercode = ?2");
+        }
+        Query query = em.createNativeQuery(hql.toString());
+
+        if(!StringUtils.isEmpty(name)){
+            query.setParameter(1,name);
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            query.setParameter(2,usercode);
+        }
         query.setFirstResult(currentPage);
         query.setMaxResults(pagecount);
         List<Object[]> objects = query.getResultList();
         for(Object[] tmstudent:objects){
             TmStudent tmStudent = new TmStudent();
 
-            String name = tmstudent[0]==null?"":String.valueOf(tmstudent[0]);
+            String studentname = tmstudent[0]==null?"":String.valueOf(tmstudent[0]);
             String code = tmstudent[1]==null?"":String.valueOf(tmstudent[1]);
             String phone = tmstudent[2]==null?"":String.valueOf(tmstudent[2]);
             String age = tmstudent[3]==null?null:String.valueOf(tmstudent[3]);
             String banjiid = tmstudent[4]==null?null:String.valueOf(tmstudent[4]);
             String banjiname = tmstudent[5]==null?"":String.valueOf(tmstudent[5]);
             String id = tmstudent[6]==null?"":String.valueOf(tmstudent[6]);
-            tmStudent.setName(name);
+            tmStudent.setName(studentname);
             tmStudent.setUsercode(code);
             tmStudent.setPhone(phone);
             if(!StringUtils.isEmpty(age)){

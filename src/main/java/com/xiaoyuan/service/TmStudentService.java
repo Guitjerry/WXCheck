@@ -13,6 +13,6 @@ public interface TmStudentService {
      * 查询所有数据包括班级名称
      * @return
      */
-    public List<TmStudent> findAllStudent();
-    PageBean<TmStudent> findAllStudent(int currentPage,int pagecount);
+    public List<TmStudent> findAllStudent(String name,String usercode);
+    PageBean<TmStudent> findAllStudent(int currentPage,int pagecount,String name,String usercode);
 }

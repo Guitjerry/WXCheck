@@ -97,7 +97,7 @@ public class TmBanjiMainController {
     }
     @RequestMapping("fpStudentdiv")
     private String fpStudentdiv(HttpServletResponse response,HttpServletRequest request,Integer banjiid){
-        List<TmStudent> tmStudents = tmStudentService.findAllStudent();
+        List<TmStudent> tmStudents = tmStudentService.findAllStudent(null,null);
         request.setAttribute("tmStudents",tmStudents);
         request.setAttribute("banjiid",banjiid);
         //查询班级信息

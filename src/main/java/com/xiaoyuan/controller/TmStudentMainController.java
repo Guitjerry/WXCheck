@@ -2,6 +2,7 @@ package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.TmBanJi;
 import com.xiaoyuan.entity.TmStudent;
+import com.xiaoyuan.entity.TmUser;
 import com.xiaoyuan.pager.PageBean;
 import com.xiaoyuan.pager.PageShow;
 import com.xiaoyuan.respository.TmBanjiRepository;
@@ -61,12 +62,12 @@ public class TmStudentMainController {
      *  学生列表
      */
     @RequestMapping("/studentList")
-    private String userList(HttpServletRequest request, String msg,Integer pageNo){
+    private String userList(HttpServletRequest request, String msg, Integer pageNo, String txt_search_name,String usercode){
         request.setAttribute("msg",msg);
         //初始化pageable
         pageNo=pageNo==null?1:pageNo;
         //根据当前页，每页显示数量返回bean
-        PageBean<TmStudent> tmStudentPageBean = tmStudentService.findAllStudent(pageNo,Const.PAGE_SIZE);
+        PageBean<TmStudent> tmStudentPageBean = tmStudentService.findAllStudent(pageNo,Const.PAGE_SIZE,txt_search_name,usercode);
         if(tmStudentPageBean!=null){
             List<TmStudent> tmStudents = tmStudentPageBean.getList();
             request.setAttribute("tmStudents",tmStudents);
