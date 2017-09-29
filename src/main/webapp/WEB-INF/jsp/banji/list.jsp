@@ -74,7 +74,7 @@
                             <a class="large orange button f-mr20" data-toggle="modal" onclick="delBanji(${banji.ID})">删除班级</a>
                             <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpeditModal" href="fpKemu?banjiid=${banji.ID}">分配科目</a>
                             <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生导入</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpNewStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生分配</a>
+                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpNewStudenteditModal" href="fpStudentdiv?banjiid=${banji.ID}">学生分配</a>
                         </td>
                     </tr>
                 </c:forEach>

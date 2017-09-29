@@ -15,7 +15,8 @@
     </div>
     <div class="input-group f-mb10 f-pd5">
         <span class="input-group-addon" >学生班级</span>
-        <select name="banji" id="banji" style="width: 478px" >
+        <select name="banji" id="banji" style="width: 478px;height: 30px" >
+            <option value="">--请选择--</option>
             <c:forEach items="${tmBanJis}" var="tmbanji">
                 <option value="${tmbanji.ID}">${tmbanji.name}</option>
             </c:forEach>

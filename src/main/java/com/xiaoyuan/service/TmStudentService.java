@@ -1,6 +1,7 @@
 package com.xiaoyuan.service;
 
 import com.xiaoyuan.entity.TmStudent;
+import com.xiaoyuan.pager.PageBean;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface TmStudentService {
      * @return
      */
     public List<TmStudent> findAllStudent();
+    PageBean<TmStudent> findAllStudent(int currentPage,int pagecount);
 }

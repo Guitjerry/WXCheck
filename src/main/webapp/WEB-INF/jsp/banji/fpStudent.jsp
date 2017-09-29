@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form name="fileform" method="post" id="fileform" enctype="multipart/form-data" action="/banji/fpStudentSure">
+<form name="fileform" method="post" id="fileform" enctype="multipart/form-data" action="/upload/uploadfile">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                 aria-hidden="true">&times;</span></button>

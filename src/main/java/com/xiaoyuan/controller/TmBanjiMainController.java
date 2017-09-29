@@ -8,6 +8,7 @@ import com.xiaoyuan.respository.TmBanjiKemuRepository;
 import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmKemuRepository;
 import com.xiaoyuan.respository.TmStudentRepository;
+import com.xiaoyuan.service.TmStudentService;
 import com.xiaoyuan.util.ExcelConfig;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.JxlExcelUtil;
@@ -47,6 +48,38 @@ public class TmBanjiMainController {
     private TmBanjiKemuRepository tmBanjiKemuRepository;
     @Autowired
     private TmStudentRepository tmStudentRepository;
+    @Autowired
+    private TmStudentService tmStudentService;
+
+    /**
+     * 班级分配学生
+     * @param request
+     * @param msg
+     */
+    @RequestMapping("/banjiFp")
+    private void banjiFp(HttpServletRequest request, String msg,String[] studentids,Integer banjiid,HttpServletResponse response){
+        try{
+            if(studentids!=null&&studentids.length>0){
+                for(int i=0;i<studentids.length;i++){
+                    String studentid = studentids[i];
+                    //分配班级
+                    TmStudent tmStudent = tmStudentRepository.findOne(Integer.valueOf(studentid));
+                    tmStudent.setBanjiid(banjiid);
+                    tmStudentRepository.saveAndFlush(tmStudent);
+                }
+                JsonUtilTemp.returnSucessJson(response,"分配学生成功");
+            }else{
+                JsonUtilTemp.returnFailJson(response,"请至少选择一个学生");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error("分配学生失败"+e.getMessage());
+            JsonUtilTemp.returnExceptionJson(response,"分配学生异常"+e.getMessage());
+        }
+
+    }
+
     /**
      * 班级列表
      */
@@ -61,6 +94,14 @@ public class TmBanjiMainController {
     private String addBanji(HttpServletResponse response){
 
         return "banji/addBanji";
+    }
+    @RequestMapping("fpStudentdiv")
+    private String fpStudentdiv(HttpServletResponse response,HttpServletRequest request,Integer banjiid){
+        List<TmStudent> tmStudents = tmStudentService.findAllStudent();
+        request.setAttribute("tmStudents",tmStudents);
+        request.setAttribute("banjiid",banjiid);
+        //查询班级信息
+        return "banji/fpStudentdiv";
     }
 
     @RequestMapping("addBanjiSure")

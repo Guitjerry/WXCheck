@@ -2,11 +2,18 @@ package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.TmBanJi;
 import com.xiaoyuan.entity.TmStudent;
+import com.xiaoyuan.pager.PageBean;
+import com.xiaoyuan.pager.PageShow;
 import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmStudentRepository;
 import com.xiaoyuan.service.TmStudentService;
+import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.JsonUtilTemp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -24,14 +31,48 @@ public class TmStudentMainController {
     @Autowired
     private TmBanjiRepository tmBanjiRepository;
     /**
+     * 分页查询
+     * @param currentPage 当前页号：现在显示的页数
+     * @param pageSize 每页显示的记录条数
+     * @return 封闭了分页信息(包括记录集list)的Bean
+     * */
+//    public Page queryForPage(int currentPage, int pageSize) {
+//        // TODO Auto-generated method stub
+//
+//        PageBean<TmStudent> page =new PageBean<>();
+//        page.init();
+//        //总记录数
+//        int allRow = page.getCount();
+//        //当前页开始记录
+//        int offset =page.getPageSize();
+////        //分页查询结果集
+////        List<Course> list = courseDao.queryForPage(offset, pageSize);
+//
+//        page.setPageIndex(currentPage);
+//        page.setPageSize(pageSize);
+//        page.setTotalRecords(allRow);
+//        page.setList(list);
+//
+//        return page;
+//    }
+
+    @SuppressWarnings("unchecked")
+    /**
      *  学生列表
      */
     @RequestMapping("/studentList")
-    private String userList(HttpServletRequest request, String msg){
+    private String userList(HttpServletRequest request, String msg,Integer pageNo){
         request.setAttribute("msg",msg);
-        List<TmStudent> tmStudents = tmStudentService.findAllStudent();
+        //初始化pageable
+        pageNo=pageNo==null?1:pageNo;
+        //根据当前页，每页显示数量返回bean
+        PageBean<TmStudent> tmStudentPageBean = tmStudentService.findAllStudent(pageNo,Const.PAGE_SIZE);
+        if(tmStudentPageBean!=null){
+            List<TmStudent> tmStudents = tmStudentPageBean.getList();
+            request.setAttribute("tmStudents",tmStudents);
+            request.setAttribute("pageShow",tmStudentPageBean);
+        }
 
-        request.setAttribute("tmStudents",tmStudents);
         return "student/list";
     }
     @RequestMapping("addStudent")
