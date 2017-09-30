@@ -64,6 +64,8 @@ public class TmStudentMainController {
     @RequestMapping("/studentList")
     private String userList(HttpServletRequest request, String msg, Integer pageNo, String txt_search_name,String usercode){
         request.setAttribute("msg",msg);
+        request.setAttribute("txt_search_name",txt_search_name);
+        request.setAttribute("usercode",usercode);
         //初始化pageable
         pageNo=pageNo==null?1:pageNo;
         //根据当前页，每页显示数量返回bean

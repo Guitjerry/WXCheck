@@ -35,19 +35,20 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">查询条件</div>
                     <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal" action="studentList?msg=student">
+                        <form id="formSearch" class="form-horizontal" action="studentList">
                             <div class="form-group" style="margin-top:15px">
                                 <label class="control-label col-sm-1" class="rolename" for="txt_search_account">名称</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_account" name="txt_search_name">
+                                    <input type="text" class="form-control" id="txt_search_account" name="txt_search_name" value="${txt_search_name}">
                                 </div>
                                 <label class="control-label col-sm-1 rolecode"  for="txt_search_name">编码</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_name" name="usercode">
+                                    <input type="text" class="form-control" id="txt_search_name" name="usercode" value="${usercode}">
                                 </div>
                                 <div class="col-sm-4" style="text-align:left;">
                                     <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
                                 </div>
+                                <input name="msg" type="hidden" value="student">
                             </div>
                         </form>
                     </div>

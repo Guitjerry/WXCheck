@@ -94,8 +94,12 @@ public class TmStudentServiceImpl implements TmStudentService{
         if(!StringUtils.isEmpty(usercode)){
             query.setParameter(2,usercode);
         }
-        query.setFirstResult(currentPage);
-        query.setMaxResults(pagecount);
+        //总条数要比每页页的条数多
+        if(allstudents.size()>pagecount){
+            query.setFirstResult(currentPage);
+            query.setMaxResults(pagecount);
+        }
+
         List<Object[]> objects = query.getResultList();
         for(Object[] tmstudent:objects){
             TmStudent tmStudent = new TmStudent();
