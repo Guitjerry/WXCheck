@@ -1,13 +1,12 @@
-
-//js获取项目根路径
-function getRootPath(){  
-    var currentPath=window.document.location.href;  
-    var pathName=window.document.location.pathname;  
-    var pos=currentPath.indexOf(pathName);  
-    var localhostPaht=currentPath.substring(0,pos);  
-//    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);  
-    return(localhostPaht);
+var rootPath = getRootPath();
+function getRootPath(){
+	var currentPath = window.document.location.href;
+	var pathName = window.document.location.pathname;
+	var pos = currentPath.indexOf(pathName);
+	var localhostPaht = currentPath.substring(0,pos);
+	return(localhostPaht+"/wxCheck");
 }
+
 
 //获取请求参数
 function getQueryParamValue(key) {

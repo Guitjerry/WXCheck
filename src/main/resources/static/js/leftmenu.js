@@ -1,6 +1,6 @@
 $(function () {
  $.ajax({
-  url:"/init/leftinit?userid="+$('#userid').val(),
+  url:rootPath+"/init/leftinit?userid="+$('#userid').val(),
   success:function (data) {
    var obj = eval('('+data+')');
    var childResource = obj.childResource;
@@ -17,7 +17,7 @@ $(function () {
       if(link!=null&&link!=undefined&&link.indexOf('?')>-1){
        var linkmsg = link.substring(link.indexOf("?"));
        var limsg = link.substring(link.indexOf("?")+1);
-       childrenli += "<li "+limsg+">"+" <a href="+childResource[j].link+">"+childResource[j].name+"</a></li>";
+       childrenli += "<li "+limsg+">"+" <a href="+rootPath+childResource[j].link+">"+childResource[j].name+"</a></li>";
       }
      }
     }
