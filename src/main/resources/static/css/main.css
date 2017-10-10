@@ -222,3 +222,14 @@ body{
 .main-container {
     padding: 0;
 }
+
+/*验证相关*/
+.icon-red{
+    color: red;
+}
+
+.error{
+    position: fixed;
+    z-index: 999999!important;
+
+}

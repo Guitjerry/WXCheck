@@ -16,7 +16,40 @@
 $.extend($.fn, {
 	// http://docs.jquery.com/Plugins/Validation/validate
 	validate: function( options ) {
+		var tipdiv = $('<div  id="toast-container" class="toast-top-right" aria-live="polite" style="display: none">'+
+			'<div  class="toast toast-error toastdiv" style="opacity: 0.866;">');
+		if(this.hasClass('startvaild')){
 
+			var alltxt =$('.editForm').serializeArray();//获取所有的子元素
+			for (var i=0;i<alltxt.length;i++)
+			{
+				var target =$('input[name='+'"'+alltxt[i].name+'"'+']');
+				if(target!=undefined){
+					if(target.attr("requierd")=="yes"){
+						// $('.toastdiv').parent('.toast-top-right').html('').html(tipdiv);
+						$('.toastdiv').append('<div class="toast-message">'+target.attr('tip')+'</div>');
+						$('.toastdiv').parent('.toast-top-right').show('slow');
+						setTimeout(function () {
+							$('.toastdiv').html("").parent('.toast-top-right').hide('slow');
+						},3000)
+						return;
+					}
+
+				}
+				// if("INPUT"==alltxt[i].type||"SELECT"==alltxt[i].type){
+				// 	if(target.attr("requierd")=="yes"){
+				// 		// $('.toastdiv').parent('.toast-top-right').html('').html(tipdiv);
+				// 		$('.toastdiv').append('<div class="toast-message">'+alltxt[i].tip+'</div>');
+				// 		$('.toastdiv').parent('.toast-top-right').show('slow');
+				// 		setTimeout(function () {
+				// 			$('.toastdiv').html("").parent('.toast-top-right').hide('slow');
+				// 		},3000)
+				// 		return;
+				// 	}
+                //
+				// };
+			}
+		}
 		// if nothing is selected, return nothing; can't chain anyway
 		if (!this.length) {
 			options && options.debug && window.console && console.warn( "nothing selected, can't validate, returning nothing" );
@@ -121,7 +154,6 @@ $.extend($.fn, {
 			var existingRules = $.validator.staticRules(element);
 			switch(command) {
 			case "add":
-				$.extend(existingRules, $.validator.normalizeRule(argument));
 				staticRules[element.name] = existingRules;
 				if (argument.messages)
 					settings.messages[element.name] = $.extend( settings.messages[element.name], argument.messages );

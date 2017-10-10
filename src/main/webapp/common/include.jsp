@@ -5,15 +5,22 @@
 <link href="../css/leftmenu.css" rel="stylesheet">
 <link href="../plugins/boostrap-table/bootstrap-table.css" rel="stylesheet">
 <link href="../plugins/bootstrap-toastr/toastr.css" rel="stylesheet">
+
 <link href="../plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link href="../plugins/jquery-ztree/zTreeStyle.css" rel="stylesheet">
 <link href="../css/playground.css" rel="stylesheet">
+<%--<link href="../css/form.css" rel="stylesheet">--%>
 <%--<link href="stylesheet" href="<%=request.getContextPath()%>/plugins/kindeditor/themes/default/default.css" />--%>
 <link href="<%=request.getContextPath()%>/plugins/kindeditor/plugins/code/prettify.css" rel="stylesheet">
 <link href="<%=request.getContextPath()%>/plugins/select2/select2.css" rel="stylesheet">
 
 
 <script type="text/javascript" src="../js/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.validate.js"></script>
+<script type="text/javascript" src="../js/roles.js"></script>
+<script type="text/javascript" src="../js/utils.js"></script>
+<%--<script type="text/javascript" src="../js/jquery.validate.extend.js"></script>--%>
+<script type="text/javascript" src="../js/messages_zh.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
 <script type="text/javascript" src="../js/leftMenu.js"></script>
 <script type="text/javascript" src="../plugins/boostrap-table/bootstrap-table.js"></script>
@@ -35,3 +42,4 @@
 <script type="text/javascript" src="../js/rdcp.toastr.js"></script>
 <input name="msg" class="selectmsg" value="${msg}" type="hidden">
 <input type="hidden" id="userid" name="userid" value="<%=session.getAttribute("userid")%>">
+

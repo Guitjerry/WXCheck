@@ -96,7 +96,7 @@ public class TmStudentServiceImpl implements TmStudentService{
         }
         //总条数要比每页页的条数多
         if(allstudents.size()>pagecount){
-            query.setFirstResult(currentPage);
+            query.setFirstResult((currentPage-1)*pagecount);
             query.setMaxResults(pagecount);
         }
 
