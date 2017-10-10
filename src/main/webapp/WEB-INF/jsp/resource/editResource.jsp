@@ -68,7 +68,7 @@
     });
 
     $(function () {
-        $("#editModal").find('#editiconmodel').load("/init/initicon", function () {
+        $("#editModal").find('#editiconmodel').load(rootPath+"/init/initicon", function () {
             $("#editModal").find('.bs-glyphicons').addClass("f-none");
 
 

@@ -2,26 +2,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:import url="../../common/include.jsp"></c:import>--%>
-
+<form id="addResourceForm">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">新增资源</h4>
     </div>
     <div class="modal-body">
         <div class="input-group f-mb10 f-pd5">
-            <span class="input-group-addon" id="basic-addon1">资源名称</span>
-            <input type="text" class="form-control" name="name" id="name" placeholder="请输入资源名称" aria-describedby="basic-addon1">
+            <span class="input-group-addon" id="basic-addon1">资源名称<label class="icon-red">*</label></span>
+            <input type="text" class="form-control" name="name" id="name" placeholder="请输入资源名称" requierd="yes" tip="资源名称不能为空" aria-describedby="basic-addon1">
         </div>
 
         <div class="input-group f-mt10 f-pd5">
-            <span class="input-group-addon" >菜单级别</span>
+            <span class="input-group-addon" >菜单级别<icon class="icon-red">*</icon></span>
 
-            <select class="form-control depth" name="depath"  >
-                <option selected>--请选择---</option>
+            <select class="form-control depth" name="depath"  requierd="yes" tip="菜单级别不能为空">
+                <option selected value="">--请选择---</option>
                 <option value="1">一级菜单</option>
                 <option value="2">二级菜单</option>
                 <%--<c:forEach items="<%=Const.getDepthArray()%>" var="os">--%>
-                    <%--<option value="${os.code}">${os.name}</option>--%>
+                <%--<option value="${os.code}">${os.name}</option>--%>
                 <%--</c:forEach>--%>
             </select>
         </div>
@@ -56,39 +56,48 @@
         <button type="button" class="btn btn-primary" onclick="saveSource()">保存</button>
     </div>
 
+</form>
+
 <script>
 
     $("#addModal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
     function  saveSource() {
-        var depth = $('.depth').val();
-        var param={"name":$("#name").val(),"link":$("#link").val(),"depth":depth,"icon":$("#icon").val(),"parentid":$('.parentselect').val()};
-        $.ajax({
-            url:"addResourceSure",
-            data:param,
-            success:function (data) {
-                var obj = eval('('+data+')')
-                if(obj.status=="success"){
-                    $("#addModal").modal({show:false});
-                    toastrSuccessMessage(obj.msg,"信息提示");
-                    setTimeout(function () {
-                        location.reload();
-                    },1000)
-
-                }
+        if(validform($('#addResourceForm'))){
+            var depth = $('.depth').val();
+            if(depth=="2"&&($('.parentselect').val()==""||$('.parentselect').val()==null)){
+                toastrErrorMessage("请选择上级菜单");
+                return;
             }
-        });
+            var param={"name":$("#name").val(),"link":$("#link").val(),"depth":depth,"icon":$("#icon").val(),"parentid":$('.parentselect').val()};
+            $.ajax({
+                url:"addResourceSure",
+                data:param,
+                success:function (data) {
+                    var obj = eval('('+data+')')
+                    if(obj.status=="success"){
+                        $("#addModal").modal({show:false});
+                        toastrSuccessMessage(obj.msg,"信息提示");
+                        setTimeout(function () {
+                            location.reload();
+                        },1000)
+
+                    }
+                }
+            });
+        }
+
     }
     $(function () {
         //加载图标页面
-        $('#iconmodel').load("/init/initicon",function () {
+        $('#iconmodel').load(rootPath+"/init/initicon",function () {
             $("#addModal").find('.bs-glyphicons').addClass("f-none");
 
         });
 
         //选中二级需要选中父级
-        $("#addModal").find('.depath').on('change',function () {
+        $(document).on('change','.depth',function () {
             if($(this).val()=="2"){
                 $('.parentdiv').removeClass('f-none');
             }else{

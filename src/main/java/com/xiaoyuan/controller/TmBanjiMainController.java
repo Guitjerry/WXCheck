@@ -84,10 +84,14 @@ public class TmBanjiMainController {
      * 班级列表
      */
     @RequestMapping("/banjiList")
-    private String userList(HttpServletRequest request, String msg){
+    private String userList(HttpServletRequest request, String msg,String txt_search_name){
         request.setAttribute("msg",msg);
-        List<TmBanJi> tmBanJis = tmBanjiRepository.findAll();
+        List<TmBanJi> tmBanJis = tmBanjiRepository.findAllByname(txt_search_name);
+        if(StringUtils.isEmpty(txt_search_name)){
+            tmBanJis = tmBanjiRepository.findAll();
+        }
         request.setAttribute("tmBanJis",tmBanJis);
+        request.setAttribute("txt_search_name",txt_search_name);
         return "banji/list";
     }
     @RequestMapping("addBanji")

@@ -33,12 +33,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">查询条件</div>
                     <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
+                        <form id="formSearch" class="form-horizontal" action="banjiList">
                             <div class="form-group" style="margin-top:15px">
                                 <label class="control-label col-sm-1" class="banjiname" for="txt_search_name">班级名称</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_name" name="txt_search_name">
+                                    <input type="text" class="form-control" id="txt_search_name" name="txt_search_name" value="${txt_search_name}">
                                 </div>
+                                <div class="col-sm-4" style="text-align:left;">
+                                    <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                </div>
+                                <input name="msg" type="hidden" value="banji">
 
                             </div>
                         </form>
@@ -70,7 +74,7 @@
 
 
                         <td>
-                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editBanji?banjiid=${banji.ID}">修改用户</a>
+                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editBanji?banjiid=${banji.ID}">修改班级</a>
                             <a class="large orange button f-mr20" data-toggle="modal" onclick="delBanji(${banji.ID})">删除班级</a>
                             <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpeditModal" href="fpKemu?banjiid=${banji.ID}">分配科目</a>
                             <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生导入</a>

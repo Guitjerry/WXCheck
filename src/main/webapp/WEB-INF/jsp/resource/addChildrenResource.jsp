@@ -59,7 +59,7 @@
     });
     $(function () {
 
-        $('#editiconmodel').load("/init/initicon", function () {
+        $('#editiconmodel').load(rootPath+"/init/initicon", function () {
             $('.bs-glyphicons').addClass("f-none");
 
 
