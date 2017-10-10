@@ -54,7 +54,7 @@
 
             </div>
             <table id="tb_roles" class="table table-bordered  table-hover  f-ml10">
-                <thead>
+                <thead class="label-success">
                 <th data-valign="middle" data-align="center" >科目名称</th>
 
                 <th>操作</th>

@@ -222,7 +222,14 @@ body{
 .main-container {
     padding: 0;
 }
-
+.table-bordered{
+    border: 1px solid #ddd!important;
+    border-radius: 2px!important;
+}
+.table-bordered th{
+    background: #adcdfc;
+    color: #fff;
+}
 /*验证相关*/
 .icon-red{
     color: red;
