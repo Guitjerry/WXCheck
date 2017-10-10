@@ -9,12 +9,12 @@
     </div>
     <div class="modal-body">
         <div class="input-group f-mb10 f-pd5">
-            <span class="input-group-addon" id="basic-addon1">资源名称</span>
+            <span class="input-group-addon" id="basic-addon1">资源名称<label class="icon-red">*</label></span>
             <input type="text" class="form-control" name="editname" id="editname" placeholder="请输入资源名称" aria-describedby="basic-addon1"  requierd="yes" tip="资源名称不能为空" value="${resource.name}">
         </div>
 
         <div class="input-group f-mt10 f-pd5">
-            <span class="input-group-addon" >菜单级别</span>
+            <span class="input-group-addon" >菜单级别<label class="icon-red">*</label></span>
 
             <select class="form-control editdepth" name="editdepth"  requierd="yes" tip="菜单级别不能为空"  default-select="${resource.depth}">
                 <option value="">---------请选择——-----</option>

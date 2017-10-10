@@ -5,6 +5,7 @@ import com.xiaoyuan.respository.TmRoleRepository;
 import com.xiaoyuan.respository.TmUserRepository;
 import com.xiaoyuan.respository.TmUserRoleRepository;
 import com.xiaoyuan.service.TmResourceService;
+import com.xiaoyuan.service.TmUserService;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class TmUserController {
     private TmUserRoleRepository tmUserRoleRepository;
     @Autowired
     private TmRoleRepository tmRoleRepository;
+    @Autowired
+    private TmUserService tmUserService;
     @RequestMapping("addUser")
     private String addUser(HttpServletResponse response){
 
@@ -64,9 +67,7 @@ public class TmUserController {
     @RequestMapping("deleteUser")
     private void deleteUser(Integer userid,HttpServletRequest request,HttpServletResponse response){
         if(userid!=null){
-            TmUser tmUser = tmUserRepository.findOne(userid);
-            tmUser.setStatus(1);//状态设置为无效
-            tmUserRepository.saveAndFlush(tmUser);
+            tmUserRepository.delete(userid);
             JsonUtilTemp.returnSucessJson(response,"数据删除成功");
         }
     }
@@ -77,7 +78,7 @@ public class TmUserController {
     @RequestMapping("editUserSure")
     private void editUserSure(TmUser tmUser,HttpServletRequest request,HttpServletResponse response){
         if(tmUser!=null&&tmUser.getId()>0){
-            tmUser.setPassword(MD5Util.string2MD5(tmUser.getPassword()));
+//            tmUser.setPassword(MD5Util.string2MD5(tmUser.getPassword()));
             tmUserRepository.saveAndFlush(tmUser);
             JsonUtilTemp.returnSucessJson(response,"数据更新成功");
         }
@@ -88,10 +89,13 @@ public class TmUserController {
      * 角色列表
      */
     @RequestMapping("/userList")
-    private String userList(HttpServletRequest request,String msg){
+    private String userList(HttpServletRequest request,String msg,String txt_search_account,String txt_search_name,String txt_search_phone){
         request.setAttribute("msg",msg);
-        List<TmUser> tmUsers = tmUserRepository.findAll();
+        List<TmUser> tmUsers = tmUserService.findAllByaccountAndNameAndPhone(txt_search_account,txt_search_name,txt_search_phone);
         request.setAttribute("tmUsers",tmUsers);
+        request.setAttribute("txt_search_account",txt_search_account);
+        request.setAttribute("txt_search_name",txt_search_name);
+        request.setAttribute("txt_search_phone",txt_search_phone);
         leftCommon(request);
         return "user/list";
     }

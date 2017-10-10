@@ -67,7 +67,7 @@
             return;
         }
         $.ajax({
-            url:"/user/userToRole",
+            url:rootPath+"/user/userToRole",
             data:{"userid":userid,"roleids":roleids},
             success:function (data) {
                 var obj = eval('('+data+')')

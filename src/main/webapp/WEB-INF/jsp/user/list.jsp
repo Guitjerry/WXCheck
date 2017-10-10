@@ -34,18 +34,23 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">查询条件</div>
                     <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
+                        <form id="formSearch" class="form-horizontal" action="userList">
                             <div class="form-group" style="margin-top:15px">
                                 <label class="control-label col-sm-1" class="rolename" for="txt_search_account">登录名</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_account" name="account">
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="txt_search_account" name="txt_search_account" value="${txt_search_account}">
                                 </div>
                                 <label class="control-label col-sm-1 rolecode"  for="txt_search_name">用户名</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_name">
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="txt_search_name" name="txt_search_name" value="${txt_search_name}">
                                 </div>
-                                <div class="col-sm-4" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                <label class="control-label col-sm-1 rolecode"  for="txt_search_phone">手机号</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control" id="txt_search_phone" name="txt_search_phone" value="${txt_search_phone}">
+                                </div>
+                                <div class="col-sm-3" style="text-align:left;">
+                                    <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                    <input type="hidden" name="msg" id="msg" value="user">
                                 </div>
                             </div>
                         </form>
@@ -65,7 +70,7 @@
                     <th data-valign="middle" data-align="center">用户名</th>
                     <th data-valign="middle" data-align="center">电子邮件</th>
                     <th data-valign="middle" data-align="center">手机</th>
-                    <th data-valign="middle" data-align="center">状态</th>
+                    <%--<th data-valign="middle" data-align="center">状态</th>--%>
                     <th>操作</th>
                     </thead>
                     <tbody>
@@ -76,10 +81,10 @@
                             <td>${user.email}</td>
                             <td>${user.phone}</td>
 
-                                <td>
-                                    <c:if test="${user.status==0}"> 有效 </c:if>
-                                    <c:if test="${user.status==1}"> 无效 </c:if>
-                                </td>
+                                <%--<td>--%>
+                                    <%--<c:if test="${user.status==0}"> 有效 </c:if>--%>
+                                    <%--<c:if test="${user.status==1}"> 无效 </c:if>--%>
+                                <%--</td>--%>
 
 
                             <td>

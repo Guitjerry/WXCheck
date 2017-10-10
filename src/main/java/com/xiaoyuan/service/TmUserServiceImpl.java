@@ -40,4 +40,27 @@ public class TmUserServiceImpl implements TmUserService {
         return query.getResultList();
 
     }
+    public List<TmUser> findAllByaccountAndNameAndPhone(String account,String name,String phone) {
+        StringBuffer hql = new StringBuffer(" select * from TM_USER where 1=1");
+        if (!StringUtils.isEmpty(account)) {
+            hql.append(" and account=?1");
+        }
+        if (!StringUtils.isEmpty(name)) {
+            hql.append(" and name=?2");
+        }
+        if (!StringUtils.isEmpty(phone)) {
+            hql.append(" and phone like ?3");
+        }
+        Query query = em.createNativeQuery(hql.toString(),TmUser.class);
+        if (!StringUtils.isEmpty(account)) {
+            query.setParameter(1, account);
+        }
+        if (!StringUtils.isEmpty(name)) {
+            query.setParameter(2, name);
+        }
+        if (!StringUtils.isEmpty(phone)) {
+            query.setParameter(3, "%"+phone+"%");
+        }
+        return query.getResultList();
+    }
 }

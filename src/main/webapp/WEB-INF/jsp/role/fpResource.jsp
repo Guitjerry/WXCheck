@@ -67,7 +67,7 @@
             return;
         }
         $.ajax({
-            url:"/roleToResource/add",
+            url:rootPath+"/roleToResource/add",
             data:{"roleid":roleid,"resourceids":resourceids},
             success:function (data) {
                 var obj = eval('('+data+')')

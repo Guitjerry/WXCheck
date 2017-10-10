@@ -67,7 +67,7 @@
             return;
         }
         $.ajax({
-            url:"/banji/banjiToKemu",
+            url:rootPath+"/banji/banjiToKemu",
             data:{"banjiid":banjiid,"kemuids":kemuids},
             success:function (data) {
                 var obj = eval('('+data+')')

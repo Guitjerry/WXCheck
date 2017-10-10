@@ -19,7 +19,7 @@
         <!--右侧内容-->
         <div class="col-md-10" style="background: #fffcfa" >
 
-            <a class="large blue button f-ml20 f-mt20" data-toggle="modal" data-target="#addModal" href="addRole">新增角色</a>
+            <a class="large blue button f-ml20 f-mt20 f-mb10" data-toggle="modal" data-target="#addModal" href="addRole">新增角色</a>
             <!-- Modal -->
             <div class="modal fade" id="addModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
                 <div class="modal-dialog" role="document">
@@ -29,36 +29,35 @@
                 </div>
             </div>
 
-            <div class="panel-body" style="padding-bottom:0px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading">查询条件</div>
-                    <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
-                            <div class="form-group" style="margin-top:15px">
-                                <label class="control-label col-sm-1" class="rolename" for="txt_search_departmentname">名称</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_departmentname">
-                                </div>
-                                <label class="control-label col-sm-1 rolecode"  for="txt_search_statu">编码</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_statu">
-                                </div>
-                                <div class="col-sm-4" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div id="toolbar" class="btn-group">
+            <%--<div class="panel-body" style="padding-bottom:0px;">--%>
+                <%--<div class="panel panel-default">--%>
+                    <%--<div class="panel-heading">查询条件</div>--%>
+                    <%--<div class="panel-body">--%>
+                        <%--<form id="formSearch" class="form-horizontal">--%>
+                            <%--<div class="form-group" style="margin-top:15px">--%>
+                                <%--<label class="control-label col-sm-1" class="rolename" for="txt_search_departmentname">名称</label>--%>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<input type="text" class="form-control" id="txt_search_departmentname">--%>
+                                <%--</div>--%>
+                                <%--<label class="control-label col-sm-1 rolecode"  for="txt_search_statu">编码</label>--%>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<input type="text" class="form-control" id="txt_search_statu">--%>
+                                <%--</div>--%>
+                                <%--<div class="col-sm-4" style="text-align:left;">--%>
+                                    <%--<button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
 
 
 
 
 
 
-                </div>
+
+                <%--</div>--%>
                 <table id="tb_roles" data-toggle="table">
                     <thead>
                         <th data-valign="middle" data-align="center">名称</th>

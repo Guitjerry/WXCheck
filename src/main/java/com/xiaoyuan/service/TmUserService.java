@@ -9,4 +9,13 @@ import java.util.List;
  */
 public interface TmUserService {
     public List<TmUser> findAllByaccountAndpassword(String account, String password);
+
+    /**
+     * 根据账户，用户名，手机查询
+     * @param account
+     * @param name
+     * @param phone
+     * @return
+     */
+    public List<TmUser> findAllByaccountAndNameAndPhone(String account,String name,String phone);
 }

@@ -56,6 +56,16 @@ public class TmRoleMainController {
         return "role/editRole";
     }
     /**
+     * 编辑角色
+     */
+    @RequestMapping("editRoleSure")
+    private void editRoleSure(HttpServletRequest request,HttpServletResponse response,TmRole existmRole){
+        if(existmRole!=null&&existmRole.getId()>0){
+            tmRoleRepository.saveAndFlush(existmRole);
+            JsonUtilTemp.returnSucessJson(response,"更新成功");
+        }
+    }
+    /**
      * 角色列表
      */
     @RequestMapping("/roleList")

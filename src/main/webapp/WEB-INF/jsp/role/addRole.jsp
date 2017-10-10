@@ -1,19 +1,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form action="addRoleSure" >
+<form id="addRoleForm" >
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">新增角色</h4>
     </div>
     <div class="modal-body">
         <div class="input-group f-mb10 f-pd5">
-            <span class="input-group-addon" id="basic-addon1">角色名称</span>
-            <input type="text" class="form-control" name="name" id="name" placeholder="请输入角色名称" aria-describedby="basic-addon1">
+            <span class="input-group-addon" id="basic-addon1">角色名称<label class="icon-red">*</label></span>
+            <input type="text" class="form-control" name="name" id="name" placeholder="请输入角色名称" requierd="yes" tip="角色名称不能为空" aria-describedby="basic-addon1">
         </div>
 
         <div class="input-group f-mt10 f-pd5">
-            <span class="input-group-addon" id="basic-addon2">角色编码</span>
-            <input type="text" class="form-control" name="code" id="code" placeholder="请输入角色编码" aria-describedby="basic-addon2">
+            <span class="input-group-addon" id="basic-addon2">角色编码<label class="icon-red">*</label></span>
+            <input type="text" class="form-control" name="code" id="code" placeholder="请输入角色编码" requierd="yes" tip="角色编码不能为空" aria-describedby="basic-addon2">
         </div>
 
     </div>
@@ -25,22 +25,25 @@
 
 <script>
     function  saveRole() {
-        var param={"name":$("#name").val(),"code":$("#code").val()};
-        $.ajax({
-            url:"addRoleSure",
-            data:param,
-            success:function (data) {
-                var obj = eval('('+data+')')
-                if(obj.status=="success"){
-                    $("#addModal").modal({show:false});
-                    toastrSuccessMessage(obj.msg,"信息提示");
-                    setTimeout(function () {
-                        location.reload();
-                    },1000)
+        if(validform($('#addRoleForm'))){
+            var param={"name":$("#name").val(),"code":$("#code").val()};
+            $.ajax({
+                url:"addRoleSure",
+                data:param,
+                success:function (data) {
+                    var obj = eval('('+data+')')
+                    if(obj.status=="success"){
+                        $("#addModal").modal({show:false});
+                        toastrSuccessMessage(obj.msg,"信息提示");
+                        setTimeout(function () {
+                            location.reload();
+                        },1000)
 
+                    }
                 }
-            }
-        });
+            });
+        }
+
     }
 
 </script>
