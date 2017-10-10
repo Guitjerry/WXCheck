@@ -111,6 +111,7 @@
     function showzuoye(obj) {
         var target = $(obj);
         target.addClass('choosespan');
+        target.siblings().removeClass('choosespan');
         $('.selectzuoye').removeClass('f-none');
         $('.savetbtn').removeClass('f-none');
     }

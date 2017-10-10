@@ -26,18 +26,19 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">查询条件</div>
                     <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
+                        <form id="formSearch" class="form-horizontal" action="zuoyeList">
                             <div class="form-group" style="margin-top:15px">
                                 <label class="control-label col-sm-1" class="rolename" for="txt_search_kemu">科目名称</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_kemu" name="kemuname">
+                                    <input type="text" class="form-control" id="txt_search_kemu" name="txt_search_kemu"  value="${txt_search_kemu}">
                                 </div>
                                 <label class="control-label col-sm-1 rolecode"  for="txt_search_banji">班级名称</label>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_banji" name="banji">
+                                    <input type="text" class="form-control" id="txt_search_banji" name="txt_search_banji" value="${txt_search_banji}">
                                 </div>
                                 <div class="col-sm-4" style="text-align:left;">
-                                    <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                    <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                                    <input type="hidden" name="msg" id="msg" value="index">
                                 </div>
                             </div>
                         </form>
@@ -51,7 +52,7 @@
 
 
             </div>
-            <table id="tb_roles" data-toggle="table">
+            <table id="tb_roles" class="table table-bordered  table-hover  f-ml10">
                 <thead>
                 <th data-valign="middle" data-align="center">班级</th>
                 <th data-valign="middle" data-align="center">科目</th>
@@ -66,7 +67,7 @@
                         <td>${zuoye.task}</td>
 
                         <td>
-                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editZuoye?zuoye=${zuoye.zuoyeid}">修改作业</a>
+                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editZuoye?zuoyeid=${zuoye.zuoyeid}">修改作业</a>
                             <a class="large orange button f-mr20" data-toggle="modal" onclick="delZuoye(${zuoye.zuoyeid})">删除作业</a>
                         </td>
                     </tr>

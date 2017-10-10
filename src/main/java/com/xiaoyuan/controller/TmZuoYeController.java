@@ -51,6 +51,22 @@ public class TmZuoYeController {
 
 
     }
+    @RequestMapping(value = "deleteZuoye")
+    public void deleteZuoye(HttpServletResponse response, String msg,Integer zuoyeid){
+        try{
+            if(zuoyeid>0){
+                tmZuoYeRepository.delete(zuoyeid);
+                JsonUtilTemp.returnSucessJson(response,"删除作业成功");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            JsonUtilTemp.returnExceptionJson(response,"删除作业异常");
+        }
+
+
+
+    }
+
     @RequestMapping(value = "selectKemuByBanji")
     public void selectKemuByBanji(HttpServletRequest request, HttpServletResponse response,String msg, Integer banjiid){
         List<TmKemu> tmKemus = tmKemuService.selectKemuByBanji(banjiid);
@@ -61,13 +77,25 @@ public class TmZuoYeController {
      * 班级列表
      */
     @RequestMapping("/zuoyeList")
-    private String userList(HttpServletRequest request, String msg){
+    private String zuoyeList(HttpServletRequest request, String msg,String txt_search_kemu,String txt_search_banji){
         request.setAttribute("msg",msg);
 //        List<TmZuoYe> tmZuoYes = tmZuoYeRepository.findAll();
 //        request.setAttribute("tmZuoYes",tmZuoYes);
-        List<ZuoyeVo> zuoyeVos =  tmZuoyeService.listAllZuoye();
+        List<ZuoyeVo> zuoyeVos =  tmZuoyeService.listAllZuoye(txt_search_kemu,txt_search_banji);
         request.setAttribute("zuoyeVos",zuoyeVos);
+        request.setAttribute("txt_search_kemu",txt_search_kemu);
+        request.setAttribute("txt_search_banji",txt_search_banji);
         return "zuoye/list";
+    }
+
+    /**
+     * 班级列表
+     */
+    @RequestMapping("/editZuoye")
+    private String editzuoye(HttpServletRequest request, Integer zuoyeid){
+       ZuoyeVo zuoyeVo = tmZuoyeService.listAllZuoyeById(zuoyeid);
+        request.setAttribute("zuoye",zuoyeVo);
+        return "zuoye/editZuoye";
     }
     @RequestMapping("addZuoye")
     private String addBanji(HttpServletResponse response,HttpServletRequest request){
