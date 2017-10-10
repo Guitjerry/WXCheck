@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="w" uri="http://javacrazyer.iteye.com/tags/pager" %>
 <html>
 <head>
     <%--<c:import url="../../common/pc/include.jsp"></c:import>--%>
@@ -30,20 +31,20 @@
             </div>
 
             <div class="panel-body" style="padding-bottom:0px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading">查询条件</div>
-                    <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal">
-                            <div class="form-group" style="margin-top:15px">
-                                <label class="control-label col-sm-1" class="kemuname" for="txt_search_name">科目名称</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_name" name="txt_search_name">
-                                </div>
+                <%--<div class="panel panel-default">--%>
+                    <%--<div class="panel-heading">查询条件</div>--%>
+                    <%--<div class="panel-body">--%>
+                        <%--<form id="formSearch" class="form-horizontal">--%>
+                            <%--<div class="form-group" style="margin-top:15px">--%>
+                                <%--<label class="control-label col-sm-1" class="kemuname" for="txt_search_name">科目名称</label>--%>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<input type="text" class="form-control" id="txt_search_name" name="txt_search_name">--%>
+                                <%--</div>--%>
 
-                            </div>
-                        </form>
-                    </div>
-                </div>
+                            <%--</div>--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
 
 
 
@@ -52,7 +53,7 @@
 
 
             </div>
-            <table id="tb_roles" data-toggle="table">
+            <table id="tb_roles" class="table table-bordered  table-hover  f-ml10">
                 <thead>
                 <th data-valign="middle" data-align="center" >科目名称</th>
 
@@ -72,7 +73,10 @@
                     </tr>
                 </c:forEach>
                 </tbody>
+                <%--当前页数 总共数量 一页显示多少条--%>
+
             </table>
+            <w:pager pageNo="${pageShow.pageIndex}" recordCount="${pageShow.count}" pageSize="${pageShow.pageCount}" url="kemuList"></w:pager>
         </div>
 
     </div>

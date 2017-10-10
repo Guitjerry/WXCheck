@@ -102,5 +102,5 @@ public class Const {
     public void setArr_sex(String[] arr_sex) {
         this.arr_sex = arr_sex;
     }
-    public static  final Integer PAGE_SIZE=2;
+    public static  final Integer PAGE_SIZE=5;
 }

@@ -1,9 +1,14 @@
 package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.TmKemu;
+import com.xiaoyuan.pager.PageBean;
 import com.xiaoyuan.respository.TmKemuRepository;
+import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.JsonUtilTemp;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,10 +28,22 @@ public class TmKeMuMainController {
      *  学生列表
      */
     @RequestMapping("/kemuList")
-    private String kemuList(HttpServletRequest request, String msg){
+    private String kemuList(HttpServletRequest request, String msg,Integer pageNo){
         request.setAttribute("msg",msg);
-        List<TmKemu> tmKemus = tmKemuRepository.findAll();
+        pageNo=pageNo==null?1:pageNo;
+        //所有科目量
+        List<TmKemu> alltmKemus = tmKemuRepository.findAll();
+        //分页
+        Pageable pageable = new PageRequest(pageNo, Const.PAGE_SIZE);
+        PageBean mypage = new PageBean();
+        mypage.setPageIndex(pageNo);
+        mypage.setCount(alltmKemus.size());
+        mypage.setPageCount(Const.PAGE_SIZE);
+
+        Page<TmKemu> tmKemuPage = tmKemuRepository.findAll(pageable);
+        List<TmKemu> tmKemus = tmKemuPage.getContent();
         request.setAttribute("tmKemus",tmKemus);
+        request.setAttribute("pageShow",mypage);
         return "kemu/list";
     }
     @RequestMapping("addKemu")
