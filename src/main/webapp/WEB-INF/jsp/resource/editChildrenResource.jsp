@@ -2,62 +2,64 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--<c:import url="../../common/include.jsp"></c:import>--%>
-
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title" id="myModalLabel">修改资源</h4>
-</div>
-<div class="modal-body">
-    <div class="input-group f-mb10 f-pd5">
-        <span class="input-group-addon" id="basic-addon1">资源名称</span>
-        <input type="text" class="form-control" name="editchildname" id="editchildname" placeholder="请输入资源名称" aria-describedby="basic-addon1" value="${resource.name}">
+<form id="editChildResourceForm">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">修改资源</h4>
     </div>
+    <div class="modal-body">
+        <div class="input-group f-mb10 f-pd5">
+            <span class="input-group-addon" id="basic-addon1">资源名称<label class="icon-red">*</label></span>
+            <input type="text" class="form-control" name="editchildname" id="editchildname" placeholder="请输入资源名称" requierd="yes" tip="资源名称不能为空" aria-describedby="basic-addon1" value="${resource.name}">
+        </div>
 
-    <div class="input-group f-mt10 f-pd5">
-        <span class="input-group-addon" >菜单级别</span>
+        <div class="input-group f-mt10 f-pd5">
+            <span class="input-group-addon" >菜单级别<label class="icon-red">*</label></span>
 
-        <select class="form-control editchilddepath" name="editchilddepath" id="editchilddepath" default-select="${resource.depth}">
-            <option value="">---------请选择——-----</option>
-            <c:forEach items="<%=Const.getDepthArray()%>" var="os">
-                <option value="${os.code}">${os.name}</option>
-            </c:forEach>
-        </select>
+            <select class="form-control editchilddepath" name="editchilddepath" id="editchilddepath" default-select="${resource.depth}"  requierd="yes" tip="菜单级别不能为空">
+                <option value="">---------请选择——-----</option>
+                <c:forEach items="<%=Const.getDepthArray()%>" var="os">
+                    <option value="${os.code}">${os.name}</option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div class="parentdiv input-group f-mt10 f-pd5 f-none" >
+            <span class="input-group-addon" >上级菜单</span>
+
+            <select class="form-control editchildparentselect" name="editchildparentid"  >
+                <option value="">---------请选择——-----</option>
+                <c:forEach items="${parentList}" var="parentResource">
+                    <option value="${parentResource.id}">${parentResource.name}</option>
+                </c:forEach>
+            </select>
+            <input name="editchildparentid" type="hidden" class="editchildparentid" value="${resource.parentid}">
+        </div>
+
+
+
+        <div class="input-group f-mt10 f-pd5">
+            <span class="input-group-addon" >链接地址</span>
+            <input type="text" class="form-control" name="editchildlink" id="editchildlink" placeholder="请输入链接地址" value="${resource.link}">
+        </div>
+
+        <div class="input-group f-mt10 f-mb20 f-pd5">
+            <span class="input-group-addon" >图标样式</span>
+
+
+            <div class="btn  f-ml20 iconbtn" style="width: 20%"   onclick="loadediticon('${resource.icon}')"><span class="${resource.icon} f-ml10"></span></div>
+            <input type="hidden" class="form-control" name="icon" id="icon" placeholder="图标样式" value="${resource.icon}" >
+        </div>
+
+        <!--图标选择-->
+        <div id="editiconmodel"></div>
     </div>
-
-    <div class="parentdiv input-group f-mt10 f-pd5 f-none" >
-        <span class="input-group-addon" >上级菜单</span>
-
-        <select class="form-control editchildparentselect" name="editchildparentid"  >
-            <option value="">---------请选择——-----</option>
-            <c:forEach items="${parentList}" var="parentResource">
-                <option value="${parentResource.id}">${parentResource.name}</option>
-            </c:forEach>
-        </select>
-        <input name="editchildparentid" type="hidden" class="editchildparentid" value="${resource.parentid}">
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="editChildrenSource(${resource.id})">保存</button>
     </div>
+</form>
 
-
-
-    <div class="input-group f-mt10 f-pd5">
-        <span class="input-group-addon" >链接地址</span>
-        <input type="text" class="form-control" name="editchildlink" id="editchildlink" placeholder="请输入链接地址" value="${resource.link}">
-    </div>
-
-    <div class="input-group f-mt10 f-mb20 f-pd5">
-        <span class="input-group-addon" >图标样式</span>
-
-
-        <button class="btn  f-ml20 iconbtn" style="width: 20%"   onclick="loadediticon('${resource.icon}')"><span class="${resource.icon} f-ml10"></span></button>
-        <input type="hidden" class="form-control" name="icon" id="icon" placeholder="图标样式" value="${resource.icon}" >
-    </div>
-
-    <!--图标选择-->
-    <div id="editiconmodel"></div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-    <button type="button" class="btn btn-primary" onclick="editChildrenSource(${resource.id})">保存</button>
-</div>
 
 <script>
     $("#editchildrenModel").on("hidden.bs.modal", function() {
@@ -126,23 +128,30 @@
 
     //更新资源信息
     function  editChildrenSource(resourceid) {
-        var depth = $('.editchilddepath').val();
-        var param={"name":$("#editchildname").val(),"link":$("#editchildlink").val(),"depth":depth,"icon":$("#icon").val(),"id":resourceid,"parentid":$('.editchildparentselect').val()};
-        $.ajax({
-            url:"editResourceSure",
-            data:param,
-            success:function (data) {
-                var obj = eval('('+data+')')
-                if(obj.status=="success"){
-                    $("#editchildrenModal").modal({show:false});
-                    toastrSuccessMessage(obj.msg,"信息提示");
-                    setTimeout(function () {
-                        location.reload();
-                    },1000)
-
-                }
+        if(validform($('#editChildResourceForm'))){
+            var depth = $('.editchilddepath').val();
+            if(depth=="2"&&($('.editchildparentselect').val()==""||$('.editchildparentselect').val()==null)){
+                toastrErrorMessage("请选择上级菜单");
+                return;
             }
-        });
+            var param={"name":$("#editchildname").val(),"link":$("#editchildlink").val(),"depth":depth,"icon":$("#icon").val(),"id":resourceid,"parentid":$('.editchildparentselect').val()};
+            $.ajax({
+                url:"editResourceSure",
+                data:param,
+                success:function (data) {
+                    var obj = eval('('+data+')')
+                    if(obj.status=="success"){
+                        $("#editchildrenModal").modal({show:false});
+                        toastrSuccessMessage(obj.msg,"信息提示");
+                        setTimeout(function () {
+                            location.reload();
+                        },1000)
+
+                    }
+                }
+            });
+        }
+
     }
 
 

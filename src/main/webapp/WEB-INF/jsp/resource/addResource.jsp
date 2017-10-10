@@ -44,7 +44,7 @@
 
         <div class="input-group f-mt10 f-mb20 f-pd5">
             <span class="input-group-addon" >图标样式</span>
-            <button class="btn btn-info f-ml20" style="width: 90%" onclick="loadicon()">选择图标</button>
+            <div class="btn btn-info f-ml20" style="width: 90%" onclick="loadicon()">选择图标</div>
             <input type="hidden" class="form-control" name="icon" id="icon" placeholder="图标样式" >
         </div>
 

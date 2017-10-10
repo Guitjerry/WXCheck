@@ -23,21 +23,25 @@ toastrDefaults={
  * @param option 具体参数
  */
 var toastrSuccessMessage=function(msg,title,option){
+    $('#toast-container').remove();
     var optionsParam= $.extend({},toastrDefaults,option);
     toastr.options=optionsParam;
     toastr['success'](msg,title)
 }
 var toastrInfoMessage=function(msg,title,option){
+    $('#toast-container').remove();
     var optionsParam= $.extend({},toastrDefaults,option);
     toastr.options=optionsParam;
     toastr['info'](msg,title)
 }
 var toastrWarnMessage=function(msg,title,option){
+    $('#toast-container').remove();
     var optionsParam= $.extend({},toastrDefaults,option);
     toastr.options=optionsParam;
     toastr['warning'](msg,title)
 }
 var toastrErrorMessage=function(msg,title,option){
+    $('#toast-container').remove();
     var optionsParam= $.extend({},toastrDefaults,option);
     toastr.options=optionsParam;
     toastr['error'](msg,title)
