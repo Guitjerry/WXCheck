@@ -26,6 +26,10 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 		<!-- 这里指定打包的时候不再需要tomcat相关的包 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
