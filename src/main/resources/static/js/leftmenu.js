@@ -1,6 +1,6 @@
 $(function () {
  $.ajax({
-  url:rootPath+"/init/leftinit?userid="+$('#userid').val(),
+  url:rootPath+"/init/leftinit?userid="+$('#loginuserid').val(),
   success:function (data) {
    var obj = eval('('+data+')');
    var childResource = obj.childResource;

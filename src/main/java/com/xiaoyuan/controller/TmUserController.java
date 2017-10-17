@@ -96,44 +96,44 @@ public class TmUserController {
         request.setAttribute("txt_search_account",txt_search_account);
         request.setAttribute("txt_search_name",txt_search_name);
         request.setAttribute("txt_search_phone",txt_search_phone);
-        leftCommon(request);
+//        leftCommon(request);
         return "user/list";
     }
-    public void leftCommon(HttpServletRequest request){
-
-        //查找所有父级菜单
-        List<TmResource> resources =tmResourceService.findAllParent();
-        String parentdiv = "";
-
-        List<LeftMenuVo> leftMenuVos = new ArrayList<>();
-        //得到相应子级菜单
-        for(TmResource resource:resources){
-            LeftMenuVo leftMenuVo = new LeftMenuVo();
-            List<TmResource> childrenResources = tmResourceService.findAllByParentid(resource.getId());
-            parentdiv = "<div class=\"link\">"+"<i class='"+resource.getIcon()+"'"+"></i>"+resource.getName()+"</div>";
-//            <li><a href="#">班级管理</a></li>
-            String childrenli="";
-            for(TmResource childrenResource:childrenResources){
-                String link = childrenResource.getLink();
-                String linkmsg = "";
-                String limsg = "";
-                if(!StringUtils.isEmpty(link)&&link.indexOf("?")>-1){
-                    linkmsg = link.substring(link.indexOf("?"));
-                    limsg = link.substring(link.indexOf("?")+1);
-                }
-                childrenli += "<li "+limsg+">"+" <a href="+childrenResource.getLink()+">"+childrenResource.getName()+"</a></li>";
-            }
-            if(childrenResources.size()>0){
-                childrenli = "<ul class=\"submenu\">"+childrenli+"</ul> ";
-            }
-
-            leftMenuVo.setParentdiv(parentdiv);
-            leftMenuVo.setChildreli(childrenli);
-            leftMenuVos.add(leftMenuVo);
-
-        }
-        request.setAttribute("leftmenus",leftMenuVos);
-    }
+//    public void leftCommon(HttpServletRequest request){
+//
+//        //查找所有父级菜单
+//        List<TmResource> resources =tmResourceService.findAllParent();
+//        String parentdiv = "";
+//
+//        List<LeftMenuVo> leftMenuVos = new ArrayList<>();
+//        //得到相应子级菜单
+//        for(TmResource resource:resources){
+//            LeftMenuVo leftMenuVo = new LeftMenuVo();
+//            List<TmResource> childrenResources = tmResourceService.findAllByParentid(resource.getId());
+//            parentdiv = "<div class=\"link\">"+"<i class='"+resource.getIcon()+"'"+"></i>"+resource.getName()+"</div>";
+////            <li><a href="#">班级管理</a></li>
+//            String childrenli="";
+//            for(TmResource childrenResource:childrenResources){
+//                String link = childrenResource.getLink();
+//                String linkmsg = "";
+//                String limsg = "";
+//                if(!StringUtils.isEmpty(link)&&link.indexOf("?")>-1){
+//                    linkmsg = link.substring(link.indexOf("?"));
+//                    limsg = link.substring(link.indexOf("?")+1);
+//                }
+//                childrenli += "<li "+limsg+">"+" <a href="+childrenResource.getLink()+">"+childrenResource.getName()+"</a></li>";
+//            }
+//            if(childrenResources.size()>0){
+//                childrenli = "<ul class=\"submenu\">"+childrenli+"</ul> ";
+//            }
+//
+//            leftMenuVo.setParentdiv(parentdiv);
+//            leftMenuVo.setChildreli(childrenli);
+//            leftMenuVos.add(leftMenuVo);
+//
+//        }
+//        request.setAttribute("leftmenus",leftMenuVos);
+//    }
     /**
      * 分配角色
      */

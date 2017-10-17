@@ -44,5 +44,5 @@
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/select2/zh-CN.js"></script>--%>
 <script type="text/javascript" src="../js/rdcp.toastr.js"></script>
 <input name="msg" class="selectmsg" value="${msg}" type="hidden">
-<input type="hidden" id="userid" name="userid" value="<%=session.getAttribute("userid")%>">
+<input type="hidden" id="loginuserid" name="loginuserid" value="<%=session.getAttribute("userid")%>">
 
