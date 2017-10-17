@@ -61,7 +61,7 @@
                 <th data-valign="middle" data-align="center">班级名</th>
                 <th data-valign="middle" data-align="center">年级</th>
                 <th data-valign="middle" data-align="center">学生数</th>
-                <th data-valign="middle" data-align="center">类别</th>
+                <%--<th data-valign="middle" data-align="center">类别</th>--%>
                 <th>操作</th>
                 </thead>
                 <tbody>
@@ -70,7 +70,7 @@
                         <td>${banji.name}</td>
                         <td>${banji.grade}</td>
                         <td>${banji.studentCount}</td>
-                        <td>${banji.banjitype}</td>
+                        <%--<td>${banji.banjitype}</td>--%>
 
 
                         <td>

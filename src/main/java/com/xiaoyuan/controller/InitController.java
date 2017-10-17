@@ -270,13 +270,13 @@ public class InitController {
             JsonUtilTemp.returnFailJson(response,"密码不能为空!");
             return;
         }
-        //测试账户
-//        if("admin".equals(username)&&"123".equals(password)){
-//            //保存到session
-//            request.getSession().setAttribute("username","admin");
-//            JsonUtilTemp.returnSucessJson(response,"成功登录系统");
-//            return;
-//        }
+       // 测试账户
+        if("admin".equals(account)&&"123".equals(password)){
+            //保存到session
+            request.getSession().setAttribute("username","admin");
+            JsonUtilTemp.returnSucessJson(response,"成功登录系统");
+            return;
+        }
         if(StringUtils.isEmpty(account)){
             JsonUtilTemp.returnSucessJson(response,"账户名不能为空");
         }

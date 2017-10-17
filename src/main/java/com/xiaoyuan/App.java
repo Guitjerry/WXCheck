@@ -14,5 +14,9 @@ public class App extends SpringBootServletInitializer
     {
         SpringApplication.run(App.class, args);
     }
-
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        // TODO Auto-generated method stub
+        return builder.sources(App.class);
+    }
 }

@@ -6,7 +6,7 @@
 	<groupId>com.xiaoyuan</groupId>
 	<artifactId>wxCheck</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>schooltask</name>
 	<description>Demo project for Spring Boot</description>
@@ -30,12 +30,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!--&lt;!&ndash; 这里指定打包的时候不再需要tomcat相关的包 &ndash;&gt;-->
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<!-- 这里指定打包的时候不再需要tomcat相关的包 -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 		<!--对jsp的支持-->
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -120,11 +120,12 @@
 		<finalName>wxCheck</finalName>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<!-- <execution> <goals> <goal>build-info</goal> </goals> </execution> -->
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
+				<configuration>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

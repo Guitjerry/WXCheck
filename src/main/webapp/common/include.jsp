@@ -22,7 +22,7 @@
 <%--<script type="text/javascript" src="../js/jquery.validate.extend.js"></script>--%>
 <script type="text/javascript" src="../js/messages_zh.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>
-<script type="text/javascript" src="../js/leftMenu.js"></script>
+<script type="text/javascript" src="../js/leftmenu.js"></script>
 <script type="text/javascript" src="../plugins/boostrap-table/bootstrap-table.js"></script>
 <%--<script type="text/javascript" src="../plugins/boostrap-table/locale/bootstrap-table-zh-CN.js"></script>--%>
 <script type="text/javascript" src="../plugins/bootstrap-toastr/toastr.js"></script>
@@ -32,6 +32,9 @@
 <script type="text/javascript" src="../plugins/jquery-ztree/jquery.ztree.excheck.js"></script>
 <script type="text/javascript" src="../plugins/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 <script type="text/javascript" src="../plugins/bootstrap-fileinput/locales/zh.js"></script>
+<script type="text/javascript" src="../plugins/tableexport/jquery.base64.js"></script>
+<script type="text/javascript" src="../plugins/tableexport/jquery.table2excel.js"></script>
+<script type="text/javascript" src="../plugins/tableexport/tableExport.js"></script>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/kindeditor/plugins/code/prettify.js"></script>--%>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/kindeditor/kindeditor.js"></script>--%>
 <%--<script type="text/javascript" src="<%=request.getContextPath()%>/plugins/kindeditor/lang/zh-CN.js"></script>--%>

@@ -42,7 +42,7 @@ public class TmResourceServiceImpl implements TmResourceService {
 //        select DISTINCT d.* from tm_user a,tm_role_resource b,tm_user_role c,tm_resource d
 //        where a.id=c.USER_ID and b.ROLE_ID=c.ROLE_ID and b.RESOURCE_ID = d.id
 //        and a.ACCOUNT='check' and a.status=0
-                String sql = "select DISTINCT d.* from tm_user a,tm_role_resource b,tm_user_role c,tm_resource d"+
+                String sql = "select DISTINCT d.* from TM_USER a,TM_ROLE_RESOURCE b,TM_USER_ROLE c,TM_RESOURCE d"+
                         " where a.id=c.USER_ID and b.ROLE_ID=c.ROLE_ID and b.RESOURCE_ID = d.id"+
                         " and a.ACCOUNT='check' and a.status=0";
         Query query = em.createNativeQuery(sql,TmResource.class);
@@ -51,7 +51,7 @@ public class TmResourceServiceImpl implements TmResourceService {
 
     @Override
     public List<TmResource> findAllParentByUserId(Integer userid) {
-        String sql ="select * from tm_resource where id in(select DISTINCT  c.parent_id from tm_role a,tm_role_resource b,tm_resource c,tm_user d,tm_user_role f "+
+        String sql ="select * from tm_resource where id in(select DISTINCT  c.parent_id from TM_ROLE a,TM_ROLE_RESOURCE b,TM_RESOURCE c,TM_USER d,TM_USER_ROLE f "+
                 "where a.id=b.ROLE_ID and c.id=b.RESOURCE_ID and d.id=f.USER_ID and a.id=f.ROLE_ID and b.ROLE_ID = f.ROLE_ID "+
                 " and d.ID=?1)";
         Query query = em.createNativeQuery(sql,TmResource.class);
@@ -62,7 +62,7 @@ public class TmResourceServiceImpl implements TmResourceService {
 
     @Override
     public List<TmResource> findAllByUserId(Integer userid) {
-        String sql ="select DISTINCT  c.* from tm_role a,tm_role_resource b,tm_resource c,tm_user d,tm_user_role f "+
+        String sql ="select DISTINCT  c.* from TM_ROLE a,TM_ROLE_RESOURCE b,TM_RESOURCE c,TM_USER d,TM_USER_ROLE f "+
                 "where a.id=b.ROLE_ID and c.id=b.RESOURCE_ID and d.id=f.USER_ID and a.id=f.ROLE_ID and b.ROLE_ID = f.ROLE_ID "+
                 " and d.ID=?1";
         Query query = em.createNativeQuery(sql,TmResource.class);
