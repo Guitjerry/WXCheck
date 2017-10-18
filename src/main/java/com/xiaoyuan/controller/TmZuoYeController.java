@@ -97,6 +97,13 @@ public class TmZuoYeController {
         request.setAttribute("zuoye",zuoyeVo);
         return "zuoye/editZuoye";
     }
+    @RequestMapping("/editZuoyeSure")
+    private void editZuoyeSure(HttpServletRequest request, Integer zuoyeid,String task,HttpServletResponse response){
+        TmZuoYe tmZuoYe = tmZuoYeRepository.findOne(zuoyeid);
+        tmZuoYe.setTask(task);
+        tmZuoYeRepository.saveAndFlush(tmZuoYe);
+        JsonUtilTemp.returnSucessJson(response,"更新作业成功");
+    }
     @RequestMapping("addZuoye")
     private String addBanji(HttpServletResponse response,HttpServletRequest request){
         List<TmBanJi> tmBanJiList = tmBanjiRepository.findAll();

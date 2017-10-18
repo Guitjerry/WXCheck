@@ -41,9 +41,9 @@
             toastrErrorMessage("二次密码输入不一致","错误提示");
             return;
         }
-        var param = {"userid":$('#userid').val(),"oldpassword":$('#oldpassword').val(),"newpassword":$('#newpassword').val()};
+        var param = {"userid":$('#loginuserid').val(),"oldpassword":$('#oldpassword').val(),"newpassword":$('#newpassword').val()};
             $.ajax({
-                url:"/init/resetPasswordSure",
+                url:rootPath+"/init/resetPasswordSure",
                 data:param,
                 success:function (data) {
                     var obj = eval('('+data+')')
@@ -51,7 +51,7 @@
                         $("#addModal").modal({show:false});
                         toastrSuccessMessage(obj.msg,"信息提示");
                         setTimeout(function () {
-                           location.href="/init/logout";
+                           location.href=rootPath+"/init/logout";
                         },1000)
 
                     }else{

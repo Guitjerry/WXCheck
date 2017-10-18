@@ -33,7 +33,7 @@ public class LogHandlerInterceptor implements HandlerInterceptor {
             HttpSession session = request.getSession();
             String username = (String) session.getAttribute("username");
             session.setMaxInactiveInterval(30*60);//以秒为单位，即在没有活动30分钟后，session将失效
-            if(username!=null){
+            if(username!=null||requestURI.indexOf("wx")>0){
                 //登陆成功的用户
 //                TmOperationLog tmOperationLog = new TmOperationLog();
 //                tmOperationLog.setLogindate(DateUtil.getNowDates());

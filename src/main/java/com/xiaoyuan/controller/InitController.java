@@ -214,7 +214,7 @@ public class InitController {
             while(em.hasMoreElements()){
                 request.getSession().removeAttribute(em.nextElement().toString());
             }
-            response.sendRedirect("/init/login");
+            response.sendRedirect(request.getContextPath()+"/init/login");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -227,6 +227,7 @@ public class InitController {
      */
     @RequestMapping(value = "/resetPassword")
     public String resetPassword(HttpServletRequest request,HttpServletResponse response,String userid){
+        String url = request.getContextPath();
         return "init/resetPassword";
     }
     @RequestMapping(value = "/resetPasswordSure")

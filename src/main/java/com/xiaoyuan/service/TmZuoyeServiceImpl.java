@@ -43,6 +43,7 @@ public class TmZuoyeServiceImpl implements TmZuoyeService {
         if(zuoyeid>0){
            hql.append(" and d.id=?1");
        }
+
         Query query =em.createQuery(hql.toString());
         if(zuoyeid>0){
             query.setParameter(1,zuoyeid);
@@ -53,6 +54,23 @@ public class TmZuoyeServiceImpl implements TmZuoyeService {
         }else {
             return null;
         }
+
+    }
+
+    public  List<ZuoyeVo> listAllZuoyeById(String usercode){
+        List<ZuoyeVo> zuoyeVos = null;
+        StringBuffer hql = new StringBuffer(" select new com.xiaoyuan.entity.ZuoyeVo(d.kemuid,d.id as zuoyeid,a.ID as banjiid, d.task,b.name as kemuname,a.name as banjiname) from  TmBanJi a, TmKemu b,TmBanjiKemu c,TmZuoYe d,TmStudent student where student.banjiid=a.id  and a.id=c.banjiid and b.id=c.kemuid and a.id=d.banjiid and b.id=d.kemuid");
+
+        if(!StringUtils.isEmpty(usercode)){
+            hql.append(" and student.usercode=?1");
+        }
+
+        Query query =em.createQuery(hql.toString());
+        if(!StringUtils.isEmpty(usercode)){
+            query.setParameter(1,usercode);
+        }
+        List<ZuoyeVo> zuoyeVoList = query.getResultList();
+       return zuoyeVoList;
 
     }
 }

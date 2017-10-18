@@ -24,8 +24,8 @@
         <div class="collapse navbar-collapse navbar-collapse-example">
             <!-- 一般导航项目 -->
             <ul class="nav navbar-nav headernav">
-                   <li style="margin-left:1000px"><a href="/init/logout">退出系统</a></li>
-                   <li ><a  data-toggle="modal" data-target="#headerModal" href="/init/resetPassword">修改密码</a></li>
+                   <li style="margin-left:1000px"><a href="/init/logout" class="logout">退出系统</a></li>
+                   <li ><a  data-toggle="modal" data-target="#headerModal" href="/init/resetPassword" class="resetPassword">修改密码</a></li>
                     <!--<li><a href="#">需求</a></li>-->
                     <!--<li><a href="#">需求</a></li>-->
                     <!--<li><a href="#">需求</a></li>-->
@@ -42,6 +42,10 @@
     </div>
 </div>
 <script>
+    $(function () {
+        $('.logout').attr('href',rootPath+"/init/logout");
+        $('.resetPassword').attr('href',rootPath+"/init/resetPassword");
+    })
     $('.headernav li').on('click',function () {
             $(this).addClass('actived').siblings().removeClass('actived');
     })

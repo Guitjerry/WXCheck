@@ -15,7 +15,7 @@
     </div>
     <div class="f-mb10 f-pd5">
         <div>作业内容:</div>
-        <textarea id="editor_conent" style="width: 100%;height: 300px" value="${zuoye.task}"></textarea>
+        <textarea id="editor_conent" style="width: 100%;height: 300px">${zuoye.task}</textarea>
     </div>
 </div>
 <div class="modal-footer">
@@ -23,3 +23,22 @@
     <button type="button" class="btn btn-primary" onclick="editZuoyeSure(${zuoye.zuoyeid})">保存</button>
 
 </div>
+<script>
+    function editZuoyeSure(zuoyeid) {
+        $.ajax({
+            url:"editZuoyeSure",
+            data:{"task":$('#editor_conent').val(),"zuoyeid":zuoyeid},
+            success:function (data) {
+                var obj = eval('('+data+')')
+                if(obj.status=="success"){
+                    toastrSuccessMessage(obj.msg,"信息提示");
+                    setTimeout(function () {
+                        location.reload();
+                    },1000)
+
+                }
+            }
+
+        })
+    }
+</script>
