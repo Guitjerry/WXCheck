@@ -29,11 +29,16 @@
 <div class="weui-cell">
     <div class="weui-cell__hd"><label class="weui-label">学生编号</label></div>
     <div class="weui-cell__bd">
-        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入学生编号">
+        <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入学生编号" id="usercode">
     </div>
 </div>
 <div class="weui-btn-area">
-    <a class="weui-btn weui-btn_primary" href="checkZuoyeList" id="showTooltips">查询</a>
+    <a class="weui-btn weui-btn_primary" onclick="checkZuoyeList()"  id="showTooltips">查询</a>
 </div>
 </body>
 </html>
+<script>
+    function checkZuoyeList(){
+        location.href = "checkZuoyeList?usercode="+$('#usercode').val();
+    }
+</script>
