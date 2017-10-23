@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>WeUI</title>
+    <title>微信作业查询</title>
     <c:import url="../../../common/wxinclude.jsp"></c:import>
     <!-- 引入 WeUI -->
     <%--<link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css">--%>

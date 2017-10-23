@@ -46,7 +46,7 @@
     </div>
 </div>
 <div class="weui-btn-area">
-    <a class="weui-btn weui-btn_primary" href="uploadtask" >上传作业</a>
+    <a class="weui-btn weui-btn_primary" href="uploadtask" style="display: none" >上传作业</a>
     <%--<a class="weui-btn weui-btn_primary" href="checkZuoyeList" id="showTooltips">成绩查询</a>--%>
 </div>
 </body>
