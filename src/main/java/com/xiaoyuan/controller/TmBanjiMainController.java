@@ -1,14 +1,9 @@
 package com.xiaoyuan.controller;
 
-import com.xiaoyuan.entity.TmBanJi;
-import com.xiaoyuan.entity.TmBanjiKemu;
-import com.xiaoyuan.entity.TmKemu;
-import com.xiaoyuan.entity.TmStudent;
-import com.xiaoyuan.respository.TmBanjiKemuRepository;
-import com.xiaoyuan.respository.TmBanjiRepository;
-import com.xiaoyuan.respository.TmKemuRepository;
-import com.xiaoyuan.respository.TmStudentRepository;
+import com.xiaoyuan.entity.*;
+import com.xiaoyuan.respository.*;
 import com.xiaoyuan.service.TmStudentService;
+import com.xiaoyuan.service.TmUserScoreService;
 import com.xiaoyuan.util.ExcelConfig;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.JxlExcelUtil;
@@ -50,6 +45,10 @@ public class TmBanjiMainController {
     private TmStudentRepository tmStudentRepository;
     @Autowired
     private TmStudentService tmStudentService;
+    @Autowired
+    private TmUserScoreService tmUserScoreService;
+    @Autowired
+    private TmUserScoreRepository tmUserScoreRepository;
 
     /**
      * 班级分配学生
@@ -153,6 +152,83 @@ public class TmBanjiMainController {
     }
 
     /**
+     * 成绩导入
+     * @param request
+     * @param response
+     * @param banjiid
+     * @return
+     */
+    @RequestMapping(value = "fpStudentScoreSure")
+    private String fpStudentScoreSure(MultipartHttpServletRequest request, HttpServletResponse response,Integer banjiid){
+        Map<String,Object> resultMap = new HashMap<String,Object>();
+        MultipartFile file = request.getFile("filename");
+        List<TtScorceImportVo> ttScorceImportVos = new ArrayList<>();//相同的学生数据
+//        List<TmUserScore> tmUserScores = new ArrayList<>();
+        try{
+            InputStream in = file.getInputStream();
+            List<Object> objects = commonImportBack(in,"excelConfig.xml","TM_USER_SCORE",new TmUserScore());
+            //根据姓名与班级查询重复记录
+            for(Object obj:objects){
+                TmUserScore tmUserScore = (TmUserScore) obj;
+                TmUserScore resultScore = new TmUserScore();
+                TtScorceImportVo ttScorceImportVo = new TtScorceImportVo();//记录导入信息
+                String errornote = null;
+                if(StringUtils.isEmpty(tmUserScore.getName())){
+                    errornote = "学生姓名不能为空";
+                }
+                if(StringUtils.isEmpty(tmUserScore.getSchoolclass())){
+                    errornote = "班级不能为空";
+                }
+                if(StringUtils.isEmpty(tmUserScore.getKemu())){
+                    errornote = "科目不能为空";
+                }
+                if(StringUtils.isEmpty(tmUserScore.getSchooltest())){
+                    errornote = "考试名称不能为空";
+                }
+                if(tmUserScore.getSchoolscore()==null||tmUserScore.getSchoolscore()==0){
+                    errornote = "考试成绩不能为空";
+                }
+
+                ttScorceImportVo.setName(tmUserScore.getName());
+                ttScorceImportVo.setKemu(tmUserScore.getKemu());
+                ttScorceImportVo.setSchoolclass(tmUserScore.getSchoolclass());
+                ttScorceImportVo.setScore(tmUserScore.getSchoolscore());
+                if(!StringUtils.isEmpty(errornote)){
+                    ttScorceImportVo.setNote(errornote);
+                    ttScorceImportVos.add(ttScorceImportVo);
+                }else{
+                    Integer counts =  tmUserScoreService.findAllCountByNameAndBanji(tmUserScore.getName(),tmUserScore.getSchoolclass(),tmUserScore.getSchooltest());
+                    //大于0则已经导入过
+                    if(counts>0){
+                        errornote = "该学生成绩已经导入";
+                        ttScorceImportVo.setNote(errornote);
+
+                    }else{
+                        errornote = "导入成绩成功";
+                        ttScorceImportVo.setNote(errornote);
+                        tmUserScoreRepository.save(tmUserScore);
+                    }
+                }
+
+
+                ttScorceImportVos.add(ttScorceImportVo);
+
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+            logger.error(e.getMessage());
+        }
+        request.setAttribute("ttScorceImportVos",ttScorceImportVos);
+//        request.setAttribute("insertcount",insertStudents.size());
+//        request.setAttribute("sameStudents",sameStudents);
+//        request.setAttribute("samecount",sameStudents.size());
+//        request.setAttribute("errorStudents",errorStudents);
+//        request.setAttribute("errorcount",errorStudents.size());
+        return "banji/importScoreList";
+    }
+
+    /**
      * 分配学生
      * @param request
      * @param response
@@ -242,7 +318,14 @@ public class TmBanjiMainController {
         request.setAttribute("banjiid",banjiid);
         return "banji/fpStudent";
     }
-
+    /**
+     * 成绩导入
+     */
+    @RequestMapping("fpStudentScore")
+    private String fpStudentScore(HttpServletRequest request,Integer banjiid){
+        request.setAttribute("banjiid",banjiid);
+        return "banji/fpStudentScore";
+    }
     @RequestMapping("banjiToKemu")
     private void banjiToKemu(HttpServletResponse response,Integer banjiid,@RequestParam(value = "kemuids[]")String[] kemuids) {
 
