@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 
 import java.io.File;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,10 +82,23 @@ public class JxlExcelUtil {
                         Cell oCell= sheet.getCell(m,j);//第j行的第m列
 
                         String val = StringUtils.trimToEmpty(oCell.getContents());
-                        if (StringUtils.isEmpty(val)) nullCellNum++;
-                    if(!StringUtils.isEmpty(oCell.getContents())){
-                        ReflectionUtils.setFieldValue(target,cloumnname,oCell.getContents().trim());
-                    }
+                        if (StringUtils.isEmpty(val)){
+                            nullCellNum++;
+                            //获得字段类型，数值得转换
+                            Field fds = target.getClass().getDeclaredField(cloumnname);
+                            String typestring = fds.getType().toString();
+                            if("class java.lang.Integer".equals(typestring)){
+                                ReflectionUtils.setFieldValue(target,cloumnname,0);
+                            }else if("class java.lang.Double".equals(typestring)){
+                                ReflectionUtils.setFieldValue(target,cloumnname,0.0);
+                            }else if("class java.lang.Float".equals(typestring)){
+                                ReflectionUtils.setFieldValue(target,cloumnname,0.0);
+                            }else if("class java.lang.String".equals(typestring)){
+                                ReflectionUtils.setFieldValue(target,cloumnname,"");
+                            }
+                        }else{
+                            ReflectionUtils.setFieldValue(target,cloumnname,val);
+                        }
 
                         if (nullCellNum >= columns) { //如果nullCellNum大于或等于总的列数
 

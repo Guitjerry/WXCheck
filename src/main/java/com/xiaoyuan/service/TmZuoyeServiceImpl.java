@@ -63,6 +63,8 @@ public class TmZuoyeServiceImpl implements TmZuoyeService {
 
         if(!StringUtils.isEmpty(usercode)){
             hql.append(" and student.usercode=?1");
+        }else{
+            return null;
         }
 
         Query query =em.createQuery(hql.toString());

@@ -1,9 +1,6 @@
 package com.xiaoyuan.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * 学生成绩导入
@@ -11,6 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TM_USER_SCORE")
 public class TmUserScore {
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
     @Column(name = "ID")
     private int id;
@@ -27,7 +25,7 @@ public class TmUserScore {
     @Column(name="SCHOOL_SCORE")
     private Double schoolscore;//分数
     @Column(name = "SCORE_TYPE")
-    private Integer scoretype;//分数等级
+    private String scoretype;//分数等级
     @Column(name="NAME")
     private String name;//学生姓名
 
@@ -96,11 +94,11 @@ public class TmUserScore {
         this.schoolscore = schoolscore;
     }
 
-    public Integer getScoretype() {
+    public String getScoretype() {
         return scoretype;
     }
 
-    public void setScoretype(Integer scoretype) {
+    public void setScoretype(String scoretype) {
         this.scoretype = scoretype;
     }
 }

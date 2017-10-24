@@ -13,7 +13,7 @@ import java.util.List;
  * Created by dnys on 2017/10/17.
  */
 @Controller
-@RequestMapping(value="/wx")
+@RequestMapping(value="/weixin")
 public class WxInitController {
     @Autowired
     private TmZuoyeService tmZuoyeService;
@@ -25,7 +25,7 @@ public class WxInitController {
     public String checkZuoyeList(HttpServletRequest request,String usercode) {
         List<ZuoyeVo> zuoyeVoList = tmZuoyeService.listAllZuoyeById(usercode);
         request.setAttribute("zuoyeVoList",zuoyeVoList);
-        return "wx/checkZuoyeList";
+        return "weixin/checkZuoyeList";
     }
 
     /**
@@ -39,6 +39,6 @@ public class WxInitController {
         //request.setAttribute("zuoyeVoList",zuoyeVoList);
         ZuoyeVo zuoyeVo = tmZuoyeService.listAllZuoyeById(zuoyeid);
         request.setAttribute("zuoyeVo",zuoyeVo);
-        return "wx/zuoyeListUpload";
+        return "weixin/zuoyeListUpload";
     }
 }

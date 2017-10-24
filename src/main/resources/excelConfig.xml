@@ -4,6 +4,16 @@
         <column>name</column>
         <column>usercode</column>
     </table>
+    <table name="TM_USER_SCORE">
+        <column>schoolgrade</column>
+        <column>schoolclass</column>
+        <column>schoolteacher</column>
+        <column>kemu</column>
+        <column>schooltest</column>
+        <column>schoolscore</column>
+        <column>scoretype</column>
+        <column>name</column>
+    </table>
 </insertconfig>
 
 
