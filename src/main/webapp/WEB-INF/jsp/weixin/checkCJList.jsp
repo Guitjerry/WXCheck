@@ -33,7 +33,7 @@
     </style>
 </head>
 <body >
-<div class="header">作业列表</div>
+<div class="header">成绩列表</div>
 <div class="weui-panel__bd">
     <c:forEach items="${tmUserScores}" var="score">
         <div class="weui-media-box weui-media-box_appmsg no_undeline" >
