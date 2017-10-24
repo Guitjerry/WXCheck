@@ -22,10 +22,11 @@
             <div style="background: #fffcfa">
                 <table class="table table-bordered  table-hover f-mt10">
                     <thead>
-                    <th colspan="5" class="info">导入结果反馈</th>
+                    <th colspan="6" class="info">导入结果反馈</th>
                     </thead>
                     <thead class="success">
                     <th>学生名称</th>
+                    <%--<th>学生编码</th>--%>
                     <th>学生班级</th>
                     <th>学生分数</th>
                     <th>学生科目</th>
@@ -36,6 +37,7 @@
                     <c:forEach items="${ttScorceImportVos}" var="scoreImport">
                         <tr>
                             <td>${scoreImport.name}</td>
+                            <%--<td>${scoreImport.studentcode}</td>--%>
                             <td>${scoreImport.schoolclass}</td>
                             <td>${scoreImport.score}</td>
                             <td>${scoreImport.kemu}</td>

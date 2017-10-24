@@ -1,5 +1,9 @@
 package com.xiaoyuan.service;
 
+import com.xiaoyuan.entity.TmUserScore;
+
+import java.util.List;
+
 /**
  * 学生成绩查询
  */
@@ -11,5 +15,12 @@ public interface TmUserScoreService {
      * @param testname
      * @return
      */
-    public Integer findAllCountByNameAndBanji(String name, String banji, String testname);
+    public Integer findAllCountByNameAndBanji(String name, String banji, String testname,String kemu);
+
+    /**
+     * 通过学生姓名或者编码查询成绩
+     * @param param
+     * @return
+     */
+    public List<TmUserScore> findAllByNameOrStudentCode(String param);
 }

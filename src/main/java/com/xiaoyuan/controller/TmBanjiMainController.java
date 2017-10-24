@@ -197,7 +197,7 @@ public class TmBanjiMainController {
                     ttScorceImportVo.setNote(errornote);
                     ttScorceImportVos.add(ttScorceImportVo);
                 }else{
-                    Integer counts =  tmUserScoreService.findAllCountByNameAndBanji(tmUserScore.getName(),tmUserScore.getSchoolclass(),tmUserScore.getSchooltest());
+                    Integer counts =  tmUserScoreService.findAllCountByNameAndBanji(tmUserScore.getName(),tmUserScore.getSchoolclass(),tmUserScore.getSchooltest(),tmUserScore.getKemu());
                     //大于0则已经导入过
                     if(counts>0){
                         errornote = "该学生成绩已经导入";

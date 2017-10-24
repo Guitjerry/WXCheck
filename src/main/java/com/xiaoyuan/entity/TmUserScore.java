@@ -28,6 +28,8 @@ public class TmUserScore {
     private String scoretype;//分数等级
     @Column(name="NAME")
     private String name;//学生姓名
+    @Column(name="STUDENTCODE")
+    private String studentcode;//学生编码
 
 
     public int getId() {
@@ -100,5 +102,13 @@ public class TmUserScore {
 
     public void setScoretype(String scoretype) {
         this.scoretype = scoretype;
+    }
+
+    public String getStudentcode() {
+        return studentcode;
+    }
+
+    public void setStudentcode(String studentcode) {
+        this.studentcode = studentcode;
     }
 }

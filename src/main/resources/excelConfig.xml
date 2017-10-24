@@ -13,6 +13,7 @@
         <column>schoolscore</column>
         <column>scoretype</column>
         <column>name</column>
+        <column>studentcode</column>
     </table>
 </insertconfig>
 
