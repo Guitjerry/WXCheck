@@ -24,6 +24,16 @@ public class TmUser {
     private Integer status;
     @Column(name = "phone")
     private String phone;
+    @Transient
+    private String code;
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 
     public Integer getId() {
         return id;

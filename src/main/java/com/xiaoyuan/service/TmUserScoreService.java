@@ -23,4 +23,24 @@ public interface TmUserScoreService {
      * @return
      */
     public List<TmUserScore> findAllByNameOrStudentCode(String param);
+
+    /**
+     * 查询成绩
+     * @param name
+     * @param studentcode
+     * @param schoolclass
+     * @param userid
+     * @return
+     */
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name,String studentcode,String schoolclass,Integer userid);
+
+    /**
+     * 根据权限查询成绩
+     * @param name
+     * @param studentcode
+     * @param schoolclass
+     * @param userid
+     * @return
+     */
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid);
 }

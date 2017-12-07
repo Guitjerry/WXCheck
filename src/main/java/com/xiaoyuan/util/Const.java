@@ -103,4 +103,9 @@ public class Const {
         this.arr_sex = arr_sex;
     }
     public static  final Integer PAGE_SIZE=5;
+    public static final String ROLE_ADMIN = "admin";//管理员
+    public static final String ROLE_BANZHUREN = "banzhuren";//班主任
+    public static final String ROLE_XINGZHENG = "xingzheng";//行政人员
+    public static final String ROLE_MANAGE = "manager";//校级管理员
+    public static final String ROLE_TEACHER = "teacher";//科任教师
 }

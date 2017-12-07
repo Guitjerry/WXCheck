@@ -5,15 +5,18 @@
         <column>usercode</column>
     </table>
     <table name="TM_USER_SCORE">
-        <column>schoolgrade</column>
-        <column>schoolclass</column>
-        <column>schoolteacher</column>
-        <column>kemu</column>
-        <column>schooltest</column>
-        <column>schoolscore</column>
-        <column>scoretype</column>
         <column>name</column>
+        <column>schoolClass</column>
+        <column>schoolTest</column>
         <column>studentcode</column>
+        <column>dili</column>
+        <column>huaxue</column>
+        <column>lishi</column>
+        <column>shengwu</column>
+        <column>shixiang</column>
+        <column>shuxue</column>
+        <column>wuli</column>
+        <column>yuwen</column>
     </table>
 </insertconfig>
 

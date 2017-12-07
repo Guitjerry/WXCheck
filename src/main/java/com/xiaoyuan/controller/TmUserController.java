@@ -1,10 +1,10 @@
 package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.*;
-import com.xiaoyuan.respository.TmRoleRepository;
-import com.xiaoyuan.respository.TmUserRepository;
-import com.xiaoyuan.respository.TmUserRoleRepository;
+import com.xiaoyuan.respository.*;
 import com.xiaoyuan.service.TmResourceService;
+import com.xiaoyuan.service.TmUserClassKemuService;
+import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.service.TmUserService;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.MD5Util;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,14 @@ public class TmUserController {
     private TmRoleRepository tmRoleRepository;
     @Autowired
     private TmUserService tmUserService;
+    @Autowired
+    private TmUserRoleService tmUserRoleService;
+    @Autowired
+    private TmBanjiRepository tmBanjiRepository;
+    @Autowired
+    private TmUserClassKemuService tmUserClassKemuService;
+    @Autowired
+    private TmUserClassKemuRepository tmUserClassKemuRepository;
     @RequestMapping("addUser")
     private String addUser(HttpServletResponse response){
 
@@ -86,11 +95,20 @@ public class TmUserController {
 
     }
     /**
-     * 角色列表
+     * 用户列表
      */
     @RequestMapping("/userList")
     private String userList(HttpServletRequest request,String msg,String txt_search_account,String txt_search_name,String txt_search_phone){
         request.setAttribute("msg",msg);
+        int userid = Integer.valueOf(request.getSession().getAttribute("userid").toString());
+        List<TmRole> tmRoles = tmUserRoleService.findAllRoleByUserId(userid);
+        for(TmRole tmRole:tmRoles){
+            if("admin".equals(tmRole.getCode())){
+                request.setAttribute("admin","yes");
+            }
+        }
+
+
         List<TmUser> tmUsers = tmUserService.findAllByaccountAndNameAndPhone(txt_search_account,txt_search_name,txt_search_phone);
         request.setAttribute("tmUsers",tmUsers);
         request.setAttribute("txt_search_account",txt_search_account);
@@ -146,9 +164,22 @@ public class TmUserController {
         request.setAttribute("selectrole",tmUserRoles);
         return "user/fpRole";
     }
+    /**
+     * 分配班级
+     */
+    @RequestMapping("fpbanji")
+    private String fpbanji(HttpServletRequest request,Integer userid){
+
+        List<TmBanJi> tmBanJis = tmBanjiRepository.findAll();
+       List<TmBanJi> selectbanji = tmUserClassKemuService.findAllByUserId(userid);
+        request.setAttribute("tmBanJis",tmBanJis);
+        request.setAttribute("selectbanji",selectbanji);
+        request.setAttribute("userid",userid);
+        return "user/fpbanji";
+    }
 
     @RequestMapping("userToRole")
-    private void add(HttpServletResponse response,Integer userid,@RequestParam(value = "roleids[]")String[] roleids){
+    private void userToRole(HttpServletResponse response,Integer userid,@RequestParam(value = "roleids[]")String[] roleids){
 
         if(roleids==null||roleids.length==0){
             JsonUtilTemp.returnFailJson(response,"至少需要选择一个角色");
@@ -175,4 +206,36 @@ public class TmUserController {
 
 
     }
+
+    @RequestMapping("userToBanji")
+    private void userToBanji(HttpServletResponse response,Integer userid,@RequestParam(value = "banjiids[]")String[] banjiids){
+
+        if(banjiids==null||banjiids.length==0){
+            JsonUtilTemp.returnFailJson(response,"至少需要选择一个班级");
+        }
+        //根据roleid查找数据，删除在添加
+        List<TmUserClassKemu> exists = tmUserClassKemuRepository.findAllByUserId(userid);
+        for(TmUserClassKemu tmUserClassKemu:exists){
+            tmUserClassKemuRepository.delete(tmUserClassKemu);
+        }
+        try{
+            if(banjiids!=null&&banjiids.length>0){
+                for(String banjiid:banjiids){
+                   TmUserClassKemu tmUserClassKemu = new TmUserClassKemu();
+                   tmUserClassKemu.setClassId(Integer.valueOf(banjiid));
+                    tmUserClassKemu.setCreatdate(new Date());
+                    tmUserClassKemu.setUserId(userid);
+                    tmUserClassKemuRepository.save(tmUserClassKemu);
+                }
+                JsonUtilTemp.returnSucessJson(response,"分配班级成功");
+            }
+
+        }catch (Exception e){
+            JsonUtilTemp.returnFailJson(response,e.getMessage());
+        }
+
+
+    }
+
+
 }

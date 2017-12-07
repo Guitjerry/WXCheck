@@ -8,6 +8,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class TmUserServiceImpl implements TmUserService {
 
     }
     public List<TmUser> findAllByaccountAndNameAndPhone(String account,String name,String phone) {
-        StringBuffer hql = new StringBuffer(" select * from TM_USER where 1=1");
+        StringBuffer hql = new StringBuffer(" select a.account,a.name,a.email,a.phone,c.code,a.id from TM_USER a,TM_USER_ROLE b,TM_ROLE c  where a.id=b.user_id and b.role_id = c.id ");
         if (!StringUtils.isEmpty(account)) {
             hql.append(" and account=?1");
         }
@@ -51,7 +52,7 @@ public class TmUserServiceImpl implements TmUserService {
         if (!StringUtils.isEmpty(phone)) {
             hql.append(" and phone like ?3");
         }
-        Query query = em.createNativeQuery(hql.toString(),TmUser.class);
+        Query query = em.createNativeQuery(hql.toString());
         if (!StringUtils.isEmpty(account)) {
             query.setParameter(1, account);
         }
@@ -61,6 +62,24 @@ public class TmUserServiceImpl implements TmUserService {
         if (!StringUtils.isEmpty(phone)) {
             query.setParameter(3, "%"+phone+"%");
         }
-        return query.getResultList();
+        List<TmUser> tmUsers = new ArrayList<>();
+        List<Object[]> objects = query.getResultList();
+       for(Object[] obj:objects){
+           TmUser tmUser = new TmUser();
+          String myaccount =  obj[0].toString();
+          String myname =  obj[1].toString();
+          String myemail =  obj[2].toString();
+          String myphone =  obj[3].toString();
+          String mycode =  obj[4].toString();
+          String id =  obj[5].toString();
+           tmUser.setAccount(myaccount);
+           tmUser.setName(myname);
+           tmUser.setEmail(myemail);
+           tmUser.setPhone(myphone);
+           tmUser.setCode(mycode);
+           tmUser.setId(Integer.valueOf(id));
+           tmUsers.add(tmUser);
+       }
+       return tmUsers;
     }
 }

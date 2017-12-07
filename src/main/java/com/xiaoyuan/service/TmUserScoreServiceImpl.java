@@ -1,12 +1,15 @@
 package com.xiaoyuan.service;
 
+import com.xiaoyuan.entity.TmRole;
 import com.xiaoyuan.entity.TmUserScore;
+import com.xiaoyuan.util.Const;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,6 +65,49 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
             query.setParameter(1,param);
         }
 
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name, String studentcode, String schoolclass,Integer userId) {
+        StringBuffer hql = new StringBuffer(" select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,(select sum(yuwen+shuxue+waiyu+wuli+huaxue+shengwu+dili+lishi+shixiang) from tm_user_score b where a.id=b.id   GROUP BY name) as sum_count from tm_user_score a where 1=1 ");
+        if(!StringUtils.isEmpty(name)){
+            hql.append(" and name=?1");
+        }
+        if(!StringUtils.isEmpty(studentcode)){
+            hql.append(" and studentcode=?2");
+        }
+        if(!StringUtils.isEmpty(schoolclass)){
+            hql.append(" and schoolClass=?3");
+        }
+        hql.append("  order by sum_count");
+        Query query = em.createNativeQuery(hql.toString(),TmUserScore.class);
+
+
+        if(!StringUtils.isEmpty(name)){
+            query.setParameter(1,name);
+        }
+        if(!StringUtils.isEmpty(studentcode)){
+            query.setParameter(2,studentcode);
+        }
+        if(!StringUtils.isEmpty(schoolclass)){
+            query.setParameter(3,schoolclass);
+        }
+        return query.getResultList();
+    }
+
+    @Override
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid) {
+       StringBuffer hql = new StringBuffer("select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,(select sum(yuwen+shuxue+waiyu+wuli+huaxue+shengwu+dili+lishi+shixiang) from tm_user_score b where a.id=b.id   GROUP BY name) as sum_count from  tm_user_score a  ");
+        hql.append("INNER JOIN tm_banji e on a.school_class = e.name ");
+        hql.append("INNER JOIN tm_user_class_kemu f on e.id=f.class_id ");
+        hql.append("INNER JOIN tm_user u on u.id=f.user_id and u.id=?1 ");
+        hql.append("INNER JOIN tm_user_role c on f.user_id=c.user_id ");
+        hql.append("INNER JOIN tm_role d on c.role_id =d.id order by sum_count desc");
+        Query query = em.createNativeQuery(hql.toString(),TmUserScore.class);
+        if(userid!=null){
+           query.setParameter(1,userid);
+        }
         return query.getResultList();
     }
 }

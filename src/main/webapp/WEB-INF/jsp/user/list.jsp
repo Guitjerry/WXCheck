@@ -91,6 +91,9 @@
                                 <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editUser?userid=${user.id}">修改用户</a>
                                  <a class="large orange button f-mr20" data-toggle="modal" onclick="delUser(${user.id})">删除用户</a>
                                 <a class="large blue button f-mr20 myModel" data-toggle="modal" data-target="#fpeditModal" href="fpRole?userid=${user.id}">分配角色</a>
+
+                                <a class="large blue button f-mr20 myModel" data-toggle="modal" data-target="#fpBanjiEditModal" href="fpbanji?userid=${user.id}" <c:if test="${admin==''||admin==null}">style="display: none"</c:if>>分配班级</a>
+                                <a class="large blue button f-mr20 myModel" data-toggle="modal" data-target="#fpKemuEditModal" href="fpkemu?userid=${user.id}" <c:if test="${admin==''||admin==null}">style="display: none"</c:if> <c:if test="${user.code=='banzhuren'}">style="display: none"</c:if>>分配科目</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -111,7 +114,7 @@
         </div>
     </div>
 </div>
-!-- 修改模态框 -->
+<!-- 修改模态框 -->
 <div class="modal fade" id="fpeditModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -120,6 +123,23 @@
     </div>
 </div>
 
+<!-- 分配班级模态框 -->
+<div class="modal fade" id="fpBanjiEditModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+
+<!-- 分配科目模态框 -->
+<div class="modal fade" id="fpKemuEditModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
 <script>
 
 
@@ -137,6 +157,12 @@
         $(this).removeData("bs.modal");
     });
     $("#fpeditModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+    $("#fpBanjiEditModal").on("hidden.bs.modal", function() {
+        $(this).removeData("bs.modal");
+    });
+    $("#fpKemuEditModal").on("hidden.bs.modal", function() {
         $(this).removeData("bs.modal");
     });
 

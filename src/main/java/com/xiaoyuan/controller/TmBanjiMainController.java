@@ -176,28 +176,18 @@ public class TmBanjiMainController {
                 if(StringUtils.isEmpty(tmUserScore.getName())){
                     errornote = "学生姓名不能为空";
                 }
-                if(StringUtils.isEmpty(tmUserScore.getSchoolclass())){
-                    errornote = "班级不能为空";
-                }
-                if(StringUtils.isEmpty(tmUserScore.getKemu())){
-                    errornote = "科目不能为空";
-                }
-                if(StringUtils.isEmpty(tmUserScore.getSchooltest())){
-                    errornote = "考试名称不能为空";
-                }
-                if(tmUserScore.getSchoolscore()==null||tmUserScore.getSchoolscore()==0){
-                    errornote = "考试成绩不能为空";
+                if(StringUtils.isEmpty(tmUserScore.getStudentcode())){
+                    errornote = "学生编码不能为空";
                 }
 
+
+
                 ttScorceImportVo.setName(tmUserScore.getName());
-                ttScorceImportVo.setKemu(tmUserScore.getKemu());
-                ttScorceImportVo.setSchoolclass(tmUserScore.getSchoolclass());
-                ttScorceImportVo.setScore(tmUserScore.getSchoolscore());
                 if(!StringUtils.isEmpty(errornote)){
                     ttScorceImportVo.setNote(errornote);
                     ttScorceImportVos.add(ttScorceImportVo);
                 }else{
-                    Integer counts =  tmUserScoreService.findAllCountByNameAndBanji(tmUserScore.getName(),tmUserScore.getSchoolclass(),tmUserScore.getSchooltest(),tmUserScore.getKemu());
+                    Integer counts =  tmUserScoreService.findAllCountByNameAndBanji(tmUserScore.getName(),tmUserScore.getSchoolClass(),tmUserScore.getSchoolTest(),null);
                     //大于0则已经导入过
                     if(counts>0){
                         errornote = "该学生成绩已经导入";
