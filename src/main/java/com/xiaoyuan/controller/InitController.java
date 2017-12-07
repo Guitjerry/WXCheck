@@ -214,7 +214,7 @@ public class InitController {
             while(em.hasMoreElements()){
                 request.getSession().removeAttribute(em.nextElement().toString());
             }
-            response.sendRedirect(request.getContextPath()+"/init/login");
+            response.sendRedirect(request.getContextPath()+"/wxCheck/init/login");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -228,7 +228,7 @@ public class InitController {
     @RequestMapping(value = "/resetPassword")
     public String resetPassword(HttpServletRequest request,HttpServletResponse response,String userid){
         String url = request.getContextPath();
-        return "init/resetPassword";
+        return "resetPassword";
     }
     @RequestMapping(value = "/resetPasswordSure")
     public void resetPasswordSure(HttpServletRequest request,HttpServletResponse response,Integer userid,String oldpassword,String newpassword){
@@ -271,13 +271,7 @@ public class InitController {
             JsonUtilTemp.returnFailJson(response,"密码不能为空!");
             return;
         }
-       // 测试账户
-        if("admin".equals(account)&&"123".equals(password)){
-            //保存到session
-            request.getSession().setAttribute("username","admin");
-            JsonUtilTemp.returnSucessJson(response,"成功登录系统");
-            return;
-        }
+
         if(StringUtils.isEmpty(account)){
             JsonUtilTemp.returnSucessJson(response,"账户名不能为空");
         }
