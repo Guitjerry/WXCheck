@@ -1,15 +1,21 @@
 package com.xiaoyuan.controller.wx;
 
+import com.xiaoyuan.entity.TmStudent;
 import com.xiaoyuan.entity.TmUserScore;
 import com.xiaoyuan.entity.ZuoyeVo;
+import com.xiaoyuan.service.TmStudentService;
 import com.xiaoyuan.service.TmUserScoreService;
 import com.xiaoyuan.service.TmZuoyeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dnys on 2017/10/17.
@@ -21,6 +27,8 @@ public class WxInitController {
     private TmZuoyeService tmZuoyeService;
     @Autowired
     private TmUserScoreService tmUserScoreService;
+    @Autowired
+    private TmStudentService tmStudentService;
     @RequestMapping(value = "/checkZuoye")
     public String checkZuoye(HttpServletRequest request) {
         return "weixin/checkZuoye";
@@ -44,8 +52,28 @@ public class WxInitController {
     @RequestMapping(value = "/checkCJList")
     public String checkCJList(HttpServletRequest request,String usercode) {
         List<TmUserScore> tmUserScores =  tmUserScoreService.findAllByNameOrStudentCode(usercode);
-        request.setAttribute("tmUserScores",tmUserScores);
+        List<TmUserScore> alltmUserScores =  new ArrayList<>();
+         List<String> scorebanjiindex = tmUserScoreService.findBanjiIndex(usercode);
+         List<String> scorenianjiindex = tmUserScoreService.findNianjiIndex(usercode);
+         for(int i=0;i<tmUserScores.size();i++){
+             TmUserScore tmUserScore = tmUserScores.get(i);
+             tmUserScore.setBanjiindex(String.valueOf(scorebanjiindex.get(i)));
+             tmUserScore.setNianjiindex(String.valueOf(scorenianjiindex.get(i)));
+             alltmUserScores.add(tmUserScore);
+         }
+        request.setAttribute("tmUserScores",alltmUserScores);
         return "weixin/checkCJList";
+    }
+    @RequestMapping(value = "/checkLogin")
+    public @ResponseBody Map<String,Object> checkLogin(HttpServletRequest request, String usercode, String password) {
+        Map<String,Object> resultMap = new HashMap<>();
+        List<TmStudent> tmStudents =  tmStudentService.findStudentByUserCodeAndPassword(usercode,password);
+       if(tmStudents.size()>0){
+           resultMap.put("successmsg","登录成功");
+       }else{
+           resultMap.put("errormsg","登录失败,用户名或密码不正确");
+       }
+       return  resultMap;
     }
     /**
      * 作业明细以及上传

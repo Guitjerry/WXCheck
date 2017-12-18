@@ -35,24 +35,45 @@
 <body >
 <div class="header">成绩列表</div>
 <div class="weui-panel__bd">
-    <c:forEach items="${tmUserScores}" var="score">
-        <div class="weui-media-box weui-media-box_appmsg no_undeline" >
 
-            <div class="weui-media-box__hd" style="width: auto!important;">
-                <div class="title" >${score.schooltest}</div>
-            </div>
-            <div class="weui-media-box__bd" style="float: left">
-                <p class="weui-media-box__desc" style="float: left;padding-left: 2rem">科目:${score.kemu}</p>
-                <p class="weui-media-box__desc" style="padding-left: 2rem">班级:${score.schoolclass}</p>
-                <p class="weui-media-box__desc" style="float: left;padding-left: 2rem">成绩:${score.schoolscore}</p>
-                <p class="weui-media-box__desc" style="padding-left: 2rem">老师:${score.schoolteacher}</p>
-            </div>
-            <div style="border: 1px solid">
-                <p  style="padding: 0.5rem">${score.scoretype}</p>
-            </div>
+       <table class="table table-bordered">
+           <thead>
+                <th>名称</th>
+                <th>语文</th>
+                <th>数学</th>
+                <th>外语</th>
+                <th>物理</th>
+                <th>化学</th>
+                <th>历史</th>
+                <th>生物</th>
+                <th>地理</th>
+                <th>思想</th>
+                <th>班排名</th>
+                <th>年级排名</th>
+           </thead>
+           <tbody>
+           <c:forEach items="${tmUserScores}" var="score">
+                <tr>
+                    <td>
+                       ${score.schoolTest}
+                    </td>
+                    <td>${score.yuwen}</td>
+                    <td> ${score.shuxue}</td>
+                    <td>${score.waiyu}</td>
+                    <td> ${score.wuli}</td>
+                    <td>  ${score.huaxue}</td>
+                    <td>  ${score.lishi}</td>
+                    <td>   ${score.shengwu}</td>
+                    <td>  ${score.dili}</td>
+                    <td>  ${score.shixiang}</td>
+                    <td>  ${score.banjiindex}</td>
+                    <td>   ${score.nianjiindex}</td>
+                </tr>
+           </c:forEach>
+           </tbody>
 
-        </div>
-    </c:forEach>
+       </table>
+
 </div>
 
 </body>

@@ -31,6 +31,14 @@
     <div class="weui-cell__bd">
         <input class="weui-input"  placeholder="请输入学生编号或者名称" id="usercode">
     </div>
+
+
+</div>
+<div class="weui-cell">
+    <div class="weui-cell__hd"><label class="weui-label">登录密码</label></div>
+    <div class="weui-cell__bd">
+        <input class="weui-input"  placeholder="请输入密码" id="password" type="password">
+    </div>
 </div>
 <div class="weui-btn-area">
     <a class="weui-btn weui-btn_primary" onclick="checkZuoyeList()"  id="showTooltips">查询</a>
@@ -43,6 +51,26 @@
             toastrErrorMessage("学生编号或者姓名不能为空");
             return;
         }
-        location.href = "checkCJList?usercode="+$('#usercode').val();
+        if($('#password').val()==""||$('#password').val()==null){
+            toastrErrorMessage("密码不能为空");
+            return;
+        }
+        $.ajax({
+            "url":"checkLogin",
+            data:{"usercode":$('#usercode').val(),"password":$('#password').val()},
+            success:function (data) {
+                if(data.successmsg!=undefined&&data.successmsg!=''){
+                    toastrSuccessMessage(data.successmsg);
+                    setTimeout(function () {
+                        location.href = "checkCJList?usercode="+$('#usercode').val();
+                    },2000)
+
+                }else{
+                    toastrErrorMessage(data.errormsg);
+                }
+
+            }
+        })
+
     }
 </script>

@@ -135,5 +135,21 @@ public class TmStudentServiceImpl implements TmStudentService{
         pageBean.setList(tmStudents);
         return pageBean;
     }
+    /**
+     * 根据账号密码查询登录
+     * @param usercode
+     * @param password
+     * @return
+     */
+    @Override
+    public  List<TmStudent> findStudentByUserCodeAndPassword(String usercode, String password) {
+        StringBuffer hql = new StringBuffer(" from  TmStudent where usercode=?1 and password=?2");
+        Query query = em.createQuery(hql.toString());
+        query.setParameter(1,usercode);
+        query.setParameter(2,password);
+        List<TmStudent> tmStudents =  query.getResultList();
+        return tmStudents;
+    }
+
 
 }

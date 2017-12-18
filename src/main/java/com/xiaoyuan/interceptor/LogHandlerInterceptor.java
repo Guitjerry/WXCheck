@@ -18,14 +18,18 @@ public class LogHandlerInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String requestURI;
-        requestURI = request.getRequestURI().replaceAll("\\/\\/", "/");
+        String requestURI = null;
+        requestURI = request.getRequestURI();
+//        requestURI = request.getRequestURI().replaceAll("\\/\\/", "/");
         //过滤后缀,直接跳过
 //        for (String suffix : m_suffixs) {
 //            if (requestURI.endsWith("." + suffix)) {
 //                return super.preHandle(httpServletRequest, httpServletResponse, handler);
 //            }
 //        }
+        if(requestURI.indexOf("weixin")>=0){
+            return true;
+        }
         boolean flag = false;
         //不在登录页面
         if(requestURI.indexOf("login")<=0){

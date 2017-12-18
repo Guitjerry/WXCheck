@@ -15,4 +15,5 @@ public interface TmStudentService {
      */
     public List<TmStudent> findAllStudent(String name,String usercode);
     PageBean<TmStudent> findAllStudent(int currentPage,int pagecount,String name,String usercode);
+    public  List<TmStudent> findStudentByUserCodeAndPassword(String usercode,String password);
 }

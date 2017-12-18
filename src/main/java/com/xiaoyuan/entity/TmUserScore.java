@@ -21,8 +21,27 @@ public class TmUserScore {
     private String wuli;
     private String yuwen;
     private Double sumCount;
+    @Transient
+    private String banjiindex;
+    @Transient
+    private String nianjiindex;
 
 
+    public String getBanjiindex() {
+        return banjiindex;
+    }
+
+    public void setBanjiindex(String banjiindex) {
+        this.banjiindex = banjiindex;
+    }
+
+    public String getNianjiindex() {
+        return nianjiindex;
+    }
+
+    public void setNianjiindex(String nianjiindex) {
+        this.nianjiindex = nianjiindex;
+    }
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id

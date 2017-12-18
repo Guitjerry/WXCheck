@@ -42,7 +42,7 @@
                         <form role="form"  method="post" class="login-form">
                             <div class="form-group">
                                 <label class="sr-only" for="form-username">账户名:</label>
-                                <input type="text" name="account" placeholder=账户名" class="form-username form-control" id="form-username">
+                                <input type="text" name="account" placeholder=账户名 class="form-username form-control" id="form-username">
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" for="form-password">密码:</label>

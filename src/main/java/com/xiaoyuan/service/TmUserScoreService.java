@@ -43,4 +43,8 @@ public interface TmUserScoreService {
      * @return
      */
     public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid);
+    public List<String> findBanjiIndex(String studentcode);
+    public List<String> findNianjiIndex(String studentcode);
+    public List<TmUserScore> findBanjiScorce(String studentcode);
+    public List<TmUserScore> findNianjiScorce(String studentcode);
 }
