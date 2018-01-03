@@ -35,6 +35,7 @@ public class TmUserScoreController {
     private String list(HttpServletRequest request,String msg,String name,String studentcode,String schoolclass){
         Integer userid = (Integer) request.getSession().getAttribute("userid");
         List<TmUserScore> tmUserScoreList = null;
+        //查询当前用户的角色
         List<TmRole> tmRoles= tmUserRoleService.findAllRoleByUserId(userid);
         Boolean flag = false;
         for(TmRole tmRole:tmRoles){

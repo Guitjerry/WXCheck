@@ -22,25 +22,24 @@ public class TmUserScore {
     private String yuwen;
     private Double sumCount;
     @Transient
-    private String banjiindex;
+    private String banjiindexs;
     @Transient
-    private String nianjiindex;
-
-
-    public String getBanjiindex() {
-        return banjiindex;
+    private String nianjiindexs;
+    @Transient
+    public String getBanjiindexs() {
+        return banjiindexs;
     }
 
-    public void setBanjiindex(String banjiindex) {
-        this.banjiindex = banjiindex;
+    public void setBanjiindexs(String banjiindexs) {
+        this.banjiindexs = banjiindexs;
+    }
+    @Transient
+    public String getNianjiindexs() {
+        return nianjiindexs;
     }
 
-    public String getNianjiindex() {
-        return nianjiindex;
-    }
-
-    public void setNianjiindex(String nianjiindex) {
-        this.nianjiindex = nianjiindex;
+    public void setNianjiindexs(String nianjiindexs) {
+        this.nianjiindexs = nianjiindexs;
     }
 
     @GeneratedValue(strategy= GenerationType.IDENTITY)

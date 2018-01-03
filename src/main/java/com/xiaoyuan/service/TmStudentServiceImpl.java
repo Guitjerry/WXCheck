@@ -6,6 +6,7 @@ import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -149,6 +150,56 @@ public class TmStudentServiceImpl implements TmStudentService{
         query.setParameter(2,password);
         List<TmStudent> tmStudents =  query.getResultList();
         return tmStudents;
+    }
+    public Long findAllCountByUserid(String name, String usercode,Integer userid){
+        StringBuffer sql = new StringBuffer("select count(*) from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID ");
+        if(userid!=null&&userid>0){
+            sql.append(" and c.USER_ID=?1");
+        }
+        Query query = em.createNativeQuery(sql.toString());
+        if(userid!=null&&userid>0){
+            query.setParameter(1,userid);
+        }
+        return Long.valueOf(query.getSingleResult().toString());
+    }
+
+    @Override
+    public List<TmStudent> findAllStudentByName(Pageable pageable, String name, String usercode,Integer userid,Boolean flag) {
+        List<TmStudent> tmStudents = new ArrayList<>();
+        StringBuffer hql = new StringBuffer("select u.* from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID ");
+        //admin去除权限限制
+        if(!flag){
+            if(userid!=null&&userid>0){
+                hql.append(" and c.USER_ID=?1");
+            }
+        }
+        //admin角色
+        if(flag){
+            hql = new StringBuffer(" select * from TM_STUDENT u where 1=1");
+        }
+
+        if(!StringUtils.isEmpty(name)){
+            hql.append(" and u.name =?2");
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            hql.append(" and u.USER_CODE =?3");
+        }
+        Query query = em.createNativeQuery(hql.toString(),TmStudent.class);
+
+        if(!StringUtils.isEmpty(name)){
+            query.setParameter(2,name);
+        }
+        if(!StringUtils.isEmpty(usercode)){
+            query.setParameter(3,usercode);
+        }
+        if(!flag){
+            if(userid!=null&&userid>0){
+                query.setParameter(1,userid);
+            }
+        }
+        query.setFirstResult((pageable.getPageNumber()-1)*(pageable.getPageSize()));
+        query.setMaxResults(pageable.getPageSize());
+        return query.getResultList();
     }
 
 

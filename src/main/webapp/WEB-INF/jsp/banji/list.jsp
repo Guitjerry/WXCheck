@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="w" uri="http://javacrazyer.iteye.com/tags/pager" %>
 <html>
 <head>
     <%--<c:import url="../../common/pc/include.jsp"></c:import>--%>
@@ -19,7 +20,7 @@
         <!--右侧内容-->
         <div class="col-md-10" style="background: #fffcfa" >
 
-            <a class="large blue button f-ml20 f-mt20" data-toggle="modal" data-target="#addModal" href="addBanji">新增班级</a>
+            <a class="large blue button f-ml5 f-mt20 f-mb10" data-toggle="modal" data-target="#addModal" href="addBanji">新增班级</a>
             <!-- Modal -->
             <div class="modal fade" id="addModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
                 <div class="modal-dialog" role="document">
@@ -29,34 +30,25 @@
                 </div>
             </div>
 
-            <div class="panel-body" style="padding-bottom:0px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading">查询条件</div>
-                    <div class="panel-body">
-                        <form id="formSearch" class="form-horizontal" action="banjiList">
-                            <div class="form-group" style="margin-top:15px">
-                                <label class="control-label col-sm-1" class="banjiname" for="txt_search_name">班级名称</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control" id="txt_search_name" name="txt_search_name" value="${txt_search_name}">
-                                </div>
-                                <div class="col-sm-4" style="text-align:left;">
-                                    <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
-                                </div>
-                                <input name="msg" type="hidden" value="banji">
+            <%--<div class="panel-body" style="padding-bottom:0px;">--%>
+                <%--<div class="panel panel-default">--%>
+                    <%--<div class="panel-heading">查询条件</div>--%>
+                    <%--<div class="panel-body">--%>
+                        <%--<form id="formSearch" class="form-horizontal" action="banjiList">--%>
+                            <%--<div class="form-group" style="margin-top:15px">--%>
+                                <%--<label class="control-label col-sm-1" class="banjiname" for="txt_search_name">班级名称</label>--%>
+                                <%--<div class="col-sm-3">--%>
+                                    <%--<input type="text" class="form-control" id="txt_search_name" name="txt_search_name" value="${txt_search_name}">--%>
+                                <%--</div>--%>
+                                <%--<div class="col-sm-4" style="text-align:left;">--%>
+                                    <%--<button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>--%>
+                                <%--</div>--%>
+                                <%--<input name="msg" type="hidden" value="banji">--%>
 
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-
-
-
-
-
-
-            </div>
-            <table id="tb_roles" data-toggle="table">
+                            <%--</div>--%>
+                        <%--</form>--%>
+                    <%--</div>--%>
+            <table  class="table table-hover" >
                 <thead>
                 <th data-valign="middle" data-align="center">班级名</th>
                 <th data-valign="middle" data-align="center">年级</th>
@@ -70,24 +62,35 @@
                         <td>${banji.name}</td>
                         <td>${banji.grade}</td>
                         <td>${banji.studentCount}</td>
-                        <%--<td>${banji.banjitype}</td>--%>
+                            <%--<td>${banji.banjitype}</td>--%>
 
 
                         <td>
-                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal" href="editBanji?banjiid=${banji.ID}">修改班级</a>
+                            <a class="large green button f-mr20 myModel" data-toggle="modal" data-target="#editModal"
+                               href="editBanji?banjiid=${banji.ID}">修改班级</a>
                             <a class="large orange button f-mr20" data-toggle="modal" onclick="delBanji(${banji.ID})">删除班级</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpeditModal" href="fpKemu?banjiid=${banji.ID}">分配科目</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudenteditModal" href="fpStudent?banjiid=${banji.ID}">学生导入</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpNewStudenteditModal" href="fpStudentdiv?banjiid=${banji.ID}">学生分配</a>
-                            <a class="large  button f-mr20"  data-toggle="modal" data-target="#fpStudentScoreditModal" href="fpStudentScore?banjiid=${banji.ID}">成绩导入</a>
+                            <a class="large  button f-mr20" data-toggle="modal" data-target="#fpeditModal"
+                               href="fpKemu?banjiid=${banji.ID}">分配科目</a>
+                            <a class="large  button f-mr20" data-toggle="modal" data-target="#fpStudenteditModal"
+                               href="fpStudent?banjiid=${banji.ID}">学生导入</a>
+                            <a class="large  button f-mr20" data-toggle="modal" data-target="#fpNewStudenteditModal"
+                               href="fpStudentdiv?banjiid=${banji.ID}">学生分配</a>
+                            <a class="large  button f-mr20" data-toggle="modal" data-target="#fpStudentScoreditModal"
+                               href="fpStudentScore?banjiid=${banji.ID}">成绩导入</a>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
+
             </table>
-        </div>
+            <c:if test="${nopage==null}">
+                <w:pager pageNo="${pageNo}" recordCount="${counts}" pageSize="10" url="banjiList"></w:pager>
+            </c:if>
+
+                </div>
 
     </div>
+
 </div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="w" uri="http://javacrazyer.iteye.com/tags/pager" %>
 <html>
 <head>
     <%--<c:import url="../../common/pc/include.jsp"></c:import>--%>
@@ -20,7 +21,7 @@
         <!--右侧内容-->
         <div class="col-md-10" style="background: #fffcfa" >
 
-            <a class="large blue button f-ml20 f-mt20" data-toggle="modal" data-target="#addModal" href="addUser">新增用户</a>
+            <a class="large blue button f-ml5 f-mt20" data-toggle="modal" data-target="#addModal" href="addUser">新增用户</a>
             <!-- Modal -->
             <div class="modal fade" id="addModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
                 <div class="modal-dialog" role="document">
@@ -30,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="panel-body" style="padding-bottom:0px;">
+            <div class="panel-body" style="padding-bottom:0px;padding-top: 10px;padding-left: 0px">
                 <div class="panel panel-default">
                     <div class="panel-heading">查询条件</div>
                     <div class="panel-body">
@@ -64,7 +65,7 @@
 
 
                 </div>
-                <table id="tb_roles" data-toggle="table">
+                <table id="tb_roles" class="table table-hover">
                     <thead>
                     <th data-valign="middle" data-align="center">登录名</th>
                     <th data-valign="middle" data-align="center">用户名</th>
@@ -99,6 +100,7 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                 <w:pager pageNo="${pageNo}" recordCount="${counts}" pageSize="${pagesize}" url="userList"></w:pager>
             </div>
 
         </div>

@@ -93,8 +93,11 @@
 
                 </tbody>
             </table>
+
+            <w:pager pageNo="${pageindex}" recordCount="${counts}" pageSize="${pagesize}" url="studentList"></w:pager>
+
             <%--当前页数 总共数量 一页显示多少条--%>
-            <w:pager pageNo="${pageShow.pageIndex}" recordCount="${pageShow.count}" pageSize="${pageShow.pageCount}" url="studentList"></w:pager>
+
         </div>
 
     </div>

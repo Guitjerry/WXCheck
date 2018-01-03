@@ -6,9 +6,13 @@ import com.xiaoyuan.service.TmResourceService;
 import com.xiaoyuan.service.TmUserClassKemuService;
 import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.service.TmUserService;
+import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,7 +102,7 @@ public class TmUserController {
      * 用户列表
      */
     @RequestMapping("/userList")
-    private String userList(HttpServletRequest request,String msg,String txt_search_account,String txt_search_name,String txt_search_phone){
+    private String userList(HttpServletRequest request,String msg,String txt_search_account,String txt_search_name,String txt_search_phone,Integer pageNo){
         request.setAttribute("msg",msg);
         int userid = Integer.valueOf(request.getSession().getAttribute("userid").toString());
         List<TmRole> tmRoles = tmUserRoleService.findAllRoleByUserId(userid);
@@ -107,10 +111,16 @@ public class TmUserController {
                 request.setAttribute("admin","yes");
             }
         }
+        pageNo= pageNo==null?1:pageNo;
+          long counts =  tmUserRepository.count();
+          Pageable pageable = new PageRequest(pageNo-1, Const.PAGE_SIZE);
+//        Page<TmUser> pageBean = tmUserRepository.findAll(pageable);
 
-
-        List<TmUser> tmUsers = tmUserService.findAllByaccountAndNameAndPhone(txt_search_account,txt_search_name,txt_search_phone);
+        List<TmUser> tmUsers = tmUserService.findAllByaccountAndNameAndPhone(txt_search_account,txt_search_name,txt_search_phone,pageable,pageNo);
         request.setAttribute("tmUsers",tmUsers);
+        request.setAttribute("counts",counts);
+        request.setAttribute("pageNo",pageNo);
+        request.setAttribute("pagesize",Const.PAGE_SIZE);
         request.setAttribute("txt_search_account",txt_search_account);
         request.setAttribute("txt_search_name",txt_search_name);
         request.setAttribute("txt_search_phone",txt_search_phone);

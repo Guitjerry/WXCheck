@@ -3,6 +3,7 @@ package com.xiaoyuan.controller;
 import com.xiaoyuan.entity.*;
 import com.xiaoyuan.respository.*;
 import com.xiaoyuan.service.TmResourceService;
+import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.service.TmUserService;
 import com.xiaoyuan.util.ExcelConfig;
 import com.xiaoyuan.util.JsonUtilTemp;
@@ -46,6 +47,8 @@ public class InitController {
     private TmUserRepository tmUserRepository;
     @Autowired
     private TmUserService tmUserService;
+    @Autowired
+    private TmUserRoleService tmUserRoleService;
     public List<Object> commonImportBack(InputStream in,String filename,String configxml,String tablename,Object target){
         List<Object> reportExcelDatas = new ArrayList<Object>();
 
@@ -228,7 +231,7 @@ public class InitController {
     @RequestMapping(value = "/resetPassword")
     public String resetPassword(HttpServletRequest request,HttpServletResponse response,String userid){
         String url = request.getContextPath();
-        return "resetPassword";
+        return "init/resetPassword";
     }
     @RequestMapping(value = "/resetPasswordSure")
     public void resetPasswordSure(HttpServletRequest request,HttpServletResponse response,Integer userid,String oldpassword,String newpassword){
@@ -282,6 +285,14 @@ public class InitController {
        if(tmUsers!=null&&tmUsers.size()>0){
            request.getSession().setAttribute("username",tmUsers.get(0).getName());
            request.getSession().setAttribute("userid",tmUsers.get(0).getId());
+           boolean flag = false;
+           List<TmRole> tmRoles = tmUserRoleService.findAllRoleByUserId(tmUsers.get(0).getId());
+           for(TmRole tmRole:tmRoles) {
+               if ("admin".equals(tmRole.getCode())) {
+                   flag = true;
+               }
+           }
+           request.getSession().setAttribute("adminRole",flag);//纪录是否admin权限账户登录
            JsonUtilTemp.returnSucessJson(response,"成功登录系统");
        }else{
            JsonUtilTemp.returnFailJson(response,"账户或者密码错误!");

@@ -57,8 +57,8 @@ public class WxInitController {
          List<String> scorenianjiindex = tmUserScoreService.findNianjiIndex(usercode);
          for(int i=0;i<tmUserScores.size();i++){
              TmUserScore tmUserScore = tmUserScores.get(i);
-             tmUserScore.setBanjiindex(String.valueOf(scorebanjiindex.get(i)));
-             tmUserScore.setNianjiindex(String.valueOf(scorenianjiindex.get(i)));
+             tmUserScore.setBanjiindexs(String.valueOf(scorebanjiindex.get(i)));
+             tmUserScore.setNianjiindexs(String.valueOf(scorenianjiindex.get(i)));
              alltmUserScores.add(tmUserScore);
          }
         request.setAttribute("tmUserScores",alltmUserScores);

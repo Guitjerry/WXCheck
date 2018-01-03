@@ -32,9 +32,9 @@ public class Const {
     }
     public enum NianjiArray{
 
-        ONE(1,"高中一年级"),
-        TWO(2,"高中二年级"),
-        Three(3,"高中三年级");
+        ONE(1,"七年级"),
+        TWO(2,"八年级"),
+        Three(3,"九年级");
 
         private int code;
         private String name;
@@ -102,7 +102,7 @@ public class Const {
     public void setArr_sex(String[] arr_sex) {
         this.arr_sex = arr_sex;
     }
-    public static  final Integer PAGE_SIZE=5;
+    public static  final Integer PAGE_SIZE=10;
     public static final String ROLE_ADMIN = "admin";//管理员
     public static final String ROLE_BANZHUREN = "banzhuren";//班主任
     public static final String ROLE_XINGZHENG = "xingzheng";//行政人员

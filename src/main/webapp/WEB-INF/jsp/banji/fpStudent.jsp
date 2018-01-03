@@ -23,8 +23,8 @@
     </div>
     <table id="CheckResultTable" style="display: none">
         <thead>
-            <th>学生名称</th>
             <th>学生编码</th>
+            <th>学生名称</th>
         </thead>
         <tbody>
 

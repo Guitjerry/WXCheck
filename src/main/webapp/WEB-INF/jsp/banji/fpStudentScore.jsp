@@ -24,15 +24,19 @@
     </div>
     <table id="CheckResultTable" style="display: none">
         <thead>
-        <th>年级</th>
         <th>班级</th>
-        <th>任课老师</th>
-        <th>科目</th>
         <th>考试名称</th>
-        <th>分数</th>
-        <th>等级</th>
         <th>学生姓名</th>
         <th>学生编码</th>
+        <th>语文</th>
+        <th>数学</th>
+        <th>外语</th>
+        <th>道德与法治(九年级为思想品德)</th>
+        <th>物理</th>
+        <th>化学</th>
+        <th>历史</th>
+        <th>地理</th>
+        <th>生物</th>
 
         </thead>
         <tbody>

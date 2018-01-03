@@ -30,7 +30,7 @@ public class TmStudent {
     private String phone;
     @Column(name = "PASSWORD")
     private String password;
-    @Transient
+    @Column(name = "banjiname")
     private String banjiname;//班级名称
 
     public String getPassword() {

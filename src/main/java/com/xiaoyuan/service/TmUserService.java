@@ -1,6 +1,7 @@
 package com.xiaoyuan.service;
 
 import com.xiaoyuan.entity.TmUser;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,5 +18,5 @@ public interface TmUserService {
      * @param phone
      * @return
      */
-    public List<TmUser> findAllByaccountAndNameAndPhone(String account,String name,String phone);
+    public List<TmUser> findAllByaccountAndNameAndPhone(String account, String name, String phone, Pageable pageable, Integer pageNo);
 }

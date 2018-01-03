@@ -1,15 +1,22 @@
 package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.*;
+import com.xiaoyuan.pager.PageBean;
 import com.xiaoyuan.respository.*;
+import com.xiaoyuan.service.TmBanJiService;
 import com.xiaoyuan.service.TmStudentService;
+import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.service.TmUserScoreService;
+import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.ExcelConfig;
 import com.xiaoyuan.util.JsonUtilTemp;
 import com.xiaoyuan.util.JxlExcelUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,6 +56,10 @@ public class TmBanjiMainController {
     private TmUserScoreService tmUserScoreService;
     @Autowired
     private TmUserScoreRepository tmUserScoreRepository;
+    @Autowired
+    private TmUserRoleService tmUserRoleService;
+    @Autowired
+    private TmBanJiService tmBanJiService;
 
     /**
      * 班级分配学生
@@ -83,14 +94,25 @@ public class TmBanjiMainController {
      * 班级列表
      */
     @RequestMapping("/banjiList")
-    private String userList(HttpServletRequest request, String msg,String txt_search_name){
+    private String userList(HttpServletRequest request, String msg,String txt_search_name,Integer pageNo){
         request.setAttribute("msg",msg);
-        List<TmBanJi> tmBanJis = tmBanjiRepository.findAllByname(txt_search_name);
-        if(StringUtils.isEmpty(txt_search_name)){
-            tmBanJis = tmBanjiRepository.findAll();
+        pageNo = pageNo==null?1:pageNo;
+        int userid = Integer.valueOf(request.getSession().getAttribute("userid").toString());
+        //获取当前用户权限
+        Boolean role = (Boolean) request.getSession().getAttribute("adminRole");
+        long counts =  tmBanjiRepository.count();
+        if(role){
+            Pageable pageable = new PageRequest(pageNo-1,Const.PAGE_SIZE);
+            Page<TmBanJi> pageBean = tmBanjiRepository.findAll(pageable);
+            request.setAttribute("pageNo",pageNo);
+            request.setAttribute("counts",counts);
+            request.setAttribute("tmBanJis",pageBean.getContent());
+            request.setAttribute("txt_search_name",txt_search_name);
+            return "banji/list";
         }
+        List<TmBanJi> tmBanJis = tmBanJiService.findAllBanjiByUserId(userid);
         request.setAttribute("tmBanJis",tmBanJis);
-        request.setAttribute("txt_search_name",txt_search_name);
+        request.setAttribute("nopage",true);
         return "banji/list";
     }
     @RequestMapping("addBanji")
@@ -176,13 +198,17 @@ public class TmBanjiMainController {
                 if(StringUtils.isEmpty(tmUserScore.getName())){
                     errornote = "学生姓名不能为空";
                 }
-                if(StringUtils.isEmpty(tmUserScore.getStudentcode())){
-                    errornote = "学生编码不能为空";
+                if(StringUtils.isEmpty(tmUserScore.getSchoolClass())){
+                    errornote = "班级不能为空";
+                }
+
+                if(StringUtils.isEmpty(tmUserScore.getSchoolTest())){
+                    errornote = "考试名称不能为空";
                 }
 
 
-
                 ttScorceImportVo.setName(tmUserScore.getName());
+                ttScorceImportVo.setSchoolclass(tmUserScore.getSchoolClass());
                 if(!StringUtils.isEmpty(errornote)){
                     ttScorceImportVo.setNote(errornote);
                     ttScorceImportVos.add(ttScorceImportVo);

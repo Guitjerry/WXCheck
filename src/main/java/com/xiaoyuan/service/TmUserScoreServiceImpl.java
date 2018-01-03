@@ -146,7 +146,7 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
 
     @Override
     public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid) {
-       StringBuffer hql = new StringBuffer("select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count  from  tm_user_score a  ");
+       StringBuffer hql = new StringBuffer("select distinct a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count  from  tm_user_score a  ");
         hql.append("INNER JOIN tm_banji e on a.school_class = e.name ");
         hql.append("INNER JOIN tm_user_class_kemu f on e.id=f.class_id ");
         hql.append("INNER JOIN tm_user u on u.id=f.user_id and u.id=?1 ");

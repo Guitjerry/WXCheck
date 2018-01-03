@@ -2,6 +2,7 @@ package com.xiaoyuan.service;
 
 import com.xiaoyuan.entity.TmUser;
 import com.xiaoyuan.util.MD5Util;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -41,16 +42,16 @@ public class TmUserServiceImpl implements TmUserService {
         return query.getResultList();
 
     }
-    public List<TmUser> findAllByaccountAndNameAndPhone(String account,String name,String phone) {
-        StringBuffer hql = new StringBuffer(" select a.account,a.name,a.email,a.phone,c.code,a.id from TM_USER a,TM_USER_ROLE b,TM_ROLE c  where a.id=b.user_id and b.role_id = c.id ");
+    public List<TmUser> findAllByaccountAndNameAndPhone(String account, String name, String phone, Pageable pageable,Integer pageNo) {
+        StringBuffer hql = new StringBuffer(" select a.account,a.name,a.email,a.phone,c.code,a.id from TM_USER a left join TM_USER_ROLE b on a.id=b.user_id left join TM_ROLE c  on b.role_id = c.id where 1=1 ");
         if (!StringUtils.isEmpty(account)) {
-            hql.append(" and account=?1");
+            hql.append(" and a.account=?1");
         }
         if (!StringUtils.isEmpty(name)) {
-            hql.append(" and name=?2");
+            hql.append(" and a.name=?2");
         }
         if (!StringUtils.isEmpty(phone)) {
-            hql.append(" and phone like ?3");
+            hql.append(" and a.phone like ?3");
         }
         Query query = em.createNativeQuery(hql.toString());
         if (!StringUtils.isEmpty(account)) {
@@ -63,6 +64,8 @@ public class TmUserServiceImpl implements TmUserService {
             query.setParameter(3, "%"+phone+"%");
         }
         List<TmUser> tmUsers = new ArrayList<>();
+        query.setFirstResult((pageNo-1)*pageable.getPageSize());
+        query.setMaxResults(pageable.getPageSize());
         List<Object[]> objects = query.getResultList();
        for(Object[] obj:objects){
            TmUser tmUser = new TmUser();
@@ -70,16 +73,23 @@ public class TmUserServiceImpl implements TmUserService {
           String myname =  obj[1].toString();
           String myemail =  obj[2].toString();
           String myphone =  obj[3].toString();
-          String mycode =  obj[4].toString();
+           if(obj[4]!=null){
+               String mycode =  obj[4].toString();
+               tmUser.setCode(mycode);
+           }
+
           String id =  obj[5].toString();
+
            tmUser.setAccount(myaccount);
            tmUser.setName(myname);
            tmUser.setEmail(myemail);
            tmUser.setPhone(myphone);
-           tmUser.setCode(mycode);
+
+
            tmUser.setId(Integer.valueOf(id));
            tmUsers.add(tmUser);
        }
+
        return tmUsers;
     }
 }

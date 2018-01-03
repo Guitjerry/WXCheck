@@ -1,6 +1,7 @@
 package com.xiaoyuan.controller;
 
 import com.xiaoyuan.entity.TmBanJi;
+import com.xiaoyuan.entity.TmRole;
 import com.xiaoyuan.entity.TmStudent;
 import com.xiaoyuan.entity.TmUser;
 import com.xiaoyuan.pager.PageBean;
@@ -8,6 +9,7 @@ import com.xiaoyuan.pager.PageShow;
 import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmStudentRepository;
 import com.xiaoyuan.service.TmStudentService;
+import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.util.Const;
 import com.xiaoyuan.util.JsonUtilTemp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,31 +33,7 @@ public class TmStudentMainController {
     private TmStudentService tmStudentService;
     @Autowired
     private TmBanjiRepository tmBanjiRepository;
-    /**
-     * 分页查询
-     * @param currentPage 当前页号：现在显示的页数
-     * @param pageSize 每页显示的记录条数
-     * @return 封闭了分页信息(包括记录集list)的Bean
-     * */
-//    public Page queryForPage(int currentPage, int pageSize) {
-//        // TODO Auto-generated method stub
-//
-//        PageBean<TmStudent> page =new PageBean<>();
-//        page.init();
-//        //总记录数
-//        int allRow = page.getCount();
-//        //当前页开始记录
-//        int offset =page.getPageSize();
-////        //分页查询结果集
-////        List<Course> list = courseDao.queryForPage(offset, pageSize);
-//
-//        page.setPageIndex(currentPage);
-//        page.setPageSize(pageSize);
-//        page.setTotalRecords(allRow);
-//        page.setList(list);
-//
-//        return page;
-//    }
+    private TmUserRoleService tmUserRoleService;
 
     @SuppressWarnings("unchecked")
     /**
@@ -66,16 +44,35 @@ public class TmStudentMainController {
         request.setAttribute("msg",msg);
         request.setAttribute("txt_search_name",txt_search_name);
         request.setAttribute("usercode",usercode);
-        //初始化pageable
+        //获取当前用户权限
+        Boolean flag = (Boolean) request.getSession().getAttribute("adminRole");
+        String userid = request.getSession().getAttribute("userid").toString();
         pageNo=pageNo==null?1:pageNo;
-        //根据当前页，每页显示数量返回bean
-        PageBean<TmStudent> tmStudentPageBean = tmStudentService.findAllStudent(pageNo,Const.PAGE_SIZE,txt_search_name,usercode);
-        if(tmStudentPageBean!=null){
-            List<TmStudent> tmStudents = tmStudentPageBean.getList();
-            request.setAttribute("tmStudents",tmStudents);
-            request.setAttribute("pageShow",tmStudentPageBean);
+//        if(flag){
+//
+//
+//            //根据当前页，每页显示数量返回bean
+//            PageBean<TmStudent> tmStudentPageBean = tmStudentService.findAllStudent(pageNo,Const.PAGE_SIZE,txt_search_name,usercode);
+//            if(tmStudentPageBean!=null){
+//                List<TmStudent> tmStudents = tmStudentPageBean.getList();
+//                request.setAttribute("tmStudents",tmStudents);
+//                request.setAttribute("pageShow",tmStudentPageBean);
+//            }
+//            return "student/list";
+//        }
+        Pageable pageable = new PageRequest(pageNo,Const.PAGE_SIZE);
+        Long counts =0L;
+        if(flag){
+            counts = tmStudentRepository.count();
+        }else{
+            counts = tmStudentService.findAllCountByUserid(txt_search_name,usercode,Integer.valueOf(userid));
         }
 
+        List<TmStudent> tmStudents = tmStudentService.findAllStudentByName(pageable,txt_search_name,usercode,Integer.valueOf(userid),flag);
+        request.setAttribute("tmStudents",tmStudents);
+        request.setAttribute("counts",counts);
+        request.setAttribute("pageNo",pageNo);
+        request.setAttribute("pagesize",Const.PAGE_SIZE);
         return "student/list";
     }
     @RequestMapping("addStudent")
