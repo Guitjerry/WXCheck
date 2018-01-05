@@ -152,7 +152,7 @@ public class TmStudentServiceImpl implements TmStudentService{
         return tmStudents;
     }
     public Long findAllCountByUserid(String name, String usercode,Integer userid){
-        StringBuffer sql = new StringBuffer("select count(*) from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID ");
+        StringBuffer sql = new StringBuffer("select count(*) from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID and c.KEMU_ID=0");
         if(userid!=null&&userid>0){
             sql.append(" and c.USER_ID=?1");
         }
@@ -166,7 +166,7 @@ public class TmStudentServiceImpl implements TmStudentService{
     @Override
     public List<TmStudent> findAllStudentByName(Pageable pageable, String name, String usercode,Integer userid,Boolean flag) {
         List<TmStudent> tmStudents = new ArrayList<>();
-        StringBuffer hql = new StringBuffer("select u.* from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID ");
+        StringBuffer hql = new StringBuffer("select u.* from TM_STUDENT u,TM_USER_CLASS_KEMU c where  u.BANJIID=c.CLASS_ID AND C.KEMU_ID=0");
         //admin去除权限限制
         if(!flag){
             if(userid!=null&&userid>0){

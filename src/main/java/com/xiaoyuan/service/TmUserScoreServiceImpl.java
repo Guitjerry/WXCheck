@@ -148,13 +148,34 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
     public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid) {
        StringBuffer hql = new StringBuffer("select distinct a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count  from  tm_user_score a  ");
         hql.append("INNER JOIN tm_banji e on a.school_class = e.name ");
-        hql.append("INNER JOIN tm_user_class_kemu f on e.id=f.class_id ");
-        hql.append("INNER JOIN tm_user u on u.id=f.user_id and u.id=?1 ");
+        hql.append("INNER JOIN TM_STUDENT s on s.BANJIID = e.ID ");
+        if(!StringUtils.isEmpty(name)){
+            hql.append(" and s.NAME=?1 ");
+        }
+        if(!StringUtils.isEmpty(studentcode)){
+            hql.append(" and s.USERCODE=?2 ");
+        }
+        if(!StringUtils.isEmpty(schoolclass)){
+            hql.append(" and s.banjiname=?3 ");
+        }
+        hql.append("INNER JOIN tm_user_class_kemu f on e.id=f.class_id and f.kemu_id=0 ");
+        hql.append("INNER JOIN tm_user u on u.id=f.user_id and u.id=?4 ");
         hql.append("INNER JOIN tm_user_role c on f.user_id=c.user_id ");
         hql.append("INNER JOIN tm_role d on c.role_id =d.id order by a.sum_count desc");
+
         Query query = em.createNativeQuery(hql.toString(),TmUserScore.class);
+        if(!StringUtils.isEmpty(name)){
+           query.setParameter(1,name);
+        }
+        if(!StringUtils.isEmpty(studentcode)){
+            query.setParameter(2,studentcode);
+        }
+        if(!StringUtils.isEmpty(schoolclass)){
+            query.setParameter(3,schoolclass);
+        }
+
         if(userid!=null){
-           query.setParameter(1,userid);
+           query.setParameter(4,userid);
         }
         return query.getResultList();
     }

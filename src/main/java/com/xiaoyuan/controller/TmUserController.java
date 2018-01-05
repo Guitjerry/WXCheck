@@ -48,6 +48,8 @@ public class TmUserController {
     private TmUserClassKemuService tmUserClassKemuService;
     @Autowired
     private TmUserClassKemuRepository tmUserClassKemuRepository;
+    @Autowired
+    private TmKemuRepository tmKemuRepository;
     @RequestMapping("addUser")
     private String addUser(HttpServletResponse response){
 
@@ -187,6 +189,45 @@ public class TmUserController {
         request.setAttribute("userid",userid);
         return "user/fpbanji";
     }
+    /**
+     * 分配科目
+     */
+    @RequestMapping("fpkemu")
+    private String fpkemu(HttpServletRequest request,Integer userid){
+        List<TmUserClassKemu> tmUserClassKemus = tmUserClassKemuRepository.findAllByUserId(userid);
+        if(tmUserClassKemus.size()==0){
+            request.setAttribute("noclass",true);
+            return "user/fpkemu";
+        }
+        //所有的科目
+        List<TmKemu> tmKemus = tmKemuRepository.findAll();
+        request.setAttribute("tmKemus",tmKemus);
+        request.setAttribute("userid",userid);
+
+        //分配的班级
+//        List<TmBanJi> tmBanJis =  tmUserClassKemuService.findAllByUserId(userid);
+        List<TmBanJi> tmBanJis =  tmBanjiRepository.findAll();
+        request.setAttribute("tmBanJis",tmBanJis);
+
+        StringBuffer bindKemu = new StringBuffer();
+        List<UserKemuVo> userKemuVos = tmUserClassKemuService.findAllVoByUserId(userid,null);
+        for(UserKemuVo userKemuVo:userKemuVos){
+            bindKemu.append("班级:"+userKemuVo.getClassName()+", 科目:"+userKemuVo.getKemuName()+"\n");
+        }
+        request.setAttribute("bindKemu",bindKemu);
+
+//        //选中的科目
+//        List<TmUserClassKemu> selectTmkemus = new ArrayList<>();
+//        for(TmUserClassKemu tmUserClassKemu:tmUserClassKemus){
+//            if(tmUserClassKemu.getKemuId()>0){
+//                selectTmkemus.add(tmUserClassKemu);
+//            }
+//        }
+//        request.setAttribute("selectTmkemus",selectTmkemus);
+
+
+        return "user/fpKemu";
+    }
 
     @RequestMapping("userToRole")
     private void userToRole(HttpServletResponse response,Integer userid,@RequestParam(value = "roleids[]")String[] roleids){
@@ -216,6 +257,44 @@ public class TmUserController {
 
 
     }
+
+
+    @RequestMapping("userToKemu")
+    private void userToKemu(HttpServletResponse response,Integer userid,Integer kemuid,Integer banjiid){
+
+        if(StringUtils.isEmpty(kemuid)){
+            JsonUtilTemp.returnFailJson(response,"至少需要选择一个科目");
+        }
+        //根据userid,kemuid查找数据，删除在添加
+        List<Integer> banjiIds = new ArrayList<>();
+        List<TmUserClassKemu> existsKemu = tmUserClassKemuService.findAllByUserIdAndKemuId(userid,kemuid,banjiid);
+        for(TmUserClassKemu tmUserClassKemu:existsKemu){
+            tmUserClassKemuRepository.delete(tmUserClassKemu);
+
+        }
+        try{
+            if(StringUtils.isEmpty(banjiid)){
+                JsonUtilTemp.returnFailJson(response,"请选择一个班级");
+            }
+            if(StringUtils.isEmpty(kemuid)){
+                JsonUtilTemp.returnFailJson(response,"请选择一个科目");
+            }
+            TmUserClassKemu tmUserClassKemu = new TmUserClassKemu();
+            tmUserClassKemu.setClassId(banjiid);
+            tmUserClassKemu.setCreatdate(new Date());
+            tmUserClassKemu.setKemuId(kemuid);
+            tmUserClassKemu.setUserId(userid);
+            tmUserClassKemuRepository.save(tmUserClassKemu);
+            JsonUtilTemp.returnSucessJson(response,"分配科目成功");
+
+        }catch (Exception e){
+            JsonUtilTemp.returnFailJson(response,"分配科目失败:"+e.getMessage());
+        }
+
+
+    }
+
+
 
     @RequestMapping("userToBanji")
     private void userToBanji(HttpServletResponse response,Integer userid,@RequestParam(value = "banjiids[]")String[] banjiids){

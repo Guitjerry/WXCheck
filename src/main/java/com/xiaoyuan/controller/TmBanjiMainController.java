@@ -147,6 +147,7 @@ public class TmBanjiMainController {
     @RequestMapping("editBanjiSure")
     private void editBanjiSure(HttpServletResponse response, TmBanJi tmBanJi){
       if(tmBanJi!=null&&tmBanJi.getID()>0){
+          tmBanJi.setName(tmBanJi.getName().trim());
           tmBanjiRepository.saveAndFlush(tmBanJi);
           JsonUtilTemp.returnSucessJson(response,"更新班级成功");
       }

@@ -43,7 +43,7 @@ public class TmUserServiceImpl implements TmUserService {
 
     }
     public List<TmUser> findAllByaccountAndNameAndPhone(String account, String name, String phone, Pageable pageable,Integer pageNo) {
-        StringBuffer hql = new StringBuffer(" select a.account,a.name,a.email,a.phone,c.code,a.id from TM_USER a left join TM_USER_ROLE b on a.id=b.user_id left join TM_ROLE c  on b.role_id = c.id where 1=1 ");
+        StringBuffer hql = new StringBuffer(" select distinct a.account,a.name,a.email,a.phone,c.code,a.id from TM_USER a left join TM_USER_ROLE b on a.id=b.user_id left join TM_ROLE c  on b.role_id = c.id where 1=1 ");
         if (!StringUtils.isEmpty(account)) {
             hql.append(" and a.account=?1");
         }

@@ -1,13 +1,11 @@
 package com.xiaoyuan.controller;
 
-import com.xiaoyuan.entity.TmBanJi;
-import com.xiaoyuan.entity.TmKemu;
-import com.xiaoyuan.entity.TmZuoYe;
-import com.xiaoyuan.entity.ZuoyeVo;
+import com.xiaoyuan.entity.*;
 import com.xiaoyuan.respository.TmBanjiRepository;
 import com.xiaoyuan.respository.TmKemuRepository;
 import com.xiaoyuan.respository.TmZuoYeRepository;
 import com.xiaoyuan.service.TmKemuService;
+import com.xiaoyuan.service.TmUserClassKemuService;
 import com.xiaoyuan.service.TmZuoyeService;
 import com.xiaoyuan.util.JsonUtilTemp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -31,6 +30,8 @@ public class TmZuoYeController {
     private TmZuoYeRepository tmZuoYeRepository;
     @Autowired
     private TmZuoyeService tmZuoyeService;
+    @Autowired
+    private TmUserClassKemuService tmUserClassKemuService;
     @RequestMapping(value = "index")
     public String index(HttpServletRequest request,String msg){
         List<TmBanJi> tmBanJiList = tmBanjiRepository.findAll();
@@ -69,7 +70,23 @@ public class TmZuoYeController {
 
     @RequestMapping(value = "selectKemuByBanji")
     public void selectKemuByBanji(HttpServletRequest request, HttpServletResponse response,String msg, Integer banjiid){
-        List<TmKemu> tmKemus = tmKemuService.selectKemuByBanji(banjiid);
+        //获取当前用户权限
+        Boolean flag = (Boolean) request.getSession().getAttribute("adminRole");
+        String userid = request.getSession().getAttribute("userid").toString();
+        List<TmKemu> tmKemus = new ArrayList<>();
+        if(flag){
+            tmKemus = tmKemuService.selectKemuByBanji(banjiid);
+        }else{
+            //查询任课教师的科目
+            List<UserKemuVo> userKemuVos =  tmUserClassKemuService.findAllVoByUserId(Integer.valueOf(userid),banjiid);
+            for(UserKemuVo userKemuVo:userKemuVos){
+                TmKemu tmKemu = new TmKemu();
+                tmKemu.setId(userKemuVo.getKemuId());
+                tmKemu.setName(userKemuVo.getKemuName());
+                tmKemus.add(tmKemu);
+            }
+
+        }
         JsonUtilTemp.returnJson(tmKemus,response);
     }
 
@@ -81,7 +98,11 @@ public class TmZuoYeController {
         request.setAttribute("msg",msg);
 //        List<TmZuoYe> tmZuoYes = tmZuoYeRepository.findAll();
 //        request.setAttribute("tmZuoYes",tmZuoYes);
-        List<ZuoyeVo> zuoyeVos =  tmZuoyeService.listAllZuoye(txt_search_kemu,txt_search_banji);
+        Boolean flag = (Boolean) request.getSession().getAttribute("adminRole");
+        String userid = request.getSession().getAttribute("userid").toString();
+        //判断是否传userid
+        Integer quuserid = flag==true?null:Integer.valueOf(userid);
+        List<ZuoyeVo> zuoyeVos =  tmZuoyeService.listAllZuoye(txt_search_kemu,txt_search_banji,quuserid);
         request.setAttribute("zuoyeVos",zuoyeVos);
         request.setAttribute("txt_search_kemu",txt_search_kemu);
         request.setAttribute("txt_search_banji",txt_search_banji);
@@ -105,14 +126,25 @@ public class TmZuoYeController {
         JsonUtilTemp.returnSucessJson(response,"更新作业成功");
     }
     @RequestMapping("addZuoye")
-    private String addBanji(HttpServletResponse response,HttpServletRequest request){
-        List<TmBanJi> tmBanJiList = tmBanjiRepository.findAll();
-        request.setAttribute("tmBanJiList",tmBanJiList);
+    private String addZuoye(HttpServletResponse response,HttpServletRequest request){
+
+        //获取当前用户权限
+        Boolean flag = (Boolean) request.getSession().getAttribute("adminRole");
+        String userid = request.getSession().getAttribute("userid").toString();
+        if(flag){
+            List<TmBanJi> tmBanJiList = tmBanjiRepository.findAll();
+            request.setAttribute("tmBanJiList",tmBanJiList);
+            return "zuoye/addZuoye";
+        }
+
+        //非admin，查询出相关的科任教师
+        List<TmBanJi> tmBanJis =  tmUserClassKemuService.findAllBanjiByUserId(Integer.valueOf(userid));
+        request.setAttribute("tmBanJiList",tmBanJis);
         return "zuoye/addZuoye";
     }
 
-    @RequestMapping("addBanjiSure")
-    private void addBanjiSure(HttpServletResponse response, TmZuoYe tmZuoYe){
+    @RequestMapping("addZuoyeSure")
+    private void addZuoyeSure(HttpServletResponse response, TmZuoYe tmZuoYe){
         if(tmZuoYe!=null){
             tmZuoYeRepository.save(tmZuoYe);
         }

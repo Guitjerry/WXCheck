@@ -17,21 +17,27 @@ public class TmZuoyeServiceImpl implements TmZuoyeService {
     @PersistenceContext
     protected EntityManager em;
     @Override
-    public List<ZuoyeVo> listAllZuoye(String kemuname,String banjiname) {
+    public List<ZuoyeVo> listAllZuoye(String kemuname,String banjiname,Integer userid) {
         List<ZuoyeVo> zuoyeVos = null;
-        StringBuffer hql = new StringBuffer(" select new com.xiaoyuan.entity.ZuoyeVo(d.kemuid,d.id as zuoyeid,a.ID as banjiid, d.task,b.name as kemuname,a.name as banjiname) from  TmBanJi a, TmKemu b,TmBanjiKemu c,TmZuoYe d where a.id=c.banjiid and b.id=c.kemuid and a.id=d.banjiid and b.id=d.kemuid");
+        StringBuffer hql = new StringBuffer(" select new com.xiaoyuan.entity.ZuoyeVo(d.kemuid,d.id as zuoyeid,a.ID as banjiid, d.task,b.name as kemuname,a.name as banjiname) from  TmBanJi a, TmKemu b,TmUserClassKemu c,TmZuoYe d where a.id=c.classId and b.id=c.kemuId and a.id=d.banjiid  and c.kemuId>0 ");
+        if(userid!=null&&userid>0){
+            hql.append(" and c.userId=?1");
+        }
         if(!StringUtils.isEmpty(kemuname)){
-            hql.append(" and b.name=?1");
+            hql.append(" and b.name=?2");
         }
         if(!StringUtils.isEmpty(banjiname)){
-            hql.append(" and a.name=?2");
+            hql.append(" and a.name=?3");
         }
         Query query = em.createQuery(hql.toString());
+        if(userid!=null&&userid>0){
+            query.setParameter(1,userid);
+        }
         if(!StringUtils.isEmpty(kemuname)){
-            query.setParameter(1,kemuname);
+            query.setParameter(2,kemuname);
         }
         if(!StringUtils.isEmpty(banjiname)){
-            query.setParameter(2,banjiname);
+            query.setParameter(3,banjiname);
         }
         zuoyeVos = query.getResultList();
         return zuoyeVos;
