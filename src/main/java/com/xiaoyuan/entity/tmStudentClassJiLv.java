@@ -1,14 +1,13 @@
 package com.xiaoyuan.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
  * 学生纪律
  */
+@Entity
+@Table(name = "TM_STUDENTCLASS_JILV")
 public class tmStudentClassJiLv {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Id
