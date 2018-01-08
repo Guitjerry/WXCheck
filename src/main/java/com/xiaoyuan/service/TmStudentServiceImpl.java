@@ -197,8 +197,11 @@ public class TmStudentServiceImpl implements TmStudentService{
                 query.setParameter(1,userid);
             }
         }
-        query.setFirstResult((pageable.getPageNumber()-1)*(pageable.getPageSize()));
-        query.setMaxResults(pageable.getPageSize());
+        if(pageable!=null){
+            query.setFirstResult((pageable.getPageNumber()-1)*(pageable.getPageSize()));
+            query.setMaxResults(pageable.getPageSize());
+        }
+
         return query.getResultList();
     }
 

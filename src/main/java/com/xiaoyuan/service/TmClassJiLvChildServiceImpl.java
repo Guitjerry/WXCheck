@@ -22,4 +22,9 @@ public class TmClassJiLvChildServiceImpl implements TmClassJiLvChildService {
         Query query = em.createQuery(hql,TmClassJiLvChild.class);
         return query.getResultList();
     }
+    public List<TmClassJiLvChild> findAllByType() {
+        String hql = " select new com.xiaoyuan.entity.TmClassJiLvChild(b.id,b.name,b.JLId,a.type,a.name as parentname) from TmClassJiLv a,TmClassJiLvChild b where a.id=b.JLId and a.type=1 ";
+        Query query = em.createQuery(hql,TmClassJiLvChild.class);
+        return query.getResultList();
+    }
 }

@@ -10,4 +10,5 @@ import java.util.List;
  */
 public interface TmClassJiLvChildService {
     public List<TmClassJiLvChild> findAll();
+    public List<TmClassJiLvChild> findAllByType();
 }

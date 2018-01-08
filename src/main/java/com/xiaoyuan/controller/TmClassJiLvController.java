@@ -27,7 +27,7 @@ public class TmClassJiLvController {
      *  科目列表
      */
     @RequestMapping("/jilvList")
-    private String kemuList(HttpServletRequest request, String msg, Integer pageNo){
+    private String jilvList(HttpServletRequest request, String msg, Integer pageNo){
         request.setAttribute("msg",msg);
         List<TmClassJiLv> tmClassJiLvs = tmClassJiLvRepository.findAll();
         //分页
