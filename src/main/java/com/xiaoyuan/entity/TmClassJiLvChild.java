@@ -16,6 +16,38 @@ public class TmClassJiLvChild {
     private String name;//名称
     @Column(name = "JL_ID")
     private int JLId;//主项id
+    @Transient
+    private Integer type;
+    @Transient
+    private String parentname;
+
+    public TmClassJiLvChild() {
+    }
+
+    public TmClassJiLvChild(Integer id,String name, int JLId, Integer type,String parentname) {
+        this.name = name;
+        this.JLId = JLId;
+        this.type = type;
+        this.parentname=parentname;
+        this.id=id;
+    }
+    @Transient
+    public String getParentname() {
+        return parentname;
+    }
+
+    public void setParentname(String parentname) {
+        this.parentname = parentname;
+    }
+
+    @Transient
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;

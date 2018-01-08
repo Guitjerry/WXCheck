@@ -4,6 +4,33 @@ package com.xiaoyuan.util;
  * Created by dnys on 2017/9/12.
  */
 public class Const {
+    public enum JilvArray{
+
+        ONE(1,"个人纪律"),
+        TWO(2,"班级纪律");
+
+        private int code;
+        private String name;
+
+        private JilvArray(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public int getCode() {
+            return code;
+        }
+        public void setCode(int code) {
+            this.code = code;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
     public enum DepthArray{
 
         ONE(1,"一级菜单"),
@@ -86,6 +113,9 @@ public class Const {
     }
     public static  DepthArray[] getDepthArray(){
         return Const.DepthArray.values();
+    }
+    public static  JilvArray[] getJilvArray(){
+        return Const.JilvArray.values();
     }
     public static NianjiArray[] getNianjiArray(){return Const.NianjiArray.values();}
     public static BanjiTypeArray[] getBanjiTypeArray(){return Const.BanjiTypeArray.values();}
