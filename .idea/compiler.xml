@@ -23,10 +23,20 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="wxCheck" />
+        <module name="xiaoyuan-app-eurekaserver" />
+        <module name="xiaoyuan-app-gateway" />
+        <module name="xiaoyuan-app-score" />
+        <module name="xiaoyuan-app-shop" />
+        <module name="xiaoyuanapp-eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="wxCheck" target="1.8" />
+      <module name="xiaoyuan-app-eurekaserver" target="1.8" />
+      <module name="xiaoyuan-app-gateway" target="1.8" />
+      <module name="xiaoyuan-app-score" target="1.8" />
+      <module name="xiaoyuan-app-shop" target="1.8" />
+      <module name="xiaoyuanapp-eureka-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

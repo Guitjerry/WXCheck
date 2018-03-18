@@ -25,6 +25,7 @@
     <table id="CheckResultTable" style="display: none">
         <thead>
         <th>班级</th>
+        <th>年级</th>
         <th>考试名称</th>
         <th>学生姓名</th>
         <th>学生编码</th>

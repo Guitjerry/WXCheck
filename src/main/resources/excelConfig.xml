@@ -5,18 +5,21 @@
         <column>name</column>
     </table>
     <table name="TM_USER_SCORE">
-        <column>name</column>
+
         <column>schoolClass</column>
+        <column>schoolGrade</column>
         <column>schoolTest</column>
+        <column>name</column>
         <column>studentcode</column>
-        <column>dili</column>
+        <column>yuwen</column>
+        <column>shuxue</column>
+        <column>waiyu</column>
+        <column>shixiang</column>
+        <column>wuli</column>
         <column>huaxue</column>
         <column>lishi</column>
+        <column>dili</column>
         <column>shengwu</column>
-        <column>shixiang</column>
-        <column>shuxue</column>
-        <column>wuli</column>
-        <column>yuwen</column>
     </table>
 </insertconfig>
 

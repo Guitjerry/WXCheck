@@ -20,7 +20,7 @@
 
         <!--右侧内容-->
         <div class="col-md-10" style="background: #fffcfa" >
-
+            <button class="btn btn-info "  id="button1" style="margin-top: 10px" >导出数据</button>
             <%--<a class="large blue button f-ml20 f-mt20" data-toggle="modal" data-target="#addModal" href="addStudent">新增成绩</a>--%>
             <!-- Modal -->
             <div class="modal fade" id="addModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
@@ -67,7 +67,7 @@
 
 
             </div>
-            <table id="tb_roles" class="table table-bordered  table-hover  f-ml10" >
+            <table id="CheckResultTable" class="table table-bordered  table-hover  f-ml10" >
                 <thead>
                 <th data-valign="middle" data-align="center">考试名称</th>
                 <th data-valign="middle" data-align="center">班级</th>
@@ -85,6 +85,7 @@
                 <th data-valign="middle" data-align="center">历史</th>
                 <th data-valign="middle" data-align="center">思想</th>
                 <th data-valign="middle" data-align="center">总分</th>
+                <th data-valign="middle" data-align="center">操作</th>
 
                 <%--<th data-valign="middle" data-align="center">性别</th>--%>
                 <%--<th>操作</th>--%>
@@ -109,7 +110,7 @@
                         <td>${score.shixiang}</td>
                         <td>${score.sumCount}</td>
                             <%--<td>${user.sex}</td>--%>
-
+                        <td><button class="btn" onclick="delscore(${score.id})">删除</button></td>
 
 
                         <%--<td>--%>
@@ -144,7 +145,16 @@
 
 <script>
 
-
+    $(function () {
+        $("#button1").click(function(){
+            $("#CheckResultTable").table2excel({
+                // exclude CSS class
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "成绩信息" //do not include extension
+            });
+        });
+    })
 
     /**
      * 每次清除数据
@@ -159,11 +169,11 @@
         $(this).removeData("bs.modal");
     });
 
-    function  delStudent(studentid) {
-        var r= confirm("你确定要删除该学生吗?");
+    function  delscore(scoreid) {
+        var r= confirm("你确定要删除该学生成绩吗?");
         if(r){
             $.ajax({
-                url:"deleteStudent?studentid="+studentid,
+                url:"delscore?scoreid="+scoreid,
                 success:function (data) {
                     var obj = eval('('+data+')')
                     if(obj.status=="success"){

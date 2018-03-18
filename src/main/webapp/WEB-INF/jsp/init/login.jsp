@@ -84,7 +84,7 @@
                 }else if(obj.status=='success'){
                     toastrSuccessMessage(obj.msg,'信息提示');
 
-                    location.href = $('#baseuri').val()+"/user/userList?msg=user";
+                    location.href = $('#baseuri').val()+"/student/studentList?msg=student";
 
                 }
             }

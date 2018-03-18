@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>成绩作业查询</title>
+
+<style type="text/css">
+*{margin:0;padding:0;list-style-type:none;}
+a,img{border:0;}
+body{font:12px/180% Arial, Helvetica, sans-serif, "新宋体";}
+</style>
+
+
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/toastr.css" />
+
+</head>
+
+<body>
+
+	
+	<div class="cd-user-modal is-visible">
+		<div class="cd-user-modal-container">
+			<ul class="cd-switcher">
+				<li><a >潭山中学考勤成绩系统</a></li>
+				<!--<li><a >教师登录</a></li>-->
+			</ul>
+
+			<div id="cd-login" class="is-selected"> <!-- 登录表单 -->
+				<div class="cd-form">
+					<p class="fieldset">
+						<label class="image-replace cd-username" for="usercode">学生编码</label>
+						<input class="full-width has-padding has-border" id="usercode" type="text" placeholder="输入学生编码">
+					</p>
+
+					<p class="fieldset">
+						<label class="image-replace cd-password" for="password">输入密码</label>
+						<input class="full-width has-padding has-border" id="password" type="password"  placeholder="输入密码">
+					</p>
+
+					<!--<p class="fieldset">-->
+						<!--<input type="checkbox" id="remember-me" checked>-->
+						<!--<label for="remember-me">记住登录状态</label>-->
+					<!--</p>-->
+
+					<p class="fieldset">
+						<button value="登录" class="loginbtn" onclick="checkZuoyeList()">登录</button>
+					</p>
+				</div>
+			</div>
+
+			<!--<div id="cd-signup"> &lt;!&ndash; 教师登录表单 &ndash;&gt;-->
+				<!--<form class="cd-form">-->
+					<!--<p class="fieldset">-->
+						<!--<label class="image-replace cd-username" for="signin-username">学生编码</label>-->
+						<!--<input class="full-width has-padding has-border" id="signin-username2" type="text" placeholder="输入学生编码">-->
+					<!--</p>-->
+
+					<!--<p class="fieldset">-->
+						<!--<label class="image-replace cd-password" for="signin-password">输入密码</label>-->
+						<!--<input class="full-width has-padding has-border" id="signin-password2" type="text"  placeholder="输入密码">-->
+					<!--</p>-->
+					<!--<p class="fieldset">-->
+						<!--<input class="full-width2" type="submit" value="教师登录">-->
+					<!--</p>-->
+				<!--</form>-->
+			<!--</div>-->
+
+			<!--<a href="#0" class="cd-close-form">关闭</a>-->
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/toastr.js"></script>
+<script type="text/javascript" src="js/rdcp.toastr.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>

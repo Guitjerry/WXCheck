@@ -129,7 +129,7 @@
                 var students = obj.students;
                 var listr="";
                 for(var i in students){
-                    listr += "<li class='studentli'>"+students[i].name+"</li>";
+                    listr += "<li class='studentli'" +"studentId="+students[i].id+">"+students[i].name+"</li>";
                 }
                 $('.studentdiv ul').html("").html(listr);
                 $('.studentli').on('click',function () {

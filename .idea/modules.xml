@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/wxCheck.iml" filepath="$PROJECT_DIR$/wxCheck.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoyuan-app-eurekaserver/xiaoyuan-app-eurekaserver.iml" filepath="$PROJECT_DIR$/xiaoyuan-app-eurekaserver/xiaoyuan-app-eurekaserver.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoyuan-app-gateway/xiaoyuan-app-gateway.iml" filepath="$PROJECT_DIR$/xiaoyuan-app-gateway/xiaoyuan-app-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoyuan-app-score/xiaoyuan-app-score.iml" filepath="$PROJECT_DIR$/xiaoyuan-app-score/xiaoyuan-app-score.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xiaoyuan-app-shop/xiaoyuan-app-shop.iml" filepath="$PROJECT_DIR$/xiaoyuan-app-shop/xiaoyuan-app-shop.iml" />
     </modules>
   </component>
 </project>
