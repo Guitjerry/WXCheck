@@ -210,6 +210,7 @@ public class TmBanjiMainController {
 
                 ttScorceImportVo.setName(tmUserScore.getName());
                 ttScorceImportVo.setSchoolclass(tmUserScore.getSchoolClass());
+
                 if(!StringUtils.isEmpty(errornote)){
                     ttScorceImportVo.setNote(errornote);
                     ttScorceImportVos.add(ttScorceImportVo);
@@ -223,6 +224,17 @@ public class TmBanjiMainController {
                     }else{
                         errornote = "导入成绩成功";
                         ttScorceImportVo.setNote(errornote);
+                            Double sumcount = StringUtils.isEmpty(tmUserScore.getYuwen())?0.0:Integer.valueOf(tmUserScore.getYuwen());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getShuxue())?sumcount:sumcount+Integer.valueOf(tmUserScore.getShuxue());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getWaiyu())?sumcount:sumcount+Integer.valueOf(tmUserScore.getWaiyu());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getWuli())?sumcount:sumcount+Integer.valueOf(tmUserScore.getWuli());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getHuaxue())?sumcount:sumcount+Integer.valueOf(tmUserScore.getHuaxue());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getShengwu())?sumcount:sumcount+Integer.valueOf(tmUserScore.getShengwu());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getDili())?sumcount:sumcount+Integer.valueOf(tmUserScore.getDili());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getLishi())?sumcount:sumcount+Integer.valueOf(tmUserScore.getLishi());
+                            sumcount = StringUtils.isEmpty(tmUserScore.getShixiang())?sumcount:sumcount+Integer.valueOf(tmUserScore.getShixiang());
+
+                        tmUserScore.setSumCount(sumcount);
                         tmUserScoreRepository.save(tmUserScore);
                     }
                 }

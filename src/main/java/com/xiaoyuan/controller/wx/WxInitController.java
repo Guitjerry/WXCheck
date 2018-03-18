@@ -33,6 +33,10 @@ public class WxInitController {
     public String checkZuoye(HttpServletRequest request) {
         return "weixin/checkZuoye";
     }
+    @RequestMapping(value = "/login/main")
+    public String login(HttpServletRequest request) {
+        return "weixin/login/main";
+    }
 
     /**
      * 查看学生成绩

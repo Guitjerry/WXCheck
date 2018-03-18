@@ -30,6 +30,9 @@ public class LogHandlerInterceptor implements HandlerInterceptor {
         if(requestURI.indexOf("weixin")>=0){
             return true;
         }
+//        if(requestURI.indexOf("wx")>=0){
+//            return true;
+//        }
         boolean flag = false;
         //不在登录页面
         if(requestURI.indexOf("login")<=0){

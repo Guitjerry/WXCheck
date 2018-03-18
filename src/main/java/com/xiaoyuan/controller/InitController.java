@@ -288,7 +288,7 @@ public class InitController {
            boolean flag = false;
            List<TmRole> tmRoles = tmUserRoleService.findAllRoleByUserId(tmUsers.get(0).getId());
            for(TmRole tmRole:tmRoles) {
-               if ("admin".equals(tmRole.getCode())) {
+               if ("admin".equals(tmRole.getCode())||"manager".equals(tmRole.getCode())) {
                    flag = true;
                }
            }

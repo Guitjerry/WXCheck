@@ -17,4 +17,5 @@ public interface TmZuoyeService {
      * @return
      */
     public  List<ZuoyeVo> listAllZuoyeById(String usercode);
+    public List<ZuoyeVo> listAllZuoyeByAdmin(String kemuname,String banjiname,Integer userid);
 }

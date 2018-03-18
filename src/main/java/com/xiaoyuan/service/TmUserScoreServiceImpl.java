@@ -26,10 +26,10 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
             hql.append(" and name=?1");
         }
         if(!StringUtils.isEmpty(banji)){
-            hql.append(" and schoolclass=?2");
+            hql.append(" and schoolClass=?2");
         }
         if(!StringUtils.isEmpty(testname)){
-            hql.append(" and schooltest=?3");
+            hql.append(" and schoolTest=?3");
         }
         if(!StringUtils.isEmpty(kemu)){
             hql.append(" and kemu=?4");
@@ -118,7 +118,7 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
 
     @Override
     public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name, String studentcode, String schoolclass,Integer userId) {
-        StringBuffer hql = new StringBuffer(" select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count  from tm_user_score a where 1=1 ");
+        StringBuffer hql = new StringBuffer(" select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count,school_grade  from tm_user_score a where 1=1 ");
         if(!StringUtils.isEmpty(name)){
             hql.append(" and name=?1");
         }
@@ -126,7 +126,7 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
             hql.append(" and studentcode=?2");
         }
         if(!StringUtils.isEmpty(schoolclass)){
-            hql.append(" and schoolClass=?3");
+            hql.append(" and school_class=?3");
         }
         hql.append("  order by sum_count desc");
         Query query = em.createNativeQuery(hql.toString(),TmUserScore.class);
@@ -146,7 +146,7 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
 
     @Override
     public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid) {
-       StringBuffer hql = new StringBuffer("select distinct a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count  from  tm_user_score a  ");
+       StringBuffer hql = new StringBuffer("select distinct a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count,a.school_grade  from  tm_user_score a  ");
         hql.append("INNER JOIN tm_banji e on a.school_class = e.name ");
         hql.append("INNER JOIN TM_STUDENT s on s.BANJIID = e.ID ");
         if(!StringUtils.isEmpty(name)){

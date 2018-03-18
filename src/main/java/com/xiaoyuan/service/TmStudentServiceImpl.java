@@ -182,7 +182,7 @@ public class TmStudentServiceImpl implements TmStudentService{
             hql.append(" and u.name =?2");
         }
         if(!StringUtils.isEmpty(usercode)){
-            hql.append(" and u.USER_CODE =?3");
+            hql.append(" and u.usercode =?3");
         }
         Query query = em.createNativeQuery(hql.toString(),TmStudent.class);
 

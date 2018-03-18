@@ -21,6 +21,7 @@ public class TmUserScore {
     private String wuli;
     private String yuwen;
     private Double sumCount;
+    private String schoolGrade;
     @Transient
     private String banjiindexs;
     @Transient
@@ -51,6 +52,15 @@ public class TmUserScore {
 
     public void setId(int id) {
         this.id = id;
+    }
+    @Basic
+    @Column(name = "SCHOOL_GRADE")
+    public String getSchool_grade() {
+        return schoolGrade;
+    }
+
+    public void setSchool_grade(String schoolGrade) {
+        this.schoolGrade = schoolGrade;
     }
 
     @Basic

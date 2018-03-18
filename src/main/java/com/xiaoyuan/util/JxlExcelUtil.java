@@ -78,7 +78,7 @@ public class JxlExcelUtil {
                 if(target!=null){
 
                     for (int m = 0; m < columns; m++) {
-                        String cloumnname =  elecloumns.get(m).getTextTrim().toLowerCase();
+                        String cloumnname =  elecloumns.get(m).getTextTrim();
                         Cell oCell= sheet.getCell(m,j);//第j行的第m列
 
                         String val = StringUtils.trimToEmpty(oCell.getContents());

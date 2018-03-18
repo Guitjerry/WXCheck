@@ -16,6 +16,32 @@ import java.util.List;
 public class TmZuoyeServiceImpl implements TmZuoyeService {
     @PersistenceContext
     protected EntityManager em;
+
+    public List<ZuoyeVo> listAllZuoyeByAdmin(String kemuname,String banjiname,Integer userid){
+        List<ZuoyeVo> zuoyeVos = null;
+        StringBuffer hql = new StringBuffer(" select new com.xiaoyuan.entity.ZuoyeVo(d.kemuid,d.id as zuoyeid,a.ID as banjiid, d.task,b.name as kemuname,a.name as banjiname) from  TmBanJi a, TmKemu b,TmZuoYe d where  a.id=d.banjiid and b.id=d.kemuid ");
+        if(userid!=null&&userid>0){
+            hql.append(" and c.userId=?1");
+        }
+        if(!StringUtils.isEmpty(kemuname)){
+            hql.append(" and b.name=?2");
+        }
+        if(!StringUtils.isEmpty(banjiname)){
+            hql.append(" and a.name=?3");
+        }
+        Query query = em.createQuery(hql.toString());
+        if(userid!=null&&userid>0){
+            query.setParameter(1,userid);
+        }
+        if(!StringUtils.isEmpty(kemuname)){
+            query.setParameter(2,kemuname);
+        }
+        if(!StringUtils.isEmpty(banjiname)){
+            query.setParameter(3,banjiname);
+        }
+        zuoyeVos = query.getResultList();
+        return zuoyeVos;
+    }
     @Override
     public List<ZuoyeVo> listAllZuoye(String kemuname,String banjiname,Integer userid) {
         List<ZuoyeVo> zuoyeVos = null;

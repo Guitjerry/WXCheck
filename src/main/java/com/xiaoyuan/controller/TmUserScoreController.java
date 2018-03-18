@@ -7,6 +7,7 @@ import com.xiaoyuan.respository.TmUserScoreRepository;
 import com.xiaoyuan.service.TmUserRoleService;
 import com.xiaoyuan.service.TmUserScoreService;
 import com.xiaoyuan.util.Const;
+import com.xiaoyuan.util.JsonUtilTemp;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -63,5 +64,11 @@ public class TmUserScoreController {
         request.setAttribute("studentcode",studentcode);
         request.setAttribute("schoolclass",schoolclass);
         return "score/list";
+    }
+    @RequestMapping("/delscore")
+    private void delscore(HttpServletRequest request,HttpServletResponse response,Integer scoreid){
+        tmUserScoreRepository.delete(scoreid);
+        JsonUtilTemp.returnSucessJson(response,"删除成功成功");
+
     }
 }

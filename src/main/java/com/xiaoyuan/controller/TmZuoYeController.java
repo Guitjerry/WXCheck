@@ -100,9 +100,14 @@ public class TmZuoYeController {
 //        request.setAttribute("tmZuoYes",tmZuoYes);
         Boolean flag = (Boolean) request.getSession().getAttribute("adminRole");
         String userid = request.getSession().getAttribute("userid").toString();
+        List<ZuoyeVo> zuoyeVos = new ArrayList<>();
         //判断是否传userid
         Integer quuserid = flag==true?null:Integer.valueOf(userid);
-        List<ZuoyeVo> zuoyeVos =  tmZuoyeService.listAllZuoye(txt_search_kemu,txt_search_banji,quuserid);
+        if(flag){
+            zuoyeVos =  tmZuoyeService.listAllZuoyeByAdmin(txt_search_kemu,txt_search_banji,quuserid);
+        }else{
+            zuoyeVos =  tmZuoyeService.listAllZuoye(txt_search_kemu,txt_search_banji,quuserid);
+        }
         request.setAttribute("zuoyeVos",zuoyeVos);
         request.setAttribute("txt_search_kemu",txt_search_kemu);
         request.setAttribute("txt_search_banji",txt_search_banji);
