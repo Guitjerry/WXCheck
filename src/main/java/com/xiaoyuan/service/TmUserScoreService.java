@@ -1,6 +1,7 @@
 package com.xiaoyuan.service;
 
 import com.xiaoyuan.entity.TmUserScore;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface TmUserScoreService {
      * @param userid
      * @return
      */
-    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name,String studentcode,String schoolclass,Integer userid);
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name, String studentcode, String schoolclass, Integer userid, Pageable pageable);
 
     /**
      * 根据权限查询成绩
@@ -42,7 +43,7 @@ public interface TmUserScoreService {
      * @param userid
      * @return
      */
-    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid);
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid,Pageable pageable);
     public List<String> findBanjiIndex(String studentcode);
     public List<String> findNianjiIndex(String studentcode);
     public List<TmUserScore> findBanjiScorce(String studentcode);

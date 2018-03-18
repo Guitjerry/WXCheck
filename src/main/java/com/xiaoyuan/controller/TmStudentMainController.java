@@ -103,6 +103,8 @@ public class TmStudentMainController {
     @RequestMapping("editStudentSure")
     private void editBanjiSure(HttpServletResponse response, TmStudent tmStudent){
         if(tmStudent!=null&&tmStudent.getId()>0){
+            TmBanJi tmBanJi = tmBanjiRepository.findOne(tmStudent.getBanjiid());
+            tmStudent.setBanjiname(tmBanJi.getName());
             tmStudentRepository.saveAndFlush(tmStudent);
             JsonUtilTemp.returnSucessJson(response,"更新班级成功");
         }

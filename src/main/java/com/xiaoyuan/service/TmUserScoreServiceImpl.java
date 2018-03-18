@@ -3,6 +3,7 @@ package com.xiaoyuan.service;
 import com.xiaoyuan.entity.TmRole;
 import com.xiaoyuan.entity.TmUserScore;
 import com.xiaoyuan.util.Const;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -117,7 +118,7 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
     }
 
     @Override
-    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name, String studentcode, String schoolclass,Integer userId) {
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClass(String name, String studentcode, String schoolclass, Integer userId, Pageable pageable) {
         StringBuffer hql = new StringBuffer(" select a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count,school_grade  from tm_user_score a where 1=1 ");
         if(!StringUtils.isEmpty(name)){
             hql.append(" and name=?1");
@@ -141,22 +142,26 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
         if(!StringUtils.isEmpty(schoolclass)){
             query.setParameter(3,schoolclass);
         }
+        if(pageable!=null){
+            query.setFirstResult((pageable.getPageNumber()-1)*(pageable.getPageSize()));
+            query.setMaxResults(pageable.getPageSize());
+        }
         return query.getResultList();
     }
 
     @Override
-    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid) {
+    public List<TmUserScore> findAllByNameAndStudentcodeAndSchoolClassByRole(String name, String studentcode, String schoolclass, Integer userid,Pageable pageable) {
        StringBuffer hql = new StringBuffer("select distinct a.id,a.name,a.school_class,a.school_test,a.studentcode,a.dili,a.huaxue,a.lishi,a.shengwu,a.shixiang,a.shuxue,a.waiyu,a.wuli,a.yuwen,a.sum_count,a.school_grade  from  tm_user_score a  ");
         hql.append("INNER JOIN tm_banji e on a.school_class = e.name ");
         hql.append("INNER JOIN TM_STUDENT s on s.BANJIID = e.ID ");
         if(!StringUtils.isEmpty(name)){
-            hql.append(" and s.NAME=?1 ");
+            hql.append(" and a.NAME=?1 ");
         }
         if(!StringUtils.isEmpty(studentcode)){
-            hql.append(" and s.USERCODE=?2 ");
+            hql.append(" and a.studentcode=?2 ");
         }
         if(!StringUtils.isEmpty(schoolclass)){
-            hql.append(" and s.banjiname=?3 ");
+            hql.append(" and a.banjiname=?3 ");
         }
         hql.append("INNER JOIN tm_user_class_kemu f on e.id=f.class_id and f.kemu_id=0 ");
         hql.append("INNER JOIN tm_user u on u.id=f.user_id and u.id=?4 ");
@@ -176,6 +181,10 @@ public class TmUserScoreServiceImpl implements TmUserScoreService {
 
         if(userid!=null){
            query.setParameter(4,userid);
+        }
+        if(pageable!=null){
+            query.setFirstResult((pageable.getPageNumber()-1)*(pageable.getPageSize()));
+            query.setMaxResults(pageable.getPageSize());
         }
         return query.getResultList();
     }
