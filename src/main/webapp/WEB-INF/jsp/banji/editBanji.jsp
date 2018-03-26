@@ -14,8 +14,7 @@
 
         <div class="input-group f-mt10 f-pd5">
             <span class="input-group-addon" >班级年级</span>
-
-            <select class="form-control editnianji" name="editnianji"  default-select="${banji.grade}">
+            <select class="form-control editnianji" name="editnianji"  requierd="yes" tip="年级不能为空"   default-select="${banji.grade}">
                 <option value="">---请选择-----</option>
                 <c:forEach items="<%=Const.getNianjiArray()%>" var="os">
                     <option value="${os.code}">${os.name}</option>
@@ -78,6 +77,9 @@
                             location.reload();
                         },3000)
 
+                    }else{
+                        $("#editModal").modal({show:false});
+                        toastrErrorMessage(obj.msg,"信息提示");
                     }
                 }
             });

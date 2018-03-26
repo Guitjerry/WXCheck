@@ -86,6 +86,12 @@ public class TmStudentMainController {
     @RequestMapping("addStudentSure")
     private void addBanjiSure(HttpServletResponse response, TmStudent tmStudent){
         if(tmStudent!=null){
+           //查询编码是否重复
+           List<TmStudent> tmStudents =  tmStudentRepository.findAllByusercode(tmStudent.getUsercode());
+           if(tmStudents.size()>0){
+               JsonUtilTemp.returnFailJson(response,"该学生编码已经存在");
+               return;
+           }
             tmStudentRepository.save(tmStudent);
         }
         if(tmStudent!=null&&tmStudent.getId()>0){
@@ -105,7 +111,14 @@ public class TmStudentMainController {
         if(tmStudent!=null&&tmStudent.getId()>0){
             TmBanJi tmBanJi = tmBanjiRepository.findOne(tmStudent.getBanjiid());
             tmStudent.setBanjiname(tmBanJi.getName());
+            //查询编码是否重复
+            List<TmStudent> tmStudents =  tmStudentRepository.findAllByusercode(tmStudent.getUsercode());
+            if(tmStudents.size()>0){
+                JsonUtilTemp.returnFailJson(response,"该学生编码已经存在");
+                return;
+            }
             tmStudentRepository.saveAndFlush(tmStudent);
+
             JsonUtilTemp.returnSucessJson(response,"更新班级成功");
         }
     }

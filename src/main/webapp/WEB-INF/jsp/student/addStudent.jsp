@@ -32,7 +32,7 @@
         <%--</div>--%>
         <div class="input-group f-mt10 f-pd5">
             <span class="input-group-addon" id="basic-addon2">学生手机</span>
-            <input type="text" class="form-control" name="addphone" id="addphone" placeholder="请输入学生手机" regex="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$" regextip="手机格式不正确" aria-describedby="basic-addon2">
+            <input type="text" class="form-control" name="addphone" id="addphone" placeholder="请输入学生手机" regex="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$" regextip="手机格式不正确" aria-describedby="basic-addon2" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/">
         </div>
         <div class="input-group f-mt10 f-pd5">
             <span class="input-group-addon" id="basic-addon3">学生年龄</span>
@@ -72,6 +72,9 @@
                             location.reload();
                         }, 1000)
 
+                    }else{
+                        $("#addModal").modal({show:false});
+                        toastrErrorMessage(obj.msg,"信息提示");
                     }
 
                 }

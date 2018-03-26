@@ -77,14 +77,7 @@ public class TmZuoYeController {
         if(flag){
             tmKemus = tmKemuService.selectKemuByBanji(banjiid);
         }else{
-            //查询任课教师的科目
-            List<UserKemuVo> userKemuVos =  tmUserClassKemuService.findAllVoByUserId(Integer.valueOf(userid),banjiid);
-            for(UserKemuVo userKemuVo:userKemuVos){
-                TmKemu tmKemu = new TmKemu();
-                tmKemu.setId(userKemuVo.getKemuId());
-                tmKemu.setName(userKemuVo.getKemuName());
-                tmKemus.add(tmKemu);
-            }
+            tmKemus = tmKemuService.selectKemuByBanji(banjiid);
 
         }
         JsonUtilTemp.returnJson(tmKemus,response);

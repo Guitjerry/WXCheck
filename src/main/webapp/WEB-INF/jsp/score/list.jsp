@@ -37,19 +37,19 @@
                     <div class="panel-body">
                         <form id="formSearch" class="form-horizontal" action="list">
                             <div class="form-group" style="margin-top:15px">
-                                <label class="control-label col-sm-1" class="name" for="txt_search_account">学生名称</label>
+                                <label class="control-label col-sm-2" class="name" for="txt_search_account">学生名称</label>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control" id="txt_search_account" name="name" value="${name}">
                                 </div>
-                                <label class="control-label col-sm-1 studentcode"  for="studentcode">学生编码</label>
+                                <label class="control-label col-sm-2 studentcode"  for="studentcode">学生编码</label>
                                 <div class="col-sm-2">
                                     <input type="text" class="form-control" id="studentcode" name="studentcode" value="${studentcode}">
                                 </div>
 
-                                <label class="control-label col-sm-1 schoolclass"  for="studentcode">班级</label>
-                                <div class="col-sm-2">
-                                    <input type="text" class="form-control" id="schoolclass" name="schoolclass" value="${schoolclass}">
-                                </div>
+                                <%--<label class="control-label col-sm-2 schoolclass"  for="studentcode">班级</label>--%>
+                                <%--<div class="col-sm-2">--%>
+                                    <%--<input type="text" class="form-control" id="schoolclass" name="schoolclass" value="${schoolclass}">--%>
+                                <%--</div>--%>
 
                                 <div class="col-sm-3" style="text-align:left;">
                                     <button type="submit" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
@@ -123,6 +123,7 @@
 
                 </tbody>
             </table>
+            <w:pager pageNo="${pageindex}" recordCount="${counts}" pageSize="${pagesize}" url="list"></w:pager>
 
         </div>
 

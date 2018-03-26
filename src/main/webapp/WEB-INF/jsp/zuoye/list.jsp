@@ -28,12 +28,12 @@
                     <div class="panel-body">
                         <form id="formSearch" class="form-horizontal" action="zuoyeList">
                             <div class="form-group" style="margin-top:15px">
-                                <label class="control-label col-sm-1" class="rolename" for="txt_search_kemu">科目名称</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-sm-2" class="rolename" for="txt_search_kemu">科目名称</label>
+                                <div class="col-sm-2">
                                     <input type="text" class="form-control" id="txt_search_kemu" name="txt_search_kemu"  value="${txt_search_kemu}">
                                 </div>
-                                <label class="control-label col-sm-1 rolecode"  for="txt_search_banji">班级名称</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-sm-2 rolecode"  for="txt_search_banji">班级名称</label>
+                                <div class="col-sm-2">
                                     <input type="text" class="form-control" id="txt_search_banji" name="txt_search_banji" value="${txt_search_banji}">
                                 </div>
                                 <div class="col-sm-4" style="text-align:left;">

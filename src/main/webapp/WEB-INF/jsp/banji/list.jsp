@@ -73,8 +73,8 @@
                                href="fpKemu?banjiid=${banji.ID}">分配科目</a>
                             <a class="large  button f-mr20" data-toggle="modal" data-target="#fpStudenteditModal"
                                href="fpStudent?banjiid=${banji.ID}">学生导入</a>
-                            <a class="large  button f-mr20" data-toggle="modal" data-target="#fpNewStudenteditModal"
-                               href="fpStudentdiv?banjiid=${banji.ID}">学生分配</a>
+                            <%--<a class="large  button f-mr20" data-toggle="modal" data-target="#fpNewStudenteditModal"--%>
+                               <%--href="fpStudentdiv?banjiid=${banji.ID}">学生分配</a>--%>
                             <a class="large  button f-mr20" data-toggle="modal" data-target="#fpStudentScoreditModal"
                                href="fpStudentScore?banjiid=${banji.ID}">成绩导入</a>
                         </td>

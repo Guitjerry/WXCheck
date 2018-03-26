@@ -27,7 +27,7 @@
         </div>
         <div class="input-group f-mt10 f-pd5">
             <span class="input-group-addon" id="basic-addon3">学生手机</span>
-            <input type="text" class="form-control" name="editphone" id="editphone" placeholder="请输入学生手机" aria-describedby="basic-addon2" value="${student.phone}">
+            <input type="text" class="form-control" name="editphone" id="editphone" placeholder="请输入学生手机" aria-describedby="basic-addon2" value="${student.phone}" onkeyup="value=value.replace(/[^\d]/g,'') " ng-pattern="/[^a-zA-Z]/" regex="^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$" regextip="手机格式不正确">
         </div>
         <div class="input-group f-mt10 f-pd5">
             <span class="input-group-addon" id="basic-addon4">学生年龄</span>
@@ -60,9 +60,12 @@
                         $("#editModal").modal({show:false});
                         toastrSuccessMessage(obj.msg,"信息提示");
                         setTimeout(function () {
-                            //location.reload();
+                            location.reload();
                         },1000)
 
+                    }else{
+                        $("#editModal").modal({show:false});
+                        toastrErrorMessage(obj.msg,"信息提示");
                     }
                 }
             });
